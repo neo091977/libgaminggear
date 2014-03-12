@@ -1,0 +1,35 @@
+* Compilation and Installation
+
+  In any shell type the following:
+
+  $ tar -xjf libgaminggear-X.X.X.tar.bz2
+  $ cd libgaminggear-X.X.X
+  $ mkdir build
+  $ cd build
+  $ cmake -DCMAKE_INSTALL_PREFIX="/usr" ..
+  $ make
+  $ sudo make install
+
+  * optional cmake entries you can set with -D:
+
+    * CMAKE_BUILD_TYPE         If you want useful debug information in case of
+      errors use Debug. Default is Release.
+
+    * INSTALL_CMAKE_MODULESDIR If cmake doesn't find the right install directory
+      for cmake modules, you can set it manually. Normally it's /usr/share/cmake/Modules.
+
+    * INSTALL_LIBDIR           If cmake doesn't find the right install directory
+      for libraries, you can set it manually. For 64bit systems that's normally
+      $PREFIX/lib64 but Ubuntu uses $PREFIX/lib/x86_64-linux-gnu/.
+
+    * INSTALL_PKGCONFIGDIR     If cmake doesn't find the right install directory
+      for pkg-config, you can set it manually. Normally it's /usr/share/pkgconfig
+      or /usr/lib*/pkgconfig.
+
+    * UINPUTDIR                If cmake doesn't find the right location of the
+      uinput device, you can set it manually. Autodetection needs module uinput
+      loaded. Normally it's in /dev or /dev/input.
+      
+
+  * It is strongly recommended to install everything in /usr instead of the default
+    directory /usr/local.
