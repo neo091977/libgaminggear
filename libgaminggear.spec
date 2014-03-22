@@ -1,5 +1,9 @@
+%define vmajor 0
+%define vminor 0
+%define vmicro 1
+
 Name: libgaminggear
-Version: 0.0.1
+Version: %{vmajor}.%{vminor}.%{vmicro}
 Release: 1
 License: GPL
 Source: %{name}-%{version}.tar.bz2
@@ -9,10 +13,10 @@ BuildRequires: gtk2-devel >= 2.20
 BuildRequires: libusb1-devel
 ExclusiveOS: linux
 Prefix: /usr
-URL: ?
+URL: http://sourceforge.net/projects/libgaminggear/
 Packager: Stefan Achatz <erazor_de@users.sourceforge.net>
 
-Summary: ?
+Summary: Libraries for gaming input devices
 Group: System Environment/Libraries
 
 %package devel
@@ -21,10 +25,10 @@ Summary: Development headers for libgaminggear.
 Group: Development/Libraries
 
 %description
-?
+Libgaminggear provides functions and widgets common for gaming input devices.
 
 %description devel
-?
+Libgaminggear provides functions and widgets common for gaming input devices.
 Here are the development headers needed to compile software that uses libgaminggear.
 
 %prep
@@ -35,12 +39,12 @@ cmake -DCMAKE_INSTALL_PREFIX="%{prefix}" ..
 
 %build
 cd build
-%{__make} %{?_smp_mflags}
+%{__make} -r %{?_smp_mflags}
 
 %install
 cd build
 %{__rm} -rf "%{buildroot}"
-%{__make} %{?_smp_mflags} DESTDIR="%{buildroot}" install
+%{__make} -r %{?_smp_mflags} DESTDIR="%{buildroot}" install
 
 %clean
 %{__rm} -rf "%{buildroot}"
@@ -61,18 +65,17 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 
 %files
 %defattr(-,root,root)
-%doc README COPYING Changelog
-%{prefix}/lib*/gaminggear-*/libgaminggear.so*
-%{prefix}/lib*/gaminggear-*/libgaminggearwidget.so*
-%{prefix}/share/gaminggear
-/etc/ld.so.conf.d/gaminggear-*.conf
+%doc INSTALL README COPYING Changelog
+%{prefix}/lib*/gaminggear-%{vmajor}
+%{prefix}/share/gaminggear/icons
+/etc/ld.so.conf.d/gaminggear-%{vmajor}.conf
 
 %files devel
 %defattr(-,root,root)
-%{prefix}/include/gaminggear-*/gaminggear/*.h
+%{prefix}/include/gaminggear-%{vmajor}/gaminggear
 %{prefix}/share/gaminggear/html
-/usr/share/pkgconfig/gaminggear-*.pc
-/usr/share/cmake/Modules/FindGAMINGGEAR*.cmake
+/usr/share/pkgconfig/gaminggear-%{vmajor}.pc
+/usr/share/cmake/Modules/FindGAMINGGEAR%{vmajor}.cmake
 
 %changelog
 * Thu Feb 27 2014 Stefan Achatz <erazor_de@users.sourceforge.net> 0.0.1-1
