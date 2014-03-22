@@ -7,6 +7,7 @@ ADD_LIBRARY (libgaminggearwidget SHARED
   gaminggear_dialogs.c
   gaminggear_dscale.c
   gaminggear_gdk_key_translations.c
+  gaminggear_hscale.c
   gaminggear_macro_combo_box.c
   gaminggear_macro_dialog.c
   gaminggear_macro_editor_advanced_list_store.c
