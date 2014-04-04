@@ -28,8 +28,14 @@
 
 static gchar const * const filter_converter_key = "converter";
 
-static void add_file_filter_from_converter(GtkFileChooser *chooser, GaminggearMacrosConverter const *converter) {
+static void add_file_filter_from_converter(GtkFileChooser *chooser, GaminggearMacrosConverter const *converter, gboolean import) {
 	GtkFileFilter *filter;
+
+	if (import) {
+		if (!converter->import) return;
+	} else {
+		if (!converter->export) return;
+	}
 
 	filter = gtk_file_filter_new();
 	g_object_set_data(G_OBJECT(filter), filter_converter_key, (gpointer)converter);
@@ -39,11 +45,11 @@ static void add_file_filter_from_converter(GtkFileChooser *chooser, GaminggearMa
 	gtk_file_chooser_add_filter(chooser, filter);
 }
 
-static void add_file_filter(GtkFileChooser *chooser) {
-	add_file_filter_from_converter(chooser, macros_converter_roccat());
-	add_file_filter_from_converter(chooser, macros_converter_roccat_arvo());
-	add_file_filter_from_converter(chooser, macros_converter_roccat_kone());
-	add_file_filter_from_converter(chooser, macros_converter_roccat_valo());
+static void add_file_filter(GtkFileChooser *chooser, gboolean import) {
+	add_file_filter_from_converter(chooser, macros_converter_roccat(), import);
+	add_file_filter_from_converter(chooser, macros_converter_roccat_arvo(), import);
+	add_file_filter_from_converter(chooser, macros_converter_roccat_kone(), import);
+	add_file_filter_from_converter(chooser, macros_converter_roccat_valo(), import);
 }
 
 static void show_import_cb(GtkMenuItem *item, gpointer user_data) {
@@ -66,7 +72,7 @@ static void show_import_cb(GtkMenuItem *item, gpointer user_data) {
 			NULL
 	);
 
-	add_file_filter(GTK_FILE_CHOOSER(dialog));
+	add_file_filter(GTK_FILE_CHOOSER(dialog), TRUE);
 
 	path = gaminggear_configuration_get_macro_save_path(config);
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path);
@@ -119,7 +125,7 @@ static void show_export_cb(GtkMenuItem *item, gpointer user_data) {
 			NULL
 	);
 
-	add_file_filter(GTK_FILE_CHOOSER(dialog));
+	add_file_filter(GTK_FILE_CHOOSER(dialog), FALSE);
 
 	path = gaminggear_configuration_get_macro_save_path(config);
 	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path);
