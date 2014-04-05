@@ -66,7 +66,7 @@ static GaminggearMacroKeystrokes *steelseries_events_to_gaminggear_macro_keystro
 	code_regex = g_regex_new("\"code\":([^,}]+)", 0, 0, NULL);
 	extra_regex = g_regex_new("\"extraData\":([^,}]+)", 0, 0, NULL);
 
-	events = g_regex_split_simple("},{", string, 0, 0);
+	events = g_strsplit(string, "},{", 0);
 
 	event = events;
 	index = 0;
