@@ -141,7 +141,7 @@ static gboolean eval_arvo_key(GaminggearMacros *gaminggear_macros, GKeyFile *arv
 		gaminggear_macros_set(gaminggear_macros, gaminggear_macro);
 
 		gaminggear_macro_free(gaminggear_macro);
-		g_free(gaminggear_macro_keystrokes);
+		gaminggear_macro_keystrokes_free(gaminggear_macro_keystrokes);
 		g_free(arvo_original_macro);
 	}
 	return TRUE;

@@ -15,6 +15,7 @@
  * along with libgaminggear. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
 #include "gaminggear_configuration.h"
 #include "gaminggear_macro_editor_dialog_menu_bar.h"
 #include "gaminggear_macro_editor_dialog_internal.h"
@@ -25,6 +26,9 @@
 #include "macros_converter_roccat_kone.h"
 #include "macros_converter_roccat_valo.h"
 #include "macros_converter_roccat.h"
+#ifdef SQLITE3_FOUND
+#include "macros_converter_steelseries_engine3.h"
+#endif
 
 static gchar const * const filter_converter_key = "converter";
 
@@ -50,6 +54,9 @@ static void add_file_filter(GtkFileChooser *chooser, gboolean import) {
 	add_file_filter_from_converter(chooser, macros_converter_roccat_arvo(), import);
 	add_file_filter_from_converter(chooser, macros_converter_roccat_kone(), import);
 	add_file_filter_from_converter(chooser, macros_converter_roccat_valo(), import);
+#ifdef SQLITE3_FOUND
+	add_file_filter_from_converter(chooser, macros_converter_steelseries_engine3(), import);
+#endif
 }
 
 static void show_import_cb(GtkMenuItem *item, gpointer user_data) {

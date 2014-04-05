@@ -1,5 +1,5 @@
-#ifndef __CONFIG_H__
-#define __CONFIG_H__
+#ifndef __MACROS_CONVERTER_STEELSERIES_ENGINE3_H__
+#define __MACROS_CONVERTER_STEELSERIES_ENGINE3_H__
 
 /*
  * This file is part of libgaminggear.
@@ -18,8 +18,12 @@
  * along with libgaminggear. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define GAMINGGEAR_ICON_PATH "${CMAKE_INSTALL_PREFIX}/share/gaminggear/icons"
-#define UINPUT_DIR "${UINPUTDIR}"
-#cmakedefine SQLITE3_FOUND
+#include "gaminggear_macros_converter.h"
+
+G_BEGIN_DECLS
+
+GaminggearMacrosConverter const * const macros_converter_steelseries_engine3(void);
+
+G_END_DECLS
 
 #endif

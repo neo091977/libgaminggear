@@ -1,4 +1,4 @@
-ADD_LIBRARY (libgaminggear SHARED
+SET(SOURCES
   gaminggear_configuration.c
   gaminggear_evdev.c
   gaminggear_helper.c
@@ -16,6 +16,14 @@ ADD_LIBRARY (libgaminggear SHARED
   macros_converter_roccat.c
 )
 
+IF(SQLITE3_FOUND)
+  SET(SOURCES ${SOURCES}
+    macros_converter_steelseries_engine3.c
+  )
+ENDIF(SQLITE3_FOUND)
+
+ADD_LIBRARY (libgaminggear SHARED ${SOURCES})
+
 ADD_DEPENDENCIES(libgaminggear
   generated_headers
 )
@@ -23,6 +31,7 @@ ADD_DEPENDENCIES(libgaminggear
 TARGET_LINK_LIBRARIES(libgaminggear
   ${USB1_LIBRARIES}
   ${GLIB2_LIBRARIES}
+  ${SQLITE3_LIBRARIES}
 )
 
 SET_TARGET_PROPERTIES(libgaminggear
