@@ -48,7 +48,7 @@ static guchar const table_hid_usage_to_kbd_keycode[256] = {
 };
 
 gboolean gaminggear_hid_is_mouse_button(guint8 usage_id) {
-	return (usage_id >= GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT && usage_id <= GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_MIDDLE) ? TRUE : FALSE;
+	return (usage_id >= GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT) ? TRUE : FALSE;
 }
 
 guint gaminggear_hid_to_kbd_keycode(guint8 usage_id) {
@@ -56,16 +56,10 @@ guint gaminggear_hid_to_kbd_keycode(guint8 usage_id) {
 }
 
 guint gaminggear_hid_to_btn_keycode(guint8 usage_id) {
-	switch (usage_id) {
-	case GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT:
-		return BTN_LEFT;
-	case GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_RIGHT:
-		return BTN_RIGHT;
-	case GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_MIDDLE:
-		return BTN_MIDDLE;
-	default:
+	if (usage_id >= GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT)
+		return usage_id - GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT + BTN_LEFT;
+	else
 		return 0;
-	}
 }
 
 static guint8 gaminggear_kbd_keycode_to_hid(guint kbd_keycode) {

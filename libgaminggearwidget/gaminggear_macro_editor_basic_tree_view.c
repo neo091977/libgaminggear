@@ -16,6 +16,7 @@
  */
 
 #include "gaminggear_macro_editor_basic_tree_view.h"
+#include "gaminggear/gdk_key_translations.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_TYPE, GaminggearMacroEditorBasicTreeViewClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_TYPE))
@@ -174,20 +175,18 @@ static GtkWidget *subsubmenu(GaminggearMacroEditorBasicTreeView *tree_view, guin
 
 static GtkWidget *submenu(GaminggearMacroEditorBasicTreeView *tree_view) {
 	GtkWidget *menu, *item;
+	guint i;
+	gchar *title;
 
 	menu = gtk_menu_new();
 
-	item = gtk_menu_item_new_with_label("Left button");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-	gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), subsubmenu(tree_view, GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT));
-
-	item = gtk_menu_item_new_with_label("Right button");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-	gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), subsubmenu(tree_view, GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_RIGHT));
-
-	item = gtk_menu_item_new_with_label("Middle button");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-	gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), subsubmenu(tree_view, GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_MIDDLE));
+	for (i = GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT; i < GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT + 6; ++i) {
+		title = gaminggear_hid_to_keyname(i);
+		item = gtk_menu_item_new_with_label(title);
+		g_free(title);
+		gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+		gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), subsubmenu(tree_view, i));
+	}
 
 	return menu;
 }

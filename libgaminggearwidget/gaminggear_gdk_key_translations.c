@@ -48,20 +48,23 @@ gchar *gaminggear_xkeycode_to_keyname(guint keycode) {
 }
 
 gchar *gaminggear_hid_to_keyname(guint8 usage_id) {
-	gchar const *string;
+	gchar *string = NULL;
 
 	switch (usage_id) {
 	case GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT:
-		string = "Button left";
+		string = g_strdup("Button left");
 		break;
 	case GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_RIGHT:
-		string = "Button right";
+		string = g_strdup("Button right");
 		break;
 	case GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_MIDDLE:
-		string = "Button middle";
+		string = g_strdup("Button middle");
 		break;
 	default:
-		string = gaminggear_xkeycode_to_keyname(gaminggear_hid_to_xkeycode(usage_id));
+		if (usage_id > GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT)
+			string = g_strdup_printf("Button %u", usage_id - GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT + 1);
+		else
+			string = gaminggear_xkeycode_to_keyname(gaminggear_hid_to_xkeycode(usage_id));
 	}
-	return g_strdup(string);
+	return string;
 }

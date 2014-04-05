@@ -26,6 +26,7 @@
 
 int gaminggear_open_misc_evdev(gchar const * identifier, guint vendor, guint product, GError **error) {
 	int fd;
+	guint i;
 	struct uinput_user_dev uidev;
 
 	fd = open(UINPUT_DIR "/uinput", O_WRONLY | O_NONBLOCK);
@@ -50,12 +51,11 @@ int gaminggear_open_misc_evdev(gchar const * identifier, guint vendor, guint pro
 		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
 	if (ioctl(fd, UI_SET_KEYBIT, KEY_STOPCD) < 0)
 		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
-	if (ioctl(fd, UI_SET_KEYBIT, BTN_LEFT) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
-	if (ioctl(fd, UI_SET_KEYBIT, BTN_RIGHT) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
-	if (ioctl(fd, UI_SET_KEYBIT, BTN_MIDDLE) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+
+	for (i = BTN_LEFT; i <= BTN_BACK; ++i) {
+		if (ioctl(fd, UI_SET_KEYBIT, i) < 0)
+			g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+	}
 
 	memset(&uidev, 0, sizeof(uidev));
 
