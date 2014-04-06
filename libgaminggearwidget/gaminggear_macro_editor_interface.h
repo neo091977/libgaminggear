@@ -48,7 +48,11 @@ struct _GaminggearMacroEditorInterfaceInterface {
 	/* should return true if macro has no keystrokes */
 	gboolean (*empty)(GaminggearMacroEditorInterface *self);
 
-	/* times are in milliseconds */
+	/*
+	 * times are in milliseconds
+	 * abs_time is absolute time the event takes place
+	 * rel_time is relative time from last element to this
+	 */
 	void (*add_keystroke)(GaminggearMacroEditorInterface *self, guint key, guint action, glong abs_time, glong rel_time);
 
 	void (*set_keystrokes)(GaminggearMacroEditorInterface *self, GaminggearMacroKeystrokes const *keystrokes);

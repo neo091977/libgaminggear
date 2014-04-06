@@ -133,7 +133,9 @@ static void popup_insert_button_click_cb(GtkMenuItem *item, gpointer user_data) 
 
 	key = GPOINTER_TO_UINT(g_object_get_data(G_OBJECT(item), macro_list_key_key));
 
-	gaminggear_macro_editor_basic_list_store_insert_dual_action_key_before(GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE(model), pinsert_iter, key);
+	// FIXME with period
+	gaminggear_macro_editor_basic_list_store_insert_keystroke_before(GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE(model), pinsert_iter, key, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS, 0);
+	gaminggear_macro_editor_basic_list_store_insert_keystroke_before(GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE(model), pinsert_iter, key, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, 0);
 }
 
 static void popup_remove_cb(GtkMenuItem *item, gpointer user_data) {

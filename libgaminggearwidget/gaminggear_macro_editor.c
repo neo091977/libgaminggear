@@ -344,18 +344,24 @@ static gboolean key_event_cb(GtkWindow *window, GdkEventKey *event, gpointer use
 
 	clock_gettime(CLOCK_REALTIME, &actual_time);
 
-	if (gaminggear_macro_editor_record_options_frame_delay_as_recorded(priv->record_options_frame))
-		rel_time = time_diff(&actual_time, &priv->record_last_event_time);
-	else
-		rel_time = gaminggear_macro_editor_record_options_frame_get_delay(priv->record_options_frame);
+	/* Initial waiting time is not supported */
+	if (gaminggear_macro_editor_key_sequence_frame_empty(priv->key_sequence_frame)) {
+		rel_time = 0L;
+	} else {
+		if (gaminggear_macro_editor_record_options_frame_delay_as_recorded(priv->record_options_frame))
+			rel_time = time_diff(&actual_time, &priv->record_last_event_time);
+		else
+			rel_time = gaminggear_macro_editor_record_options_frame_get_delay(priv->record_options_frame);
+	}
 
-	priv->record_last_event_time = actual_time;
 	priv->record_abs_time += rel_time;
 
 	action = (event->type == GDK_KEY_PRESS) ? GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS : GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE;
 
 	gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
 			gaminggear_xkeycode_to_hid(event->hardware_keycode), action, priv->record_abs_time, rel_time);
+
+	priv->record_last_event_time = actual_time;
 
 	return TRUE;
 }

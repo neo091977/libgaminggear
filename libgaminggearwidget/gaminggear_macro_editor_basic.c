@@ -65,7 +65,7 @@ static void gaminggear_macro_editor_basic_add_keystroke(GaminggearMacroEditorInt
 }
 
 static glong gaminggear_macro_editor_basic_abs_time(GaminggearMacroEditorInterface *self) {
-	return 0L;
+	return gaminggear_macro_editor_basic_list_store_get_abs_time(GAMINGGEAR_MACRO_EDITOR_BASIC(self)->priv->list_store);
 }
 
 static gboolean gaminggear_macro_editor_basic_get_modified(GaminggearMacroEditorInterface *self) {

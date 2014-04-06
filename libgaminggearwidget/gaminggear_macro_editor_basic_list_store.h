@@ -40,7 +40,6 @@ GType gaminggear_macro_editor_basic_list_store_get_type(void);
 GaminggearMacroEditorBasicListStore *gaminggear_macro_editor_basic_list_store_new(void);
 
 void gaminggear_macro_editor_basic_list_store_insert_single_action_key_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, guint key, guint action);
-void gaminggear_macro_editor_basic_list_store_insert_dual_action_key_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, guint key);
 
 /* Only inserts period if previous entry is key.
  * Returns FALSE if nothing was inserted.
@@ -48,12 +47,13 @@ void gaminggear_macro_editor_basic_list_store_insert_dual_action_key_before(Gami
 gboolean gaminggear_macro_editor_basic_list_store_insert_period_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, glong rel_time);
 
 void gaminggear_macro_editor_basic_list_store_insert_keystroke_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, guint key, guint action, glong rel_time);
-void gaminggear_macro_editor_basic_list_store_insert_gaminggear_macro_keystroke_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, GaminggearMacroKeystroke const *keystroke);
 
 gboolean gaminggear_macro_editor_basic_list_store_remove(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *iter);
 
 GaminggearMacroKeystrokes *gaminggear_macro_editor_basic_list_store_get_keystrokes(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store);
 void gaminggear_macro_editor_basic_list_store_set_keystrokes(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GaminggearMacroKeystrokes const *keystrokes);
+
+glong gaminggear_macro_editor_basic_list_store_get_abs_time(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store);
 
 void gaminggear_macro_editor_basic_list_store_set_value(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *iter, gchar const *text);
 
