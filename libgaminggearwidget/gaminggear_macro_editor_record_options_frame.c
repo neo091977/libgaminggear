@@ -17,6 +17,7 @@
 
 #include "gaminggear_macro_editor_record_options_frame.h"
 #include "gaminggear_macro_editor_advanced_list_store.h"
+#include "gaminggear_helper.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_TYPE, GaminggearMacroEditorRecordOptionsFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_TYPE))
@@ -27,14 +28,14 @@ typedef struct _AbsoluteKeystroke AbsoluteKeystroke;
 
 struct _GaminggearMacroEditorRecordOptionsFrameClass {
 	GtkFrameClass parent_class;
-	void (*started)(GaminggearMacroEditorRecordOptionsFrame *record_options_frame);
-	void (*paste)(GaminggearMacroEditorRecordOptionsFrame *record_options_frame);
 };
 
 struct _GaminggearMacroEditorRecordOptionsFramePrivate {
 	GtkToggleButton *record_button;
-	GtkToggleButton *delay_button;
 	GtkButton *paste_button;
+	GtkSpinButton *delay_value;
+	GtkRadioButton *delay_as_recorded;
+	GtkRadioButton *delay_fixed;
 };
 
 G_DEFINE_TYPE(GaminggearMacroEditorRecordOptionsFrame, gaminggear_macro_editor_record_options_frame, GTK_TYPE_FRAME);
@@ -78,34 +79,55 @@ static void paste_button_clicked_cb(GtkButton *button, gpointer user_data) {
 
 static void gaminggear_macro_editor_record_options_frame_init(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
 	GaminggearMacroEditorRecordOptionsFramePrivate *priv = GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_GET_PRIVATE(record_options_frame);
-	GtkWidget *vbox;
+	GtkWidget *vbox1;
+	GtkWidget *vbox2;
+	GtkWidget *hbox;
+	GtkWidget *delay_frame;
 
 	record_options_frame->priv = priv;
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_add(GTK_CONTAINER(record_options_frame), vbox);
+	vbox1 = gtk_vbox_new(FALSE, 0);
+	vbox2 = gtk_vbox_new(FALSE, 0);
+	hbox = gtk_hbox_new(FALSE, 0);
+	delay_frame = gtk_frame_new("Delay");
 
 	priv->record_button = GTK_TOGGLE_BUTTON(gtk_toggle_button_new_with_label("Record"));
 	g_object_ref_sink(priv->record_button);
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(priv->record_button), FALSE, FALSE, 0);
-	g_signal_connect(G_OBJECT(priv->record_button), "clicked", G_CALLBACK(record_button_clicked_cb), record_options_frame);
-
-	priv->delay_button = GTK_TOGGLE_BUTTON(gtk_check_button_new_with_label("Record delays"));
-	g_object_ref_sink(priv->delay_button);
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(priv->delay_button), FALSE, FALSE, 0);
-
 	priv->paste_button = GTK_BUTTON(gtk_button_new_with_label("Paste"));
 	g_object_ref_sink(priv->paste_button);
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(priv->paste_button), FALSE, FALSE, 10);
+	priv->delay_as_recorded = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label(NULL, "As recorded"));
+	g_object_ref_sink(priv->delay_as_recorded);
+	priv->delay_fixed = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(priv->delay_as_recorded, "Fixed"));
+	g_object_ref_sink(priv->delay_fixed);
+	priv->delay_value = GTK_SPIN_BUTTON(gtk_spin_button_new_with_range(0, G_GAMINGGEAR_MSEC_PER_SEC, 1));
+	g_object_ref_sink(priv->delay_value);
+
+	g_signal_connect(G_OBJECT(priv->record_button), "clicked", G_CALLBACK(record_button_clicked_cb), record_options_frame);
 	g_signal_connect(G_OBJECT(priv->paste_button), "clicked", G_CALLBACK(paste_button_clicked_cb), record_options_frame);
 
-	gtk_widget_show_all(GTK_WIDGET(vbox));
+	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(priv->delay_fixed), FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(priv->delay_value), FALSE, FALSE, 0);
+
+	gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(priv->delay_as_recorded), FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox2), hbox, FALSE, FALSE, 0);
+
+	gtk_container_add(GTK_CONTAINER(delay_frame), vbox2);
+
+	gtk_box_pack_start(GTK_BOX(vbox1), GTK_WIDGET(priv->record_button), FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox1), GTK_WIDGET(priv->paste_button), FALSE, FALSE, 10);
+	gtk_box_pack_start(GTK_BOX(vbox1), delay_frame, FALSE, FALSE, 0);
+
+	gtk_container_add(GTK_CONTAINER(record_options_frame), vbox1);
+
+	gtk_widget_show_all(GTK_WIDGET(vbox1));
 }
 
 static void gaminggear_macro_editor_record_options_frame_finalize(GObject *object) {
 	GaminggearMacroEditorRecordOptionsFramePrivate *priv = GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME(object)->priv;
 	g_object_unref(priv->record_button);
-	g_object_unref(priv->delay_button);
+	g_object_unref(priv->delay_value);
+	g_object_unref(priv->delay_as_recorded);
+	g_object_unref(priv->delay_fixed);
 	G_OBJECT_CLASS(gaminggear_macro_editor_record_options_frame_parent_class)->finalize(object);
 }
 
@@ -121,18 +143,20 @@ static void gaminggear_macro_editor_record_options_frame_class_init(GaminggearMa
 	signals[STARTED] = g_signal_new("started",
 			G_TYPE_FROM_CLASS(klass),
 			G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-			G_STRUCT_OFFSET(GaminggearMacroEditorRecordOptionsFrameClass, started),
-			NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+			0, NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
 	signals[PASTE] = g_signal_new("paste",
 			G_TYPE_FROM_CLASS(klass),
 			G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-			G_STRUCT_OFFSET(GaminggearMacroEditorRecordOptionsFrameClass, paste),
-			NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+			0, NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
-gboolean gaminggear_macro_editor_record_options_frame_should_record_delays(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
-	return gtk_toggle_button_get_active(record_options_frame->priv->delay_button);
+gboolean gaminggear_macro_editor_record_options_frame_delay_as_recorded(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
+	return gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(record_options_frame->priv->delay_as_recorded));
+}
+
+guint gaminggear_macro_editor_record_options_frame_get_delay(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
+	return (guint)gtk_spin_button_get_value(record_options_frame->priv->delay_value);
 }
 
 gboolean gaminggear_macro_editor_record_options_frame_is_record_on(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
