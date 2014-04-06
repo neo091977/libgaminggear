@@ -77,6 +77,11 @@ static void paste_button_clicked_cb(GtkButton *button, gpointer user_data) {
 	paste(record_options_frame);
 }
 
+static void delay_value_changed_cb(GtkSpinButton *spin, gpointer user_data) {
+	GaminggearMacroEditorRecordOptionsFrame *record_options_frame = GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME(user_data);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(record_options_frame->priv->delay_fixed), TRUE);
+}
+
 static void gaminggear_macro_editor_record_options_frame_init(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
 	GaminggearMacroEditorRecordOptionsFramePrivate *priv = GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_GET_PRIVATE(record_options_frame);
 	GtkWidget *vbox1;
@@ -104,6 +109,7 @@ static void gaminggear_macro_editor_record_options_frame_init(GaminggearMacroEdi
 
 	g_signal_connect(G_OBJECT(priv->record_button), "clicked", G_CALLBACK(record_button_clicked_cb), record_options_frame);
 	g_signal_connect(G_OBJECT(priv->paste_button), "clicked", G_CALLBACK(paste_button_clicked_cb), record_options_frame);
+	g_signal_connect(G_OBJECT(priv->delay_value), "value-changed", G_CALLBACK(delay_value_changed_cb), record_options_frame);
 
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(priv->delay_fixed), FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(priv->delay_value), FALSE, FALSE, 0);
