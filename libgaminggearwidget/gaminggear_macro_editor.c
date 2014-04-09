@@ -51,7 +51,6 @@ struct _GaminggearMacroEditorPrivate {
 	GtkButton *save_button;
 	GtkTreeRowReference *reference;
 	struct timespec record_last_event_time;
-	glong record_abs_time;
 	gboolean edited_modified;
 	gboolean modified;
 };
@@ -184,7 +183,6 @@ static void save_button_clicked_cb(GtkButton *button, gpointer user_data) {
 static void record_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *frame, gpointer user_data) {
 	GaminggearMacroEditorPrivate *priv = GAMINGGEAR_MACRO_EDITOR(user_data)->priv;
 
-	priv->record_abs_time = gaminggear_macro_editor_key_sequence_frame_abs_time(priv->key_sequence_frame);
 	clock_gettime(CLOCK_REALTIME, &priv->record_last_event_time);
 }
 
@@ -213,7 +211,6 @@ static void paste_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *fra
 	GdkKeymapKey *key;
 	gint n_keys;
 	GdkKeymap *keymap;
-	glong abs_time;
 	glong rel_time;
 
 	clipboard = gtk_clipboard_get_for_display(gdk_display_get_default(), GDK_SELECTION_PRIMARY);
@@ -222,7 +219,6 @@ static void paste_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *fra
 		iter = text;
 
 		keymap = gdk_keymap_get_default();
-		abs_time = gaminggear_macro_editor_key_sequence_frame_abs_time(priv->key_sequence_frame);
 		if (gaminggear_macro_editor_record_options_frame_delay_as_recorded(frame))
 			rel_time = 0;
 		else
@@ -246,38 +242,32 @@ static void paste_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *fra
 
 			if (key->level != 1 && shift) {
 				gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
-						HID_UID_KB_LEFT_SHIFT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, abs_time, rel_time);
+						HID_UID_KB_LEFT_SHIFT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, rel_time);
 				shift = FALSE;
-				abs_time += rel_time;
 			}
 
 			if (key->level != 2 && alt) {
 				gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
-						HID_UID_KB_RIGHT_ALT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, abs_time, rel_time);
+						HID_UID_KB_RIGHT_ALT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, rel_time);
 				alt = FALSE;
-				abs_time += rel_time;
 			}
 
 			if (key->level == 1 && !shift) {
 				gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
-						HID_UID_KB_LEFT_SHIFT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS, abs_time, rel_time);
+						HID_UID_KB_LEFT_SHIFT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS, rel_time);
 				shift = TRUE;
-				abs_time += rel_time;
 			}
 
 			if (key->level == 2 && !alt) {
 				gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
-						HID_UID_KB_RIGHT_ALT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS, abs_time, rel_time);
+						HID_UID_KB_RIGHT_ALT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS, rel_time);
 				alt = TRUE;
-				abs_time += rel_time;
 			}
 
 			gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
-					gaminggear_xkeycode_to_hid(key->keycode), GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS, abs_time, rel_time);
-			abs_time += rel_time;
+					gaminggear_xkeycode_to_hid(key->keycode), GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS, rel_time);
 			gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
-					gaminggear_xkeycode_to_hid(key->keycode), GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, abs_time, rel_time);
-			abs_time += rel_time;
+					gaminggear_xkeycode_to_hid(key->keycode), GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, rel_time);
 
 			g_free(keys);
 
@@ -286,14 +276,12 @@ static void paste_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *fra
 
 		if (shift) {
 			gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
-					HID_UID_KB_LEFT_SHIFT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, abs_time, rel_time);
-			abs_time += rel_time;
+					HID_UID_KB_LEFT_SHIFT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, rel_time);
 		}
 
 		if (alt) {
 			gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
-					HID_UID_KB_RIGHT_ALT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, abs_time, rel_time);
-			abs_time += rel_time;
+					HID_UID_KB_RIGHT_ALT, GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, rel_time);
 		}
 
 		g_free(text);
@@ -342,26 +330,20 @@ static gboolean key_event_cb(GtkWindow *window, GdkEventKey *event, gpointer use
 	if (is_autorepeat_event(event))
 		return TRUE;
 
+	/* always keep record_last_event_time up to date, so user can switch
+	 * record options while recording
+	 */
 	clock_gettime(CLOCK_REALTIME, &actual_time);
-
-	/* Initial waiting time is not supported */
-	if (gaminggear_macro_editor_key_sequence_frame_empty(priv->key_sequence_frame)) {
-		rel_time = 0L;
-	} else {
-		if (gaminggear_macro_editor_record_options_frame_delay_as_recorded(priv->record_options_frame))
-			rel_time = time_diff(&actual_time, &priv->record_last_event_time);
-		else
-			rel_time = gaminggear_macro_editor_record_options_frame_get_delay(priv->record_options_frame);
-	}
-
-	priv->record_abs_time += rel_time;
+	if (gaminggear_macro_editor_record_options_frame_delay_as_recorded(priv->record_options_frame))
+		rel_time = time_diff(&actual_time, &priv->record_last_event_time);
+	else
+		rel_time = gaminggear_macro_editor_record_options_frame_get_delay(priv->record_options_frame);
+	priv->record_last_event_time = actual_time;
 
 	action = (event->type == GDK_KEY_PRESS) ? GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS : GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE;
 
 	gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
-			gaminggear_xkeycode_to_hid(event->hardware_keycode), action, priv->record_abs_time, rel_time);
-
-	priv->record_last_event_time = actual_time;
+			gaminggear_xkeycode_to_hid(event->hardware_keycode), action, rel_time);
 
 	return TRUE;
 }

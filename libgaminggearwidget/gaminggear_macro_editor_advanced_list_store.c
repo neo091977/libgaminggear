@@ -40,6 +40,7 @@ struct _GaminggearMacroEditorAdvancedListStoreClass {
 
 struct _GaminggearMacroEditorAdvancedListStorePrivate {
 	gboolean modified;
+	glong abs_time;
 };
 
 G_DEFINE_TYPE(GaminggearMacroEditorAdvancedListStore, gaminggear_macro_editor_advanced_list_store, GTK_TYPE_LIST_STORE);
@@ -127,6 +128,7 @@ static void gaminggear_macro_editor_advanced_list_store_init(GaminggearMacroEdit
 	macro_editor_advanced_list_store->priv = priv;
 
 	priv->modified = FALSE;
+	priv->abs_time = 0L;
 }
 
 static void gaminggear_macro_editor_advanced_list_store_finalize(GObject *object) {
@@ -375,15 +377,6 @@ static gdouble get_max(GaminggearMacroEditorAdvancedListStore *macro_editor_adva
 	return value;
 }
 
-static gdouble get_upper(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, GtkTreeIter *iter) {
-	GtkWidget *dscale;
-	gdouble value;
-	dscale = gaminggear_macro_editor_advanced_list_store_get_scale_widget(macro_editor_advanced_list_store, iter);
-	value = gaminggear_dscale_get_upper(GAMINGGEAR_DSCALE(dscale));
-	g_object_unref(dscale);
-	return value;
-}
-
 static gboolean find_backwards(GaminggearMacroEditorAdvancedListStore *store, GtkTreeIter *iter, guint key) {
 	guint other_key;
 	GtkTreeIter temp_iter;
@@ -402,13 +395,10 @@ static gboolean find_backwards(GaminggearMacroEditorAdvancedListStore *store, Gt
 	return FALSE;
 }
 
-void gaminggear_macro_editor_advanced_list_store_add_keystroke(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, guint key, guint action, glong abs_time) {
-	gdouble seconds;
+static void add_single_action(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, guint key, guint action, gdouble seconds) {
 	GtkTreeIter press_iter;
 	GtkTreeIter iter;
 	gboolean iter_is_valid;
-
-	seconds = msec_to_sec(abs_time);
 
 	if (action == GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS)
 		add_press(macro_editor_advanced_list_store, &iter, key, action, seconds);
@@ -420,6 +410,18 @@ void gaminggear_macro_editor_advanced_list_store_add_keystroke(GaminggearMacroEd
 			g_warning("no up for %x", key);
 	}
 
+}
+
+static void add_wait(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, glong rel_time) {
+	/* initial waiting time is not supported */
+	if (!gaminggear_macro_editor_advanced_list_store_empty(macro_editor_advanced_list_store))
+		macro_editor_advanced_list_store->priv->abs_time += rel_time;
+}
+
+void gaminggear_macro_editor_advanced_list_store_add_keystroke(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, guint key, guint action, glong rel_time) {
+	GaminggearMacroEditorAdvancedListStorePrivate *priv = macro_editor_advanced_list_store->priv;
+	add_wait(macro_editor_advanced_list_store, rel_time);
+	add_single_action(macro_editor_advanced_list_store, key, action, msec_to_sec(priv->abs_time));
 }
 
 GtkWidget *gaminggear_macro_editor_advanced_list_store_get_label_widget(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, GtkTreeIter *iter) {
@@ -452,23 +454,6 @@ GtkWidget *gaminggear_macro_editor_advanced_list_store_get_scale_widget(Gamingge
 			GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_SCALE_COLUMN, &widget,
 			-1);
 	return widget;
-}
-
-glong gaminggear_macro_editor_advanced_list_store_get_abs_time(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store) {
-	gdouble upper = 0.0;
-	gdouble value;
-	GtkTreeIter iter;
-
-	if (!gtk_tree_model_get_iter_first(GTK_TREE_MODEL(macro_editor_advanced_list_store), &iter))
-		return 0.0;
-
-	do {
-		value = get_upper(macro_editor_advanced_list_store, &iter);
-		if (value > upper)
-			upper = value;
-	} while (gtk_tree_model_iter_next(GTK_TREE_MODEL(macro_editor_advanced_list_store), &iter));
-
-	return sec_to_msec(upper);
 }
 
 gdouble gaminggear_macro_editor_advanced_list_store_get_all_max(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store) {
@@ -602,19 +587,18 @@ static void equalize_max_time(GaminggearMacroEditorAdvancedListStore *macro_edit
 }
 
 void gaminggear_macro_editor_advanced_list_store_set_keystrokes(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, GaminggearMacroKeystrokes const *macro_keystrokes) {
+	GaminggearMacroEditorAdvancedListStorePrivate *priv = macro_editor_advanced_list_store->priv;
 	GaminggearMacroKeystroke const *keystroke;
 	guint i;
 	guint count;
-	glong abs_time;
 
 	gaminggear_macro_editor_advanced_list_store_clear(macro_editor_advanced_list_store);
 
 	count = gaminggear_macro_keystrokes_get_count(macro_keystrokes);
-	abs_time = 0;
 	for (i = 0; i < count; ++i) {
 		keystroke = &macro_keystrokes->keystrokes[i];
-		gaminggear_macro_editor_advanced_list_store_add_keystroke(macro_editor_advanced_list_store, keystroke->key, keystroke->action, abs_time);
-		abs_time += gaminggear_macro_keystroke_get_period(keystroke);
+		add_single_action(macro_editor_advanced_list_store, keystroke->key, keystroke->action, msec_to_sec(priv->abs_time));
+		add_wait(macro_editor_advanced_list_store, gaminggear_macro_keystroke_get_period(keystroke));
 	}
 
 	equalize_max_time(macro_editor_advanced_list_store);
@@ -626,7 +610,9 @@ void gaminggear_macro_editor_advanced_list_store_clear(GaminggearMacroEditorAdva
 	was_empty = gaminggear_macro_editor_advanced_list_store_empty(macro_editor_advanced_list_store);
 
 	gtk_list_store_clear(GTK_LIST_STORE(macro_editor_advanced_list_store));
+	macro_editor_advanced_list_store->priv->abs_time = 0L;
 	modified(macro_editor_advanced_list_store);
+
 	if (!was_empty)
 		empty_changed(macro_editor_advanced_list_store);
 }

@@ -59,13 +59,9 @@ static gboolean gaminggear_macro_editor_basic_empty(GaminggearMacroEditorInterfa
 	return gaminggear_macro_editor_basic_list_store_empty(priv->list_store);
 }
 
-static void gaminggear_macro_editor_basic_add_keystroke(GaminggearMacroEditorInterface *self, guint key, guint action, glong abs_time, glong rel_time) {
+static void gaminggear_macro_editor_basic_add_keystroke(GaminggearMacroEditorInterface *self, guint key, guint action, glong rel_time) {
 	GaminggearMacroEditorBasicPrivate *priv = GAMINGGEAR_MACRO_EDITOR_BASIC(self)->priv;
 	gaminggear_macro_editor_basic_tree_view_add_keystroke(priv->tree_view, key, action, rel_time);
-}
-
-static glong gaminggear_macro_editor_basic_abs_time(GaminggearMacroEditorInterface *self) {
-	return gaminggear_macro_editor_basic_list_store_get_abs_time(GAMINGGEAR_MACRO_EDITOR_BASIC(self)->priv->list_store);
 }
 
 static gboolean gaminggear_macro_editor_basic_get_modified(GaminggearMacroEditorInterface *self) {
@@ -85,7 +81,6 @@ static void gaminggear_macro_editor_basic_interface_init(GaminggearMacroEditorIn
 	iface->clear = gaminggear_macro_editor_basic_clear;
 	iface->empty = gaminggear_macro_editor_basic_empty;
 	iface->add_keystroke = gaminggear_macro_editor_basic_add_keystroke;
-	iface->abs_time = gaminggear_macro_editor_basic_abs_time;
 	iface->get_modified = gaminggear_macro_editor_basic_get_modified;
 	iface->set_modified = gaminggear_macro_editor_basic_set_modified;
 }

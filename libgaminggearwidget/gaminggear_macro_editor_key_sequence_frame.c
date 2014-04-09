@@ -271,8 +271,8 @@ GaminggearMacroKeystrokes *gaminggear_macro_editor_key_sequence_frame_get_keystr
 	return gaminggear_macro_editor_interface_get_keystrokes(key_sequence_frame->priv->active_view);
 }
 
-void gaminggear_macro_editor_key_sequence_frame_add_keystroke(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame, guint key, guint action, glong abs_time, glong rel_time) {
-	gaminggear_macro_editor_interface_add_keystroke(key_sequence_frame->priv->active_view, key, action, abs_time, rel_time);
+void gaminggear_macro_editor_key_sequence_frame_add_keystroke(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame, guint key, guint action, glong rel_time) {
+	gaminggear_macro_editor_interface_add_keystroke(key_sequence_frame->priv->active_view, key, action, rel_time);
 }
 
 void gaminggear_macro_editor_key_sequence_frame_clear(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame) {
@@ -280,10 +280,6 @@ void gaminggear_macro_editor_key_sequence_frame_clear(GaminggearMacroEditorKeySe
 
 	for (i = 0; i < NUM_VIEWS; ++i)
 		gaminggear_macro_editor_interface_clear(key_sequence_frame->priv->views[i]);
-}
-
-glong gaminggear_macro_editor_key_sequence_frame_abs_time(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame) {
-	return gaminggear_macro_editor_interface_abs_time(key_sequence_frame->priv->active_view);
 }
 
 gboolean gaminggear_macro_editor_key_sequence_frame_empty(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame) {

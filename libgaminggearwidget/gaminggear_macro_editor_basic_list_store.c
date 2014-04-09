@@ -259,32 +259,6 @@ void gaminggear_macro_editor_basic_list_store_set_keystrokes(GaminggearMacroEdit
 		gaminggear_macro_editor_basic_list_store_insert_gaminggear_macro_keystroke_before(macro_editor_basic_list_store, NULL, &keystrokes->keystrokes[i]);
 }
 
-glong gaminggear_macro_editor_basic_list_store_get_abs_time(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store) {
-	GtkTreeModel *model;
-	GtkTreeIter iter;
-	glong result;
-	gboolean is_delay;
-	guint period;
-
-	result = 0L;
-	model = GTK_TREE_MODEL(macro_editor_basic_list_store);
-	if (!gtk_tree_model_get_iter_first(model, &iter))
-		return result;
-
-	do {
-		gtk_tree_model_get(model, &iter,
-				GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_IS_NOT_KEY_COLUMN, &is_delay,
-				GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_PERIOD_COLUMN, &period,
-				-1);
-
-		if (is_delay)
-			result += (glong)period;
-
-	} while (gtk_tree_model_iter_next(model, &iter));
-
-	return result;
-}
-
 GaminggearMacroKeystrokes *gaminggear_macro_editor_basic_list_store_get_keystrokes(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store) {
 	GtkTreeModel *model;
 	GtkTreeIter iter;

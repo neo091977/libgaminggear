@@ -50,16 +50,13 @@ struct _GaminggearMacroEditorInterfaceInterface {
 
 	/*
 	 * times are in milliseconds
-	 * abs_time is absolute time the event takes place
 	 * rel_time is relative time from last element to this
 	 */
-	void (*add_keystroke)(GaminggearMacroEditorInterface *self, guint key, guint action, glong abs_time, glong rel_time);
+	void (*add_keystroke)(GaminggearMacroEditorInterface *self, guint key, guint action, glong rel_time);
 
 	void (*set_keystrokes)(GaminggearMacroEditorInterface *self, GaminggearMacroKeystrokes const *keystrokes);
 
 	GaminggearMacroKeystrokes *(*get_keystrokes)(GaminggearMacroEditorInterface *self);
-
-	glong (*abs_time)(GaminggearMacroEditorInterface *self);
 
 	gboolean (*get_modified)(GaminggearMacroEditorInterface *self);
 	void (*set_modified)(GaminggearMacroEditorInterface *self, gboolean new_state);
@@ -72,8 +69,7 @@ void gaminggear_macro_editor_interface_set_keystrokes(GaminggearMacroEditorInter
 GaminggearMacroKeystrokes *gaminggear_macro_editor_interface_get_keystrokes(GaminggearMacroEditorInterface *self);
 void gaminggear_macro_editor_interface_clear(GaminggearMacroEditorInterface *self);
 gboolean gaminggear_macro_editor_interface_empty(GaminggearMacroEditorInterface *self);
-void gaminggear_macro_editor_interface_add_keystroke(GaminggearMacroEditorInterface *self, guint key, guint action, glong abs_time, glong rel_time);
-glong gaminggear_macro_editor_interface_abs_time(GaminggearMacroEditorInterface *self);
+void gaminggear_macro_editor_interface_add_keystroke(GaminggearMacroEditorInterface *self, guint key, guint action, glong rel_time);
 gboolean gaminggear_macro_editor_interface_get_modified(GaminggearMacroEditorInterface *self);
 void gaminggear_macro_editor_interface_set_modified(GaminggearMacroEditorInterface *self, gboolean new_state);
 

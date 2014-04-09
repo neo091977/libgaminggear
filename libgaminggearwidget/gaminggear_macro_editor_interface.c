@@ -45,12 +45,8 @@ gboolean gaminggear_macro_editor_interface_empty(GaminggearMacroEditorInterface 
 	return GAMINGGEAR_MACRO_EDITOR_INTERFACE_GET_INTERFACE(self)->empty(self);
 }
 
-void gaminggear_macro_editor_interface_add_keystroke(GaminggearMacroEditorInterface *self, guint key, guint action, glong abs_time, glong rel_time) {
-	GAMINGGEAR_MACRO_EDITOR_INTERFACE_GET_INTERFACE(self)->add_keystroke(self, key, action, abs_time, rel_time);
-}
-
-glong gaminggear_macro_editor_interface_abs_time(GaminggearMacroEditorInterface *self) {
-	return GAMINGGEAR_MACRO_EDITOR_INTERFACE_GET_INTERFACE(self)->abs_time(self);
+void gaminggear_macro_editor_interface_add_keystroke(GaminggearMacroEditorInterface *self, guint key, guint action, glong rel_time) {
+	GAMINGGEAR_MACRO_EDITOR_INTERFACE_GET_INTERFACE(self)->add_keystroke(self, key, action, rel_time);
 }
 
 gboolean gaminggear_macro_editor_interface_get_modified(GaminggearMacroEditorInterface *self) {
