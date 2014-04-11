@@ -41,7 +41,7 @@ struct _GaminggearMacroEditorRecordOptionsFramePrivate {
 G_DEFINE_TYPE(GaminggearMacroEditorRecordOptionsFrame, gaminggear_macro_editor_record_options_frame, GTK_TYPE_FRAME);
 
 enum {
-	STARTED,
+	RECORD_EVENT,
 	PASTE,
 	LAST_SIGNAL
 };
@@ -58,8 +58,8 @@ GtkWidget *gaminggear_macro_editor_record_options_frame_new(void) {
 	return GTK_WIDGET(record_options_frame);
 }
 
-static void started(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
-	g_signal_emit((gpointer)record_options_frame, signals[STARTED], 0);
+static void record_event(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
+	g_signal_emit((gpointer)record_options_frame, signals[RECORD_EVENT], 0);
 }
 
 static void paste(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
@@ -68,8 +68,7 @@ static void paste(GaminggearMacroEditorRecordOptionsFrame *record_options_frame)
 
 static void record_button_clicked_cb(GtkButton *button, gpointer user_data) {
 	GaminggearMacroEditorRecordOptionsFrame *record_options_frame = GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME(user_data);
-	if (gaminggear_macro_editor_record_options_frame_is_record_on(record_options_frame))
-		started(record_options_frame);
+	record_event(record_options_frame);
 }
 
 static void paste_button_clicked_cb(GtkButton *button, gpointer user_data) {
@@ -146,7 +145,7 @@ static void gaminggear_macro_editor_record_options_frame_class_init(GaminggearMa
 
 	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorRecordOptionsFramePrivate));
 
-	signals[STARTED] = g_signal_new("started",
+	signals[RECORD_EVENT] = g_signal_new("record-event",
 			G_TYPE_FROM_CLASS(klass),
 			G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
 			0, NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);

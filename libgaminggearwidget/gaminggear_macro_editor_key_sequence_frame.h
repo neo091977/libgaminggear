@@ -45,6 +45,7 @@ GaminggearMacroKeystrokes *gaminggear_macro_editor_key_sequence_frame_get_keystr
 void gaminggear_macro_editor_key_sequence_frame_add_keystroke(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame, guint key, guint action, glong rel_time);
 void gaminggear_macro_editor_key_sequence_frame_clear(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame);
 gboolean gaminggear_macro_editor_key_sequence_frame_empty(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame);
+void gaminggear_macro_editor_key_sequence_record_mode(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame, gboolean on);
 
 G_END_DECLS
 

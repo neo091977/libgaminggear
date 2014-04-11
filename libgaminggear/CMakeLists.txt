@@ -1,3 +1,13 @@
+ADD_CUSTOM_COMMAND(
+  OUTPUT
+    ${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.h
+    ${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.c
+  COMMAND glib-genmarshal --header --prefix=g_cclosure_gaminggear_marshal ${CMAKE_CURRENT_SOURCE_DIR}/g_gaminggear_marshaller >${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.h
+  COMMAND glib-genmarshal --body --prefix=g_cclosure_gaminggear_marshal ${CMAKE_CURRENT_SOURCE_DIR}/g_gaminggear_marshaller >${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.c
+  DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/g_gaminggear_marshaller
+)
+
 SET(SOURCES
   gaminggear_configuration.c
   gaminggear_evdev.c
@@ -14,6 +24,7 @@ SET(SOURCES
   macros_converter_roccat_kone.c
   macros_converter_roccat_valo.c
   macros_converter_roccat.c
+  ${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.c
 )
 
 IF(SQLITE3_FOUND)
