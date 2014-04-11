@@ -59,9 +59,16 @@ static gboolean gaminggear_macro_editor_advanced_empty(GaminggearMacroEditorInte
 	return gaminggear_macro_editor_advanced_list_store_empty(priv->list_store);
 }
 
+static void scrolled_window_scroll_to_end(GtkScrolledWindow *window) {
+	GtkAdjustment *adjustment;
+	adjustment = gtk_scrolled_window_get_vadjustment(window);
+	gtk_adjustment_set_value(adjustment, gtk_adjustment_get_upper(adjustment) - gtk_adjustment_get_page_size(adjustment));
+}
+
 static void gaminggear_macro_editor_advanced_add_keystroke(GaminggearMacroEditorInterface *self, guint key, guint action, glong rel_time) {
 	GaminggearMacroEditorAdvancedPrivate *priv = GAMINGGEAR_MACRO_EDITOR_ADVANCED(self)->priv;
 	gaminggear_macro_editor_advanced_list_store_add_keystroke(priv->list_store, key, action, rel_time);
+	scrolled_window_scroll_to_end(GTK_SCROLLED_WINDOW(self));
 }
 
 static gboolean gaminggear_macro_editor_advanced_get_modified(GaminggearMacroEditorInterface *self) {

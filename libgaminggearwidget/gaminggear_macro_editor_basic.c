@@ -59,9 +59,18 @@ static gboolean gaminggear_macro_editor_basic_empty(GaminggearMacroEditorInterfa
 	return gaminggear_macro_editor_basic_list_store_empty(priv->list_store);
 }
 
+/* calling this directly leads to wrong position */
+static gboolean tree_view_scroll_to_end(gpointer user_data) {
+	GtkTreeView *tree_view = GTK_TREE_VIEW(user_data);
+	GtkAdjustment *adjustment = gtk_tree_view_get_vadjustment(tree_view);
+	gtk_adjustment_set_value(adjustment, gtk_adjustment_get_upper(adjustment) - gtk_adjustment_get_page_size(adjustment));
+	return FALSE;
+}
+
 static void gaminggear_macro_editor_basic_add_keystroke(GaminggearMacroEditorInterface *self, guint key, guint action, glong rel_time) {
 	GaminggearMacroEditorBasicPrivate *priv = GAMINGGEAR_MACRO_EDITOR_BASIC(self)->priv;
 	gaminggear_macro_editor_basic_tree_view_add_keystroke(priv->tree_view, key, action, rel_time);
+	g_idle_add(tree_view_scroll_to_end, priv->tree_view);
 }
 
 static gboolean gaminggear_macro_editor_basic_get_modified(GaminggearMacroEditorInterface *self) {
