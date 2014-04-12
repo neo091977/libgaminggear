@@ -18,6 +18,7 @@
 #include "gaminggear_macro_editor_key_sequence_frame.h"
 #include "gaminggear_macro_editor_advanced.h"
 #include "gaminggear_macro_editor_basic.h"
+#include "g_cclosure_gaminggear_marshaller.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_TYPE, GaminggearMacroEditorKeySequenceFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_TYPE))
@@ -32,22 +33,24 @@ enum {
 
 struct _GaminggearMacroEditorKeySequenceFrameClass {
 	GtkFrameClass parent_class;
-	void (*modified)(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame);
 };
 
 struct _GaminggearMacroEditorKeySequenceFramePrivate {
 	GtkButton *clear_button;
 	GtkComboBox *view_combo;
 	GtkWidget *action_area;
+	GtkEventBox *event_box;
 	GaminggearMacroEditorInterface *active_view;
 	GaminggearMacroEditorInterface *views[NUM_VIEWS];
 	gulong handlers[NUM_VIEWS];
+	gboolean record;
 };
 
 G_DEFINE_TYPE(GaminggearMacroEditorKeySequenceFrame, gaminggear_macro_editor_key_sequence_frame, GTK_TYPE_FRAME);
 
 enum {
 	MODIFIED,
+	BUTTON_EVENT,
 	LAST_SIGNAL
 };
 
@@ -113,6 +116,12 @@ static void activate_view(GaminggearMacroEditorKeySequenceFrame *key_sequence_fr
 	else
 		gaminggear_macro_editor_interface_clear(priv->active_view);
 	gtk_widget_show(GTK_WIDGET(priv->active_view));
+
+	/* If user activates another view while recording, EventBox is not on top anymore.
+	 * Setting again here is not enough, above_child needs to be toggled to work.
+	 */
+	gtk_event_box_set_above_child(key_sequence_frame->priv->event_box, !priv->record);
+	gtk_event_box_set_above_child(key_sequence_frame->priv->event_box, priv->record);
 }
 
 static void block_handlers(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame) {
@@ -186,15 +195,29 @@ GtkWidget *gaminggear_macro_editor_key_sequence_frame_new(void) {
 	return GTK_WIDGET(key_sequence_frame);
 }
 
+static gboolean button_event_cb(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
+	GaminggearMacroEditorKeySequenceFrame *key_sequence_frame = GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME(user_data);
+	gboolean retval;
+	g_signal_emit((gpointer)key_sequence_frame, signals[BUTTON_EVENT], 0, event->type, event->button, &retval);
+	return retval;
+}
+
 static void gaminggear_macro_editor_key_sequence_frame_init(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame) {
 	GaminggearMacroEditorKeySequenceFramePrivate *priv = GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_GET_PRIVATE(key_sequence_frame);
 	GtkWidget *vbox;
+	GtkWidget *hbox;
 	guint i;
 
 	key_sequence_frame->priv = priv;
 
 	vbox = gtk_vbox_new(FALSE, 0);
 	priv->action_area = gtk_hbox_new(FALSE, 0);
+
+	priv->event_box = GTK_EVENT_BOX(gtk_event_box_new());
+	gtk_event_box_set_visible_window(priv->event_box, TRUE);
+	gtk_widget_add_events(GTK_WIDGET(priv->event_box), GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+
+	hbox = gtk_hbox_new(FALSE, 0);
 
 	priv->clear_button = GTK_BUTTON(gtk_button_new_with_label("Clear"));
 	g_object_ref_sink(priv->clear_button);
@@ -209,11 +232,15 @@ static void gaminggear_macro_editor_key_sequence_frame_init(GaminggearMacroEdito
 	g_object_ref_sink(priv->view_combo);
 
 	for (i = 0; i < NUM_VIEWS; ++i)
-		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(priv->views[i]), TRUE, TRUE, 0);
-	gtk_box_pack_start(GTK_BOX(vbox), priv->action_area, FALSE, FALSE, 0);
+		gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(priv->views[i]), TRUE, TRUE, 0);
+
+	gtk_container_add(GTK_CONTAINER(priv->event_box), hbox);
 
 	gtk_box_pack_start(GTK_BOX(priv->action_area), GTK_WIDGET(priv->clear_button), FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(priv->action_area), GTK_WIDGET(priv->view_combo), FALSE, FALSE, 0);
+
+	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(priv->event_box), TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), priv->action_area, FALSE, FALSE, 0);
 
 	gtk_container_add(GTK_CONTAINER(key_sequence_frame), vbox);
 
@@ -222,6 +249,8 @@ static void gaminggear_macro_editor_key_sequence_frame_init(GaminggearMacroEdito
 
 	gtk_widget_show_all(priv->action_area);
 	gtk_widget_show(vbox);
+	gtk_widget_show(GTK_WIDGET(priv->event_box));
+	gtk_widget_show(hbox);
 	activate_view(key_sequence_frame, NULL);
 
 	for (i = 0; i < NUM_VIEWS; ++i) {
@@ -230,6 +259,8 @@ static void gaminggear_macro_editor_key_sequence_frame_init(GaminggearMacroEdito
 	}
 	g_signal_connect(G_OBJECT(priv->clear_button), "clicked", G_CALLBACK(clear_button_clicked_cb), key_sequence_frame);
 	g_signal_connect(G_OBJECT(priv->view_combo), "changed", G_CALLBACK(combo_button_changed_cb), key_sequence_frame);
+	g_signal_connect(G_OBJECT(priv->event_box), "button-press-event", G_CALLBACK(button_event_cb), key_sequence_frame);
+	g_signal_connect(G_OBJECT(priv->event_box), "button-release-event", G_CALLBACK(button_event_cb), key_sequence_frame);
 }
 
 static void gaminggear_macro_editor_key_sequence_frame_finalize(GObject *object) {
@@ -257,8 +288,13 @@ static void gaminggear_macro_editor_key_sequence_frame_class_init(GaminggearMacr
 	signals[MODIFIED] = g_signal_new("modified",
 			G_TYPE_FROM_CLASS(klass),
 			G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-			G_STRUCT_OFFSET(GaminggearMacroEditorKeySequenceFrameClass, modified),
-			NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+			0, NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
+	signals[BUTTON_EVENT] = g_signal_new("button-event",
+			G_TYPE_FROM_CLASS(klass),
+			G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			0, NULL, NULL, g_cclosure_gaminggear_marshal_BOOLEAN__UINT_UINT, G_TYPE_BOOLEAN,
+			2, G_TYPE_UINT, G_TYPE_UINT);
 }
 
 void gaminggear_macro_editor_key_sequence_frame_set_keystrokes(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame, GaminggearMacroKeystrokes *keystrokes) {
@@ -288,4 +324,10 @@ gboolean gaminggear_macro_editor_key_sequence_frame_empty(GaminggearMacroEditorK
 
 GtkWidget *gaminggear_macro_editor_key_sequence_get_action_area(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame) {
 	return key_sequence_frame->priv->action_area;
+}
+
+void gaminggear_macro_editor_key_sequence_record_mode(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame, gboolean on) {
+	GaminggearMacroEditorKeySequenceFramePrivate *priv = key_sequence_frame->priv;
+	priv->record = on;
+	gtk_event_box_set_above_child(key_sequence_frame->priv->event_box, on);
 }

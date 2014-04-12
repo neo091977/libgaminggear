@@ -182,8 +182,12 @@ static void save_button_clicked_cb(GtkButton *button, gpointer user_data) {
 
 static void record_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *frame, gpointer user_data) {
 	GaminggearMacroEditorPrivate *priv = GAMINGGEAR_MACRO_EDITOR(user_data)->priv;
+	gboolean on = gaminggear_macro_editor_record_options_frame_is_record_on(priv->record_options_frame);
 
-	clock_gettime(CLOCK_REALTIME, &priv->record_last_event_time);
+	if (on)
+		clock_gettime(CLOCK_REALTIME, &priv->record_last_event_time);
+
+	gaminggear_macro_editor_key_sequence_record_mode(priv->key_sequence_frame, on);
 }
 
 static GdkKeymapKey *get_key_with_group_0(GdkKeymapKey *keys, gint n_keys) {
@@ -348,6 +352,36 @@ static gboolean key_event_cb(GtkWindow *window, GdkEventKey *event, gpointer use
 	return TRUE;
 }
 
+static gboolean button_event_cb(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame, guint action, guint button, gpointer user_data) {
+	GaminggearMacroEditor *macro_editor = GAMINGGEAR_MACRO_EDITOR(user_data);
+	GaminggearMacroEditorPrivate *priv = macro_editor->priv;
+	glong rel_time;
+	struct timespec actual_time;
+
+	if (!gaminggear_macro_editor_record_options_frame_is_record_on(priv->record_options_frame))
+		return FALSE; /* propagate */
+
+	if (action != GDK_BUTTON_PRESS && action != GDK_BUTTON_RELEASE)
+		return TRUE;
+
+	/* always keep record_last_event_time up to date, so user can switch
+	 * record options while recording
+	 */
+	clock_gettime(CLOCK_REALTIME, &actual_time);
+	if (gaminggear_macro_editor_record_options_frame_delay_as_recorded(priv->record_options_frame))
+		rel_time = time_diff(&actual_time, &priv->record_last_event_time);
+	else
+		rel_time = gaminggear_macro_editor_record_options_frame_get_delay(priv->record_options_frame);
+	priv->record_last_event_time = actual_time;
+
+	gaminggear_macro_editor_key_sequence_frame_add_keystroke(priv->key_sequence_frame,
+			button - 1 + GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT,
+			(action == GDK_BUTTON_PRESS) ? GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS : GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE,
+			rel_time);
+
+	return TRUE;
+}
+
 GtkWidget *gaminggear_macro_editor_new(void) {
 	GaminggearMacroEditor *macro_editor;
 
@@ -398,8 +432,9 @@ static void gaminggear_macro_editor_init(GaminggearMacroEditor *macro_editor) {
 	gtk_box_reorder_child(action_area, GTK_WIDGET(priv->save_button), 0);
 
 	g_signal_connect(G_OBJECT(priv->key_sequence_frame), "modified", G_CALLBACK(edited_modified_cb), macro_editor);
+	g_signal_connect(G_OBJECT(priv->key_sequence_frame), "button-event", G_CALLBACK(button_event_cb), macro_editor);
 	g_signal_connect(G_OBJECT(priv->macro_options_frame), "modified", G_CALLBACK(edited_modified_cb), macro_editor);
-	g_signal_connect(G_OBJECT(priv->record_options_frame), "started", G_CALLBACK(record_button_clicked_cb), macro_editor);
+	g_signal_connect(G_OBJECT(priv->record_options_frame), "record-event", G_CALLBACK(record_button_clicked_cb), macro_editor);
 	g_signal_connect(G_OBJECT(priv->record_options_frame), "paste", G_CALLBACK(paste_button_clicked_cb), macro_editor);
 	g_signal_connect(G_OBJECT(macro_editor), "key-press-event", G_CALLBACK(key_event_cb), macro_editor);
 	g_signal_connect(G_OBJECT(macro_editor), "key-release-event", G_CALLBACK(key_event_cb), macro_editor);

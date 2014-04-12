@@ -1,5 +1,6 @@
 INCLUDE_DIRECTORIES(
   ${CMAKE_SOURCE_DIR}/libgaminggear
+  ${CMAKE_BINARY_DIR}/libgaminggear
 )
 
 ADD_LIBRARY (libgaminggearwidget SHARED
