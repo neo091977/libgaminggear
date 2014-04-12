@@ -23,8 +23,10 @@
 
 G_BEGIN_DECLS
 
+void gaminggear_macro_editor_dialog_clear(GaminggearMacroEditorDialog *dialog);
 void gaminggear_macro_editor_dialog_add_macros(GaminggearMacroEditorDialog *dialog, GaminggearMacros *gaminggear_macros);
 GaminggearMacros *gaminggear_macro_editor_dialog_get_macros(GaminggearMacroEditorDialog *dialog);
+gboolean gaminggear_macro_editor_dialog_save_macros(GaminggearMacroEditorDialog *dialog);
 
 G_END_DECLS
 

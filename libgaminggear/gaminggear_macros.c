@@ -42,23 +42,44 @@ GaminggearMacros *gaminggear_macros_new(void) {
 	return gaminggear_macros;
 }
 
+GaminggearMacros *gaminggear_macros_load_with_path(gchar const *path, GError **error) {
+	GaminggearMacros *gaminggear_macros;
+
+	gaminggear_macros = gaminggear_macros_new();
+
+	if (!g_key_file_load_from_file(gaminggear_macros->key_file, path, G_KEY_FILE_KEEP_COMMENTS, error)) {
+		gaminggear_macros_free(gaminggear_macros);
+		return NULL;
+	}
+
+	return gaminggear_macros;
+}
+
 GaminggearMacros *gaminggear_macros_load(void) {
 	gchar *path;
 	GaminggearMacros *gaminggear_macros;
 
-	gaminggear_macros = gaminggear_macros_new();
 	path = gaminggear_macros_path();
-
 	/* file might not exist yet */
-	g_key_file_load_from_file(gaminggear_macros->key_file, path, G_KEY_FILE_KEEP_COMMENTS, NULL);
-
+	gaminggear_macros = gaminggear_macros_load_with_path(path, NULL);
 	g_free(path);
 	return gaminggear_macros;
 }
 
-gboolean gaminggear_macros_save(GaminggearMacros *gaminggear_macros, GError **error) {
-	gchar *dir, *path, *data;
+gboolean gaminggear_macros_save_with_path(gchar const *path, GaminggearMacros *gaminggear_macros, GError **error) {
+	gchar *data;
 	gsize length;
+	gboolean retval;
+
+	data = g_key_file_to_data(gaminggear_macros->key_file, &length, error);
+	retval = g_file_set_contents(path, data, length, error);
+	g_free(data);
+
+	return retval;
+}
+
+gboolean gaminggear_macros_save(GaminggearMacros *gaminggear_macros, GError **error) {
+	gchar *dir, *path;
 	gboolean retval;
 
 	dir = gaminggear_configuration_dir();
@@ -67,11 +88,7 @@ gboolean gaminggear_macros_save(GaminggearMacros *gaminggear_macros, GError **er
 	g_free(dir);
 
 	path = gaminggear_macros_path();
-	data = g_key_file_to_data(gaminggear_macros->key_file, &length, error);
-
-	retval = g_file_set_contents(path, data, length, error);
-
-	g_free(data);
+	retval = gaminggear_macros_save_with_path(path, gaminggear_macros, error);
 	g_free(path);
 
 	return retval;

@@ -30,12 +30,16 @@ typedef struct _GaminggearMacros GaminggearMacros;
  */
 GaminggearMacros *gaminggear_macros_new(void);
 
+GaminggearMacros *gaminggear_macros_load_with_path(gchar const *path, GError **error);
+
 /*!
  * \brief load macro file
  * Returns key file even if file does not exist
  * \retval key file that has to be freed with \c gaminggear_macros_free()
  */
 GaminggearMacros *gaminggear_macros_load(void);
+
+gboolean gaminggear_macros_save_with_path(gchar const *path, GaminggearMacros *gaminggear_macros, GError **error);
 
 /*!
  * \brief save macro file to disk

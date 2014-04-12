@@ -36,6 +36,10 @@ struct _GaminggearMacroEditorDialogPrivate {
 
 G_DEFINE_TYPE(GaminggearMacroEditorDialog, gaminggear_macro_editor_dialog, GTK_TYPE_DIALOG);
 
+void gaminggear_macro_editor_dialog_clear(GaminggearMacroEditorDialog *dialog) {
+	gaminggear_macro_editor_clear(dialog->priv->macro_editor);
+}
+
 void gaminggear_macro_editor_dialog_add_macros(GaminggearMacroEditorDialog *dialog, GaminggearMacros *gaminggear_macros) {
 	gaminggear_macro_editor_add_macros(dialog->priv->macro_editor, gaminggear_macros);
 }
@@ -61,7 +65,7 @@ static void gaminggear_macro_editor_dialog_load_macros(GaminggearMacroEditorDial
 	gaminggear_macros_free(gaminggear_macros);
 }
 
-static gboolean gaminggear_macro_editor_dialog_save_macros(GaminggearMacroEditorDialog *dialog) {
+gboolean gaminggear_macro_editor_dialog_save_macros(GaminggearMacroEditorDialog *dialog) {
 	GaminggearMacros *gaminggear_macros;
 	gboolean result;
 	GError *error = NULL;
