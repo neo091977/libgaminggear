@@ -20,6 +20,7 @@
 #include "gaminggear/gdk_key_translations.h"
 #include "gaminggearwidget_helper.h"
 #include "gaminggear_helper.h"
+#include "gaminggear_dialogs.h"
 #include <math.h>
 
 // TODO bookkeeping of max for speedup
@@ -591,6 +592,8 @@ void gaminggear_macro_editor_advanced_list_store_set_keystrokes(GaminggearMacroE
 	GaminggearMacroKeystroke const *keystroke;
 	guint i;
 	guint count;
+	guint final_wait;
+	gchar *text;
 
 	gaminggear_macro_editor_advanced_list_store_clear(macro_editor_advanced_list_store);
 
@@ -599,6 +602,14 @@ void gaminggear_macro_editor_advanced_list_store_set_keystrokes(GaminggearMacroE
 		keystroke = &macro_keystrokes->keystrokes[i];
 		add_single_action(macro_editor_advanced_list_store, keystroke->key, keystroke->action, msec_to_sec(priv->abs_time));
 		add_wait(macro_editor_advanced_list_store, gaminggear_macro_keystroke_get_period(keystroke));
+	}
+
+	final_wait = gaminggear_macro_keystroke_get_period(keystroke);
+	if (final_wait != 0) {
+		text = g_strdup_printf("This macro contains a final wait of %u ms", final_wait);
+		gaminggear_warning_dialog(NULL, text,
+				"Advanced view does not support final waits. Please switch to another view to add it again if needed.");
+		g_free(text);
 	}
 
 	equalize_max_time(macro_editor_advanced_list_store);
