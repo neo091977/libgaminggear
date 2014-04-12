@@ -125,9 +125,10 @@ static void insert_single_action_key_before(GaminggearMacroEditorBasicListStore 
 	GtkTreeIter iter;
 	gchar *title;
 	gchar const *icon;
+	gboolean was_empty;
 
+	was_empty = gaminggear_macro_editor_basic_list_store_empty(macro_editor_basic_list_store);
 	store = GTK_LIST_STORE(macro_editor_basic_list_store);
-
 	title = gaminggear_hid_to_keyname(key);
 	icon = (action == GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS) ? "gaminggear-press" : "gaminggear-release";
 
@@ -141,23 +142,28 @@ static void insert_single_action_key_before(GaminggearMacroEditorBasicListStore 
 			GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_ACTION_COLUMN, action,
 			-1);
 	g_free(title);
-}
 
-void gaminggear_macro_editor_basic_list_store_insert_single_action_key_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, guint key, guint action) {
-	gboolean was_empty = gaminggear_macro_editor_basic_list_store_empty(macro_editor_basic_list_store);
-	insert_single_action_key_before(macro_editor_basic_list_store, sibling, key, action);
 	gaminggear_macro_editor_basic_list_store_set_modified(macro_editor_basic_list_store, TRUE);
+
 	if (was_empty)
 		empty_changed(macro_editor_basic_list_store);
 }
 
-static gboolean is_key(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *iter) {
-	gboolean is_key;
-	gtk_tree_model_get(GTK_TREE_MODEL(macro_editor_basic_list_store), iter, GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_IS_KEY_COLUMN, &is_key, -1);
-	return is_key;
+void gaminggear_macro_editor_basic_list_store_insert_single_action_key_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, guint key, guint action) {
+	insert_single_action_key_before(macro_editor_basic_list_store, sibling, key, action);
 }
 
-static gboolean previous_is_key(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *iter) {
+static gboolean current_is_period(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *iter) {
+	gboolean is_not_key;
+
+	if (!iter)
+		return FALSE;
+
+	gtk_tree_model_get(GTK_TREE_MODEL(macro_editor_basic_list_store), iter, GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_IS_NOT_KEY_COLUMN, &is_not_key, -1);
+	return is_not_key;
+}
+
+static gboolean previous_is_period(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *iter) {
 	gboolean valid;
 	GtkTreeIter test_iter;
 
@@ -168,12 +174,24 @@ static gboolean previous_is_key(GaminggearMacroEditorBasicListStore *macro_edito
 		valid = gtk_gaminggear_tree_model_get_iter_last(GTK_TREE_MODEL(macro_editor_basic_list_store), &test_iter, NULL);
 
 	if (valid)
-		return is_key(macro_editor_basic_list_store, &test_iter);
+		return current_is_period(macro_editor_basic_list_store, &test_iter);
 	else
 		return FALSE;
 }
 
-gboolean insert_period_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, glong rel_time) {
+static gboolean is_first(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *iter) {
+	gboolean valid;
+	GtkTreeIter test_iter;
+
+	if (iter) {
+		test_iter = *iter;
+		valid = gtk_gaminggear_tree_model_get_iter_previous(GTK_TREE_MODEL(macro_editor_basic_list_store), &test_iter);
+		return !valid;
+	} else
+		return gaminggear_macro_editor_basic_list_store_empty(macro_editor_basic_list_store);
+}
+
+static gboolean insert_period_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, glong rel_time) {
 	GtkListStore *store;
 	GtkTreeIter iter;
 	gchar *title;
@@ -181,7 +199,13 @@ gboolean insert_period_before(GaminggearMacroEditorBasicListStore *macro_editor_
 	if (rel_time == 0)
 		return FALSE;
 
-	if (!previous_is_key(macro_editor_basic_list_store, sibling))
+	if (is_first(macro_editor_basic_list_store, sibling))
+		return FALSE;
+
+	if (previous_is_period(macro_editor_basic_list_store, sibling))
+		return FALSE;
+
+	if (current_is_period(macro_editor_basic_list_store, sibling))
 		return FALSE;
 
 	store = GTK_LIST_STORE(macro_editor_basic_list_store);
@@ -197,54 +221,42 @@ gboolean insert_period_before(GaminggearMacroEditorBasicListStore *macro_editor_
 			GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_PERIOD_COLUMN, rel_time,
 			-1);
 	g_free(title);
+
+	gaminggear_macro_editor_basic_list_store_set_modified(macro_editor_basic_list_store, TRUE);
+
 	return TRUE;
 }
 
 gboolean gaminggear_macro_editor_basic_list_store_insert_period_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, glong rel_time) {
-	gboolean retval;
-
-	retval = insert_period_before(macro_editor_basic_list_store, sibling, rel_time);
-	if (retval)
-		gaminggear_macro_editor_basic_list_store_set_modified(macro_editor_basic_list_store, TRUE);
-
-	return retval;
+	return insert_period_before(macro_editor_basic_list_store, sibling, rel_time);
 }
 
 void gaminggear_macro_editor_basic_list_store_insert_keystroke_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, guint key, guint action, glong rel_time) {
-	gboolean was_empty = gaminggear_macro_editor_basic_list_store_empty(macro_editor_basic_list_store);
 	insert_period_before(macro_editor_basic_list_store, sibling, rel_time);
 	insert_single_action_key_before(macro_editor_basic_list_store, sibling, key, action);
-	gaminggear_macro_editor_basic_list_store_set_modified(macro_editor_basic_list_store, TRUE);
-	if (was_empty)
-		empty_changed(macro_editor_basic_list_store);
 }
 
 static void gaminggear_macro_editor_basic_list_store_insert_gaminggear_macro_keystroke_before(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *sibling, GaminggearMacroKeystroke const *keystroke) {
-	gboolean was_empty = gaminggear_macro_editor_basic_list_store_empty(macro_editor_basic_list_store);
 	insert_single_action_key_before(macro_editor_basic_list_store, sibling, keystroke->key, keystroke->action);
 	/* period stored in keystroke is waiting time to next event */
 	insert_period_before(macro_editor_basic_list_store, sibling, gaminggear_macro_keystroke_get_period(keystroke));
-	gaminggear_macro_editor_basic_list_store_set_modified(macro_editor_basic_list_store, TRUE);
-	if (was_empty)
-		empty_changed(macro_editor_basic_list_store);
 }
 
 gboolean gaminggear_macro_editor_basic_list_store_remove(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store, GtkTreeIter *iter) {
 	gboolean result;
-	gboolean is_key;
-	gboolean was_empty = gaminggear_macro_editor_basic_list_store_empty(macro_editor_basic_list_store);
 
 	result = gtk_list_store_remove(GTK_LIST_STORE(macro_editor_basic_list_store), iter);
 	if (result) {
 		/* iter points now to following element
 		 * remove it if its a period */
-		gtk_tree_model_get(GTK_TREE_MODEL(macro_editor_basic_list_store), iter, GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_IS_KEY_COLUMN, &is_key, -1);
-		if (!is_key)
+		if (current_is_period(macro_editor_basic_list_store, iter))
 			gtk_list_store_remove(GTK_LIST_STORE(macro_editor_basic_list_store), iter);
 	}
+
 	gaminggear_macro_editor_basic_list_store_set_modified(macro_editor_basic_list_store, TRUE);
-	if (!was_empty)
+	if (gaminggear_macro_editor_basic_list_store_empty(macro_editor_basic_list_store))
 		empty_changed(macro_editor_basic_list_store);
+
 	return result;
 }
 
