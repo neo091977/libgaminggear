@@ -27,10 +27,14 @@ SET(SOURCES
   ${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.c
 )
 
+SET(LIBRARIES
+  ${USB1_LIBRARIES}
+  ${GLIB2_LIBRARIES}
+)
+
 IF(SQLITE3_FOUND)
-  SET(SOURCES ${SOURCES}
-    macros_converter_steelseries_engine3.c
-  )
+  SET(SOURCES ${SOURCES} macros_converter_steelseries_engine3.c)
+  SET(LIBRARIES ${LIBRARIES} ${SQLITE3_LIBRARIES})
 ENDIF(SQLITE3_FOUND)
 
 ADD_LIBRARY (libgaminggear SHARED ${SOURCES})
@@ -39,11 +43,7 @@ ADD_DEPENDENCIES(libgaminggear
   generated_headers
 )
 
-TARGET_LINK_LIBRARIES(libgaminggear
-  ${USB1_LIBRARIES}
-  ${GLIB2_LIBRARIES}
-  ${SQLITE3_LIBRARIES}
-)
+TARGET_LINK_LIBRARIES(libgaminggear ${LIBRARIES})
 
 SET_TARGET_PROPERTIES(libgaminggear
   PROPERTIES
