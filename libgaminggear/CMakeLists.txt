@@ -1,0 +1,56 @@
+ADD_CUSTOM_COMMAND(
+  OUTPUT
+    ${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.h
+    ${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.c
+  COMMAND glib-genmarshal --header --prefix=g_cclosure_gaminggear_marshal ${CMAKE_CURRENT_SOURCE_DIR}/g_gaminggear_marshaller >${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.h
+  COMMAND glib-genmarshal --body --prefix=g_cclosure_gaminggear_marshal ${CMAKE_CURRENT_SOURCE_DIR}/g_gaminggear_marshaller >${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.c
+  DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/g_gaminggear_marshaller
+)
+
+SET(SOURCES
+  gaminggear_configuration.c
+  gaminggear_evdev.c
+  gaminggear_helper.c
+  gaminggear_key_file.c
+  gaminggear_key_translations.c
+  gaminggear_libusb.c
+  gaminggear_macro_keystrokes.c
+  gaminggear_macro_thread.c
+  gaminggear_macro_threads.c
+  gaminggear_macro.c
+  gaminggear_macros.c
+  macros_converter_roccat_arvo.c
+  macros_converter_roccat_kone.c
+  macros_converter_roccat_valo.c
+  macros_converter_roccat.c
+  ${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.c
+)
+
+SET(LIBRARIES
+  ${USB1_LIBRARIES}
+  ${GLIB2_LIBRARIES}
+)
+
+IF(SQLITE3_FOUND)
+  SET(SOURCES ${SOURCES} macros_converter_steelseries_engine3.c)
+  SET(LIBRARIES ${LIBRARIES} ${SQLITE3_LIBRARIES})
+ENDIF(SQLITE3_FOUND)
+
+ADD_LIBRARY (libgaminggear SHARED ${SOURCES})
+
+ADD_DEPENDENCIES(libgaminggear
+  generated_headers
+)
+
+TARGET_LINK_LIBRARIES(libgaminggear ${LIBRARIES})
+
+SET_TARGET_PROPERTIES(libgaminggear
+  PROPERTIES
+    VERSION ${V_MAJOR}.${V_MINOR}.${V_MICRO}
+    SOVERSION ${V_MAJOR}
+    OUTPUT_NAME gaminggear
+    COMPILE_FLAGS "-DG_LOG_DOMAIN=\\\"GamingGear\\\""
+)
+
+INSTALL(TARGETS libgaminggear DESTINATION ${INSTALL_LIBDIR}/gaminggear-${V_MAJOR})
