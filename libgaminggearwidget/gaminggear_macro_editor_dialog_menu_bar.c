@@ -248,7 +248,7 @@ static void show_save_as_cb(GtkMenuItem *item, gpointer user_data) {
 
 	config = gaminggear_configuration_load();
 
-	dialog = gtk_file_chooser_dialog_new("Export macros",
+	dialog = gtk_file_chooser_dialog_new("Save gaminggear macros as",
 			GTK_WINDOW(parent),
 			GTK_FILE_CHOOSER_ACTION_SAVE,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

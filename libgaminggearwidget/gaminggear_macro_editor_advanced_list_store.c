@@ -589,7 +589,7 @@ static void equalize_max_time(GaminggearMacroEditorAdvancedListStore *macro_edit
 
 void gaminggear_macro_editor_advanced_list_store_set_keystrokes(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, GaminggearMacroKeystrokes const *macro_keystrokes) {
 	GaminggearMacroEditorAdvancedListStorePrivate *priv = macro_editor_advanced_list_store->priv;
-	GaminggearMacroKeystroke const *keystroke;
+	GaminggearMacroKeystroke const *keystroke = NULL;
 	guint i;
 	guint count;
 	guint final_wait;
@@ -604,12 +604,14 @@ void gaminggear_macro_editor_advanced_list_store_set_keystrokes(GaminggearMacroE
 		add_wait(macro_editor_advanced_list_store, gaminggear_macro_keystroke_get_period(keystroke));
 	}
 
-	final_wait = gaminggear_macro_keystroke_get_period(keystroke);
-	if (final_wait != 0) {
-		text = g_strdup_printf("This macro contains a final wait of %u ms", final_wait);
-		gaminggear_warning_dialog(NULL, text,
-				"Advanced view does not support final waits. Please switch to another view to add it again if needed.");
-		g_free(text);
+	if (keystroke) {
+		final_wait = gaminggear_macro_keystroke_get_period(keystroke);
+		if (final_wait != 0) {
+			text = g_strdup_printf("This macro contains a final wait of %u ms", final_wait);
+			gaminggear_warning_dialog(NULL, text,
+					"Advanced view does not support final waits. Please switch to another view to add it again if needed.");
+			g_free(text);
+		}
 	}
 
 	equalize_max_time(macro_editor_advanced_list_store);

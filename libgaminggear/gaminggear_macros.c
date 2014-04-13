@@ -63,6 +63,9 @@ GaminggearMacros *gaminggear_macros_load(void) {
 	/* file might not exist yet */
 	gaminggear_macros = gaminggear_macros_load_with_path(path, NULL);
 	g_free(path);
+	if (gaminggear_macros == NULL)
+		gaminggear_macros = gaminggear_macros_new();
+
 	return gaminggear_macros;
 }
 

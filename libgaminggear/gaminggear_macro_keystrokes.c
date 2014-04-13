@@ -94,7 +94,7 @@ void gaminggear_macro_keystrokes_init(GaminggearMacroKeystrokes *keystrokes) {
 
 GaminggearMacroKeystrokes *gaminggear_macro_keystrokes_new(void) {
 	GaminggearMacroKeystrokes *keystrokes;
-	keystrokes = g_malloc(sizeof(GaminggearMacroKeystrokes));
+	keystrokes = g_malloc0(sizeof(GaminggearMacroKeystrokes));
 	gaminggear_macro_keystrokes_init(keystrokes);
 	return keystrokes;
 }
