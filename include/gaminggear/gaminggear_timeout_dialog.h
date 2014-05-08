@@ -18,6 +18,9 @@
  * along with libgaminggear. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*! \file gaminggear/gaminggear_timeout_dialog.h
+ *  \brief Dialog that views a message and issues a cancel on timeout.
+ */
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
@@ -35,8 +38,35 @@ struct _GaminggearTimeoutDialog {
 };
 
 GType gaminggear_timeout_dialog_get_type(void);
+
+/*! \brief Creates new timeout dialog.
+ *  \param parent Parent window or \c NULL.
+ *  \param title Title of dialog.
+ *  \param text Caption of dialog.
+ *  \retval widget The timeout dialog.
+ *  \since 1.0
+ */
 GtkWidget *gaminggear_timeout_dialog_new(GtkWindow *parent, gchar const *title, gchar const *text);
+
+/*! \brief Run a timeout dialog.
+ *  \param timeout_dialog A timeout dialog.
+ *  \param timeout The time in seconds.
+ *  \retval boolean \c TRUE if accepted, \c FALSE if dialog was canceled or time ran out.
+ *  \since 1.0
+ */
 gboolean gaminggear_timeout_dialog_run(GaminggearTimeoutDialog *timeout_dialog, guint timeout);
+
+/*! \brief Show a timeout dialog.
+ *
+ *  Convenience function that creates, runs and destroys a timeout dialog.
+ *
+ *  \param parent Parent window or \c NULL.
+ *  \param title Title of dialog.
+ *  \param text Caption of dialog.
+ *  \param timeout The time in seconds.
+ *  \retval boolean \c TRUE if accepted, \c FALSE if dialog was canceled or time ran out.
+ *  \since 1.0
+ */
 gboolean gaminggear_timeout_dialog(GtkWindow *parent, gchar const *title, gchar const *text, guint timeout);
 
 G_END_DECLS

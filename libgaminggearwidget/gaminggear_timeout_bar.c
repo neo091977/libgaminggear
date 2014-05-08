@@ -15,7 +15,7 @@
  * along with libgaminggear. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "gaminggear_timeout_bar.h"
+#include "gaminggear/gaminggear_timeout_bar.h"
 
 #define GAMINGGEAR_TIMEOUT_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_TIMEOUT_BAR_TYPE, GaminggearTimeoutBarClass))
 #define IS_GAMINGGEAR_TIMEOUT_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_TIMEOUT_BAR_TYPE))

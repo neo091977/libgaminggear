@@ -18,6 +18,9 @@
  * along with libgaminggear. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*! \file gaminggear/gaminggear_timeout_bar.h
+ *  \brief A progression bar counting down in an amount of seconds.
+ */
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
@@ -29,8 +32,29 @@ G_BEGIN_DECLS
 typedef struct _GaminggearTimeoutBar GaminggearTimeoutBar;
 
 GType gaminggear_timeout_bar_get_type(void);
+
+/*! \brief Creates new timeout bar.
+ *  \retval widget The timeout bar.
+ *  \since 1.0
+ */
 GtkWidget *gaminggear_timeout_bar_new(void);
+
+/*! \brief Starts a timeout bar.
+ *
+ *  The progress bar starts full and will decrease in timeout seconds to 0.0.
+ *  A "timeout" signal will be emitted if 0.0 is reached.
+ *
+ *  \param timeout_bar A timeout bar.
+ *  \param interval The update interval in milliseconds.
+ *  \param timeout The time in seconds.
+ *  \since 1.0
+ */
 void gaminggear_timeout_bar_start(GaminggearTimeoutBar *timeout_bar, guint interval, guint timeout);
+
+/*! \brief Stops a timeout bar.
+ *  \param timeout_bar A timeout bar.
+ *  \since 1.0
+ */
 void gaminggear_timeout_bar_stop(GaminggearTimeoutBar *timeout_bar);
 
 G_END_DECLS
