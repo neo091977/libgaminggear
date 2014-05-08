@@ -35,8 +35,7 @@ struct _GaminggearTimeoutBarClass {
 };
 
 struct _GaminggearTimeoutBarPrivate {
-	guint timeout; /* secs */
-	guint interval; /* msecs */
+	gdouble fraction; /* msecs */
 	guint source;
 };
 
@@ -44,11 +43,10 @@ G_DEFINE_TYPE(GaminggearTimeoutBar, gaminggear_timeout_bar, GTK_TYPE_PROGRESS_BA
 
 static gboolean update_timeout_bar(GaminggearTimeoutBar *timeout_bar) {
 	GaminggearTimeoutBarPrivate *priv = timeout_bar->priv;
-	gdouble new_value, fraction;
+	gdouble new_value;
 
-	fraction = 1.0 / priv->timeout / 1000.0 * priv->interval;
-	new_value = gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(timeout_bar)) + fraction;
-	if (new_value > (1.0 - fraction)) {
+	new_value = gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(timeout_bar)) - priv->fraction;
+	if (new_value <= 0.0) {
 		g_signal_emit_by_name((gpointer)timeout_bar, "timeout");
 		return FALSE;
 	} else {
@@ -67,8 +65,8 @@ void gaminggear_timeout_bar_start(GaminggearTimeoutBar *timeout_bar, guint inter
 	if (priv->source)
 		return;
 
-	priv->interval = interval;
-	priv->timeout = timeout;
+	priv->fraction = 1.0 / (gdouble)timeout / 1000.0 * (gdouble)interval;
+	gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(timeout_bar), 1.0);
 
 	priv->source = g_timeout_add(interval, (GSourceFunc)update_timeout_bar, timeout_bar);
 }
