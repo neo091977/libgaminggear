@@ -60,7 +60,9 @@ G_BEGIN_DECLS
 	(GAMINGEAR_MAJOR_VERSION > (major) || \
 	(GAMINGEAR_MAJOR_VERSION == (major) && GAMINGEAR_MINOR_VERSION > (minor)) || \
 	(GAMINGEAR_MAJOR_VERSION == (major) && GAMINGEAR_MINOR_VERSION == (minor) && GAMINGEAR_MICRO_VERSION >= (micro)))
- 
+
+void gaminggearwidget_init(void);
+
 G_END_DECLS
 
 #endif

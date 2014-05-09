@@ -468,8 +468,6 @@ static void gaminggear_macro_editor_class_init(GaminggearMacroEditorClass *klass
 
 	gobject_class->finalize = gaminggear_macro_editor_finalize;
 
-	gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), GAMINGGEAR_ICON_PATH);
-
 	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorPrivate));
 }
 
