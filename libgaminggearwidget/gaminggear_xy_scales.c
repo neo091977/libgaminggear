@@ -103,7 +103,7 @@ static GaminggearHScale *scale_new(gdouble min, gdouble max, gdouble step) {
 
 	scale = GAMINGGEAR_HSCALE(gaminggear_hscale_new_with_range(min, max, step));
 
-	for (i = min; i <= max; i += 1.0)
+	for (i = min; i <= max; i += step)
 		gaminggear_hscale_add_mark(scale, i, GTK_POS_BOTTOM, NULL);
 	return scale;
 }
