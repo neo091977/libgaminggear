@@ -33,3 +33,13 @@
 
   * It is strongly recommended to install everything in /usr instead of the default
     directory /usr/local.
+
+* Finishing steps
+
+  * Refresh the icon cache
+
+    Call the command
+
+    $ sudo touch --no-create /usr/share/icons/hicolor
+
+    where /usr has to be substituted with your install prefix.

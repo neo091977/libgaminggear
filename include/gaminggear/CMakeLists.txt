@@ -21,6 +21,9 @@ INSTALL(
     gaminggear_macro_dialog.h
     gaminggear_macro_editor_dialog.h
     gaminggear_text_dialog.h
+    gaminggear_timeout_bar.h
+    gaminggear_timeout_dialog.h
+    gaminggear_xy_scales.h
 	${CMAKE_CURRENT_BINARY_DIR}/gaminggear.h
     gdk_key_translations.h
     hid_uid.h

@@ -24,6 +24,7 @@
 #include <math.h>
 
 // TODO bookkeeping of max for speedup
+// FIXME recalc abs_time after some upper changed
 
 #define GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_TYPE, GaminggearMacroEditorAdvancedListStoreClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_TYPE))
@@ -262,13 +263,14 @@ static void set_label(GtkLabel *label, guint usage_id) {
 }
 
 static void add_press(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store,
-		GtkTreeIter *iter, guint key, guint action, gdouble seconds) {
+		GtkTreeIter *iter, guint key, guint action) {
 	GtkLabel *label;
 	GtkSpinButton *lower;
 	GtkSpinButton *upper;
 	GaminggearDscale *scale;
 	GtkTreeRowReference *reference;
 	gboolean was_empty;
+	gdouble seconds;
 
 	was_empty = gaminggear_macro_editor_advanced_list_store_empty(macro_editor_advanced_list_store);
 
@@ -301,6 +303,8 @@ static void add_press(GaminggearMacroEditorAdvancedListStore *macro_editor_advan
 			GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_SCALE_COLUMN, scale,
 			-1);
 
+	seconds = msec_to_sec(macro_editor_advanced_list_store->priv->abs_time);
+
 	set_label(label, key);
 	spin_button_set_value_without_upper_bound(lower, seconds);
 	gaminggear_dscale_set_lower(scale, seconds);
@@ -318,12 +322,13 @@ static void add_press(GaminggearMacroEditorAdvancedListStore *macro_editor_advan
 }
 
 static void add_release(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store,
-		GtkTreeIter *iter, GtkTreeIter *press, guint key, guint action, gdouble seconds) {
+		GtkTreeIter *iter, GtkTreeIter *press, guint key, guint action) {
 	GtkWidget *label;
 	GtkWidget *lower;
 	GtkWidget *upper;
 	GtkWidget *scale;
 	gboolean was_empty;
+	gdouble seconds;
 
 	was_empty = gaminggear_macro_editor_advanced_list_store_empty(macro_editor_advanced_list_store);
 
@@ -344,6 +349,8 @@ static void add_release(GaminggearMacroEditorAdvancedListStore *macro_editor_adv
 			GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_UPPER_COLUMN, upper,
 			GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_SCALE_COLUMN, scale,
 			-1);
+
+	seconds = msec_to_sec(macro_editor_advanced_list_store->priv->abs_time);
 
 	gaminggear_dscale_set_upper(GAMINGGEAR_DSCALE(scale), seconds);
 	spin_button_set_value_without_upper_bound(GTK_SPIN_BUTTON(upper), seconds);
@@ -396,17 +403,17 @@ static gboolean find_backwards(GaminggearMacroEditorAdvancedListStore *store, Gt
 	return FALSE;
 }
 
-static void add_single_action(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, guint key, guint action, gdouble seconds) {
+static void add_single_action(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, guint key, guint action) {
 	GtkTreeIter press_iter;
 	GtkTreeIter iter;
 	gboolean iter_is_valid;
 
 	if (action == GAMINGGEAR_MACRO_KEYSTROKE_ACTION_PRESS)
-		add_press(macro_editor_advanced_list_store, &iter, key, action, seconds);
+		add_press(macro_editor_advanced_list_store, &iter, key, action);
 	else {
 		iter_is_valid = find_backwards(macro_editor_advanced_list_store, &press_iter, key);
 		if (iter_is_valid)
-			add_release(macro_editor_advanced_list_store, &iter, &press_iter, key, action, seconds);
+			add_release(macro_editor_advanced_list_store, &iter, &press_iter, key, action);
 		else
 			g_warning("no up for %x", key);
 	}
@@ -420,9 +427,8 @@ static void add_wait(GaminggearMacroEditorAdvancedListStore *macro_editor_advanc
 }
 
 void gaminggear_macro_editor_advanced_list_store_add_keystroke(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, guint key, guint action, glong rel_time) {
-	GaminggearMacroEditorAdvancedListStorePrivate *priv = macro_editor_advanced_list_store->priv;
 	add_wait(macro_editor_advanced_list_store, rel_time);
-	add_single_action(macro_editor_advanced_list_store, key, action, msec_to_sec(priv->abs_time));
+	add_single_action(macro_editor_advanced_list_store, key, action);
 }
 
 GtkWidget *gaminggear_macro_editor_advanced_list_store_get_label_widget(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, GtkTreeIter *iter) {
@@ -588,7 +594,6 @@ static void equalize_max_time(GaminggearMacroEditorAdvancedListStore *macro_edit
 }
 
 void gaminggear_macro_editor_advanced_list_store_set_keystrokes(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, GaminggearMacroKeystrokes const *macro_keystrokes) {
-	GaminggearMacroEditorAdvancedListStorePrivate *priv = macro_editor_advanced_list_store->priv;
 	GaminggearMacroKeystroke const *keystroke = NULL;
 	guint i;
 	guint count;
@@ -600,7 +605,7 @@ void gaminggear_macro_editor_advanced_list_store_set_keystrokes(GaminggearMacroE
 	count = gaminggear_macro_keystrokes_get_count(macro_keystrokes);
 	for (i = 0; i < count; ++i) {
 		keystroke = &macro_keystrokes->keystrokes[i];
-		add_single_action(macro_editor_advanced_list_store, keystroke->key, keystroke->action, msec_to_sec(priv->abs_time));
+		add_single_action(macro_editor_advanced_list_store, keystroke->key, keystroke->action);
 		add_wait(macro_editor_advanced_list_store, gaminggear_macro_keystroke_get_period(keystroke));
 	}
 

@@ -29,6 +29,10 @@ ADD_LIBRARY (libgaminggearwidget SHARED
   gaminggear_macro_tree_view.c
   gaminggear_ruler.c
   gaminggear_text_dialog.c
+  gaminggear_timeout_bar.c
+  gaminggear_timeout_dialog.c
+  gaminggear_xy_scales.c
+  gaminggearwidget.c
   gaminggearwidget_helper.c
 )
 
