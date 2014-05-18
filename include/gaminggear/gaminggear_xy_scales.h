@@ -48,59 +48,62 @@ struct _GaminggearXyScales {
 GType gaminggear_xy_scales_get_type(void);
 
 /*! \brief Creates new xy scale.
- *  \param min .
- *  \param max .
- *  \param step .
- *  \retval widget The xy scale.
+ *
+ *  Adds marks with distance step.
+ *
+ *  \param min The minimal value.
+ *  \param max The maximal value.
+ *  \param step Step increment.
+ *  \retval widget A new xy scale.
  *  \since 1.0
  */
 GtkWidget *gaminggear_xy_scales_new(gdouble min, gdouble max, gdouble step);
 
-/*! \brief .
+/*! \brief Get the value for X.
  *  \param scales A xy scale.
- *  \retval value .
+ *  \retval value The actual value.
  *  \since 1.0
  */
 gdouble gaminggear_xy_scales_get_x_value(GaminggearXyScales *scales);
 
-/*! \brief .
+/*! \brief Set the value for X.
  *  \param scales A xy scale.
- *  \param value .
+ *  \param value The new value.
  *  \since 1.0
  */
 void gaminggear_xy_scales_set_x_value(GaminggearXyScales *scales, gdouble value);
 
-/*! \brief .
+/*! \brief Get the value for Y.
  *  \param scales A xy scale.
- *  \retval value .
+ *  \retval value The actual value.
  *  \since 1.0
  */
 gdouble gaminggear_xy_scales_get_y_value(GaminggearXyScales *scales);
 
-/*! \brief .
+/*! \brief Set the value for Y.
  *  \param scales A xy scale.
- *  \param value .
+ *  \param value The new value.
  *  \since 1.0
  */
 void gaminggear_xy_scales_set_y_value(GaminggearXyScales *scales, gdouble value);
 
-/*! \brief .
+/*! \brief Get the state of the link indicator.
  *  \param scales A xy scale.
- *  \retval value .
+ *  \retval value Returns \c TRUE if X and Y are linked, \c FALSE else.
  *  \since 1.0
  */
 gboolean gaminggear_xy_scales_get_linked(GaminggearXyScales *scales);
 
-/*! \brief .
+/*! \brief Set the state of the link indicator.
  *  \param scales A xy scale.
- *  \param value .
+ *  \param value The new state.
  *  \since 1.0
  */
 void gaminggear_xy_scales_set_linked(GaminggearXyScales *scales, gboolean value);
 
-/*! \brief .
+/*! \brief Set digits on spin button.
  *  \param scales A xy scale.
- *  \param digits .
+ *  \param digits The new amount of digits to show in the spin button.
  *  \since 1.0
  */
 void gaminggear_xy_scales_set_digits(GaminggearXyScales *scales, guint digits);
