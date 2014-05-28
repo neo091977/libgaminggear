@@ -10,6 +10,7 @@ ADD_CUSTOM_COMMAND(
 
 SET(SOURCES
   gaminggear_configuration.c
+  gaminggear_device.c
   gaminggear_evdev.c
   gaminggear_helper.c
   gaminggear_key_file.c

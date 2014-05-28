@@ -17,6 +17,7 @@ ADD_CUSTOM_TARGET(documentation ALL
 INSTALL(
   FILES
     evdev.h
+    gaminggear_device.h
     gaminggear_hscale.h
     gaminggear_macro_dialog.h
     gaminggear_macro_editor_dialog.h
