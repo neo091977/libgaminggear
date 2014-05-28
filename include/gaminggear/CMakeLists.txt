@@ -29,7 +29,6 @@ INSTALL(
     gdk_key_translations.h
     hid_uid.h
     key_translations.h
-    libusb.h
     macro.h
     macro_threads.h
     threads.h

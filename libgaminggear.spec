@@ -10,7 +10,6 @@ Source: %{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: cmake >= 2.6.4
 BuildRequires: gtk2-devel >= 2.20
-BuildRequires: libusb1-devel
 BuildRequires: sqlite >= 3.7
 ExclusiveOS: linux
 Prefix: /usr
