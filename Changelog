@@ -1,3 +1,4 @@
+ * Added WITHOUT_DOC build option
  * Added GaminggearDevice
  * Removed libusb dependency
 

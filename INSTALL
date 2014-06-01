@@ -30,6 +30,8 @@
       uinput device, you can set it manually. Autodetection needs module uinput
       loaded. Normally it's in /dev or /dev/input.
       
+    * WITHOUT_DOC              Set this to TRUE if you don't want to build the API
+      documentation.
 
   * It is strongly recommended to install everything in /usr instead of the default
     directory /usr/local.
