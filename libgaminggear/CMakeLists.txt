@@ -10,11 +10,11 @@ ADD_CUSTOM_COMMAND(
 
 SET(SOURCES
   gaminggear_configuration.c
+  gaminggear_device.c
   gaminggear_evdev.c
   gaminggear_helper.c
   gaminggear_key_file.c
   gaminggear_key_translations.c
-  gaminggear_libusb.c
   gaminggear_macro_keystrokes.c
   gaminggear_macro_thread.c
   gaminggear_macro_threads.c
@@ -28,7 +28,6 @@ SET(SOURCES
 )
 
 SET(LIBRARIES
-  ${USB1_LIBRARIES}
   ${GLIB2_LIBRARIES}
 )
 

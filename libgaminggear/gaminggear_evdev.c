@@ -83,6 +83,9 @@ error:
 }
 
 void gaminggear_close_misc_evdev(int fd, GError **error) {
+	if (fd < 0)
+		return;
+
 	if (ioctl(fd, UI_DEV_DESTROY) < 0)
 		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), "Error closing misc evdev: %s", g_strerror(errno));
 	close(fd);
@@ -92,7 +95,7 @@ void gaminggear_input_event_write_with_sync(int fd, int code, int value) {
 	struct input_event event;
 	int written;
 
-	if (fd == -1)
+	if (fd < 0)
 		return;
 
 	event.type = EV_KEY;

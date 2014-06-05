@@ -19,7 +19,7 @@
  */
 
 /*! \file gaminggear/gaminggear_xy_scales.h
- *  \brief .
+ *  \brief Scale with two sliders that can be locked.
  */
 
 #include <gtk/gtk.h>

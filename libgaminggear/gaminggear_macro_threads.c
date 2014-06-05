@@ -18,7 +18,6 @@
 #include "gaminggear/macro_threads.h"
 #include "gaminggear_macro_thread.h"
 #include <unistd.h>
-#include <linux/input.h>
 
 struct _GaminggearMacroThreads {
 	GaminggearMacroThread **threads;
