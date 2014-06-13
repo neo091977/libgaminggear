@@ -49,11 +49,12 @@ GType gaminggear_device_get_type(void);
 
 /*! \brief Creates new GaminggearDevice.
  *  \param identifier The unique identifier of the device.
+ *  \param vendor_id The vendor id of the device.
  *  \param product_id The product id of the device.
  *  \retval device The new GaminggearDevice which should be freed with g_object_unref().
  *  \since 1.0
  */
-GaminggearDevice *gaminggear_device_new(gchar const *identifier, guint product_id);
+GaminggearDevice *gaminggear_device_new(gchar const *identifier, guint vendor_id, guint product_id);
 
 /*! \brief Get identifier.
  *  \param gaminggear_dev A GaminggearDevice.
@@ -68,6 +69,22 @@ gchar const *gaminggear_device_get_identifier(GaminggearDevice const *gaminggear
  *  \since 1.0
  */
 guint gaminggear_device_get_product_id(GaminggearDevice const *gaminggear_dev);
+
+/*! \brief Get vendor id.
+ *  \param gaminggear_dev A GaminggearDevice.
+ *  \retval vendor_id The vendor id given at construction time.
+ *  \since 1.0
+ */
+guint gaminggear_device_get_vendor_id(GaminggearDevice const *gaminggear_dev);
+
+/*! \brief Match device agains vendor/product id
+ *  \param gaminggear_dev A GaminggearDevice.
+ *  \param vendor_id The vendor id to match against.
+ *  \param product_id The product id to match against.
+ *  \retval bool \c TRUE if vendor and product ids match, else \c FALSE.
+ *  \since 1.0
+ */
+gboolean gaminggear_device_matches(GaminggearDevice const *gaminggear_dev, guint vendor_id, guint product_id);
 
 /*! \brief Open file.
  *
