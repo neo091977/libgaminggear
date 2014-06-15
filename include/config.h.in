@@ -21,5 +21,6 @@
 #define GAMINGGEAR_ICON_PATH "${CMAKE_INSTALL_PREFIX}/share/gaminggear/icons"
 #define UINPUT_DIR "${UINPUTDIR}"
 #cmakedefine SQLITE3_FOUND
+#cmakedefine HAVE_NOTIFY_0_7
 
 #endif

@@ -11,6 +11,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: cmake >= 2.6.4
 BuildRequires: gtk2-devel >= 2.20
 BuildRequires: sqlite >= 3.7
+BuildRequires: libcanberra-devel
+BuildRequires: libnotify-devel
 ExclusiveOS: linux
 Prefix: /usr
 URL: http://sourceforge.net/projects/libgaminggear/
