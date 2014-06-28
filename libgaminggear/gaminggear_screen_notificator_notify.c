@@ -16,6 +16,7 @@
  */
 
 #include "gaminggear/screen_notificator.h"
+#include "config.h"
 #include <libnotify/notify.h>
 
 struct _GaminggearScreenNotificator {
