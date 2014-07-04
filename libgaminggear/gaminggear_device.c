@@ -27,6 +27,7 @@
 
 struct _GaminggearDevicePrivate {
 	gchar *identifier; // unique per device, not interface
+	guint vendor_id;
 	guint product_id;
 	GaminggearRecMutex lock;
 };
@@ -35,6 +36,7 @@ enum {
 	PROP_0,
 	PROP_IDENTIFIER,
 	PROP_PRODUCT_ID,
+	PROP_VENDOR_ID,
 };
 
 G_DEFINE_TYPE(GaminggearDevice, gaminggear_device, G_TYPE_OBJECT);
@@ -139,9 +141,19 @@ guint gaminggear_device_get_product_id(GaminggearDevice const *gaminggear_dev) {
 	return gaminggear_dev->priv->product_id;
 }
 
-GaminggearDevice *gaminggear_device_new(gchar const *identifier, guint product_id) {
+guint gaminggear_device_get_vendor_id(GaminggearDevice const *gaminggear_dev) {
+	return gaminggear_dev->priv->vendor_id;
+}
+
+gboolean gaminggear_device_matches(GaminggearDevice const *gaminggear_dev, guint vendor_id, guint product_id) {
+	GaminggearDevicePrivate *priv = gaminggear_dev->priv;
+	return (priv->vendor_id == vendor_id && priv->product_id == product_id);
+}
+
+GaminggearDevice *gaminggear_device_new(gchar const *identifier, guint vendor_id, guint product_id) {
 	return GAMINGGEAR_DEVICE(g_object_new(GAMINGGEAR_DEVICE_TYPE,
 			"identifier", identifier,
+			"vendor-id", vendor_id,
 			"product-id", product_id,
 			NULL));
 }
@@ -162,6 +174,9 @@ static void set_property(GObject *object, guint prop_id, GValue const *value, GP
 		break;
 	case PROP_PRODUCT_ID:
 		priv->product_id = g_value_get_uint(value);
+		break;
+	case PROP_VENDOR_ID:
+		priv->vendor_id = g_value_get_uint(value);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -199,6 +214,13 @@ static void gaminggear_device_class_init(GaminggearDeviceClass *klass) {
 			g_param_spec_uint("product-id",
 					"product-id",
 					"Product ID",
+					0, G_MAXUINT, 0,
+					G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+
+	g_object_class_install_property(gobject_class, PROP_VENDOR_ID,
+			g_param_spec_uint("vendor-id",
+					"vendor-id",
+					"Vendor ID",
 					0, G_MAXUINT, 0,
 					G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 }

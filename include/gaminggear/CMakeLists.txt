@@ -23,6 +23,7 @@ ENDIF()
 
 INSTALL(
   FILES
+    audio_notificator.h
     evdev.h
     gaminggear_device.h
     gaminggear_hscale.h
@@ -38,6 +39,7 @@ INSTALL(
     key_translations.h
     macro.h
     macro_threads.h
+    screen_notificator.h
     threads.h
   DESTINATION include/gaminggear-${V_MAJOR}/gaminggear
 )

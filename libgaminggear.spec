@@ -1,5 +1,5 @@
 %define vmajor 0
-%define vminor 3
+%define vminor 4
 %define vmicro 0
 
 Name: libgaminggear
@@ -11,6 +11,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: cmake >= 2.6.4
 BuildRequires: gtk2-devel >= 2.20
 BuildRequires: sqlite >= 3.7
+BuildRequires: libcanberra-devel
+BuildRequires: libnotify-devel
 ExclusiveOS: linux
 Prefix: /usr
 URL: http://sourceforge.net/projects/libgaminggear/
@@ -78,5 +80,5 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 /usr/share/cmake/Modules/FindGAMINGGEAR%{vmajor}.cmake
 
 %changelog
-* Thu Jun 05 2014 Stefan Achatz <erazor_de@users.sourceforge.net> 0.3.0-1
+* Fri Jul 04 2014 Stefan Achatz <erazor_de@users.sourceforge.net> 0.4.0-1
 - Initial version

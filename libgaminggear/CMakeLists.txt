@@ -9,6 +9,7 @@ ADD_CUSTOM_COMMAND(
 )
 
 SET(SOURCES
+  gaminggear_audio_notificator_canberra.c
   gaminggear_configuration.c
   gaminggear_device.c
   gaminggear_evdev.c
@@ -20,6 +21,7 @@ SET(SOURCES
   gaminggear_macro_threads.c
   gaminggear_macro.c
   gaminggear_macros.c
+  gaminggear_screen_notificator_notify.c
   macros_converter_roccat_arvo.c
   macros_converter_roccat_kone.c
   macros_converter_roccat_valo.c
@@ -28,7 +30,9 @@ SET(SOURCES
 )
 
 SET(LIBRARIES
+  ${CANBERRA_LIBRARIES}
   ${GLIB2_LIBRARIES}
+  ${NOTIFY_LIBRARIES}
 )
 
 IF(SQLITE3_FOUND)
