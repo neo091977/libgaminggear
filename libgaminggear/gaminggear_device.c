@@ -187,8 +187,8 @@ static void gaminggear_device_finalize(GObject *object) {
 	GaminggearDevicePrivate *priv = GAMINGGEAR_DEVICE(object)->priv;
 
 	g_free(priv->identifier);
-	g_object_unref(priv->paths);
-	g_object_unref(priv->fds);
+	g_hash_table_unref(priv->paths);
+	g_hash_table_unref(priv->fds);
 	gaminggear_rec_mutex_clear(&priv->lock);
 
 	G_OBJECT_CLASS(gaminggear_device_parent_class)->finalize(object);
