@@ -1,3 +1,8 @@
+0.5.0 2014-09-08
+
+ * Improved: GaminggearDevice
+ * Fixed: Canberra notifications are failsafe now
+ 
 0.4.0 2014-07-04
 
  * Added GaminggearAudioNotificator and GaminggearScreenNotificator

@@ -30,6 +30,9 @@ struct _GaminggearAudioNotification {
 };
 
 static guint gaminggear_audio_notificator_claim_next_id(GaminggearAudioNotificator *notificator) {
+	if (notificator == NULL)
+		return 0;
+
 	return notificator->next_id++;
 }
 
@@ -86,7 +89,7 @@ out:
 void gaminggear_audio_notificator_deinit(GaminggearAudioNotificator *notificator) {
 	gint retval;
 
-	if (notificator->context == NULL)
+	if (notificator == NULL)
 		return;
 
 	retval = ca_context_destroy(notificator->context);
@@ -97,6 +100,10 @@ void gaminggear_audio_notificator_deinit(GaminggearAudioNotificator *notificator
 
 GaminggearAudioNotification *gaminggear_audio_notification_new(GaminggearAudioNotificator *notificator) {
 	GaminggearAudioNotification *notification;
+
+	if (notificator == NULL)
+		return NULL;
+
 	notification = (GaminggearAudioNotification *)g_malloc0(sizeof(GaminggearAudioNotification));
 	notification->notificator = notificator;
 	notification->id = gaminggear_audio_notificator_claim_next_id(notificator);
@@ -109,6 +116,10 @@ void gaminggear_audio_notification_free(GaminggearAudioNotification *notificatio
 
 gboolean gaminggear_audio_notification_cancel(GaminggearAudioNotification *notification) {
 	gint retval;
+
+	if (notification == NULL)
+		return FALSE;
+
 	retval = ca_context_cancel(notification->notificator->context, notification->id);
 	if (retval != 0 && retval != CA_ERROR_STATE) {
 		g_warning("Error cancelling audio notificator: %s", ca_strerror(retval));
@@ -120,6 +131,9 @@ gboolean gaminggear_audio_notification_cancel(GaminggearAudioNotification *notif
 gboolean gaminggear_audio_notification_update(GaminggearAudioNotification *notification, gchar const *filename, gdouble volume) {
 	gint retval;
 	gchar *volume_string;
+
+	if (notification == NULL)
+		return FALSE;
 
 	volume_string = g_strdup_printf("%f", volume);
 

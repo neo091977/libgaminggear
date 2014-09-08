@@ -51,10 +51,11 @@ GType gaminggear_device_get_type(void);
  *  \param identifier The unique identifier of the device.
  *  \param vendor_id The vendor id of the device.
  *  \param product_id The product id of the device.
+ *  \param num_interfaces The number of interfaces of the device.
  *  \retval device The new GaminggearDevice which should be freed with g_object_unref().
  *  \since 1.0
  */
-GaminggearDevice *gaminggear_device_new(gchar const *identifier, guint vendor_id, guint product_id);
+GaminggearDevice *gaminggear_device_new(gchar const *identifier, guint vendor_id, guint product_id, guint num_interfaces);
 
 /*! \brief Get identifier.
  *  \param gaminggear_dev A GaminggearDevice.
@@ -76,6 +77,13 @@ guint gaminggear_device_get_product_id(GaminggearDevice const *gaminggear_dev);
  *  \since 1.0
  */
 guint gaminggear_device_get_vendor_id(GaminggearDevice const *gaminggear_dev);
+
+/*! \brief Get number of interfaces.
+ *  \param gaminggear_dev A GaminggearDevice.
+ *  \retval num_interfaces The number of interfaces of the device given at construction time.
+ *  \since 1.0
+ */
+guint gaminggear_device_get_num_interfaces(GaminggearDevice const *gaminggear_dev);
 
 /*! \brief Match device agains vendor/product id
  *  \param gaminggear_dev A GaminggearDevice.
