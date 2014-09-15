@@ -1,3 +1,5 @@
+ * Fixed: Gtk text != NULL assertions
+
 0.5.0 2014-09-08
 
  * Improved: GaminggearDevice
