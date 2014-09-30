@@ -41,7 +41,9 @@ ADD_DEPENDENCIES(libgaminggearwidget
 )
 
 TARGET_LINK_LIBRARIES(libgaminggearwidget
-  ${GTK2_LIBRARIES}
+  libgaminggear
+  ${M_LIBRARY}
+  ${GTK_LIBRARIES}
 )
 
 SET_TARGET_PROPERTIES(libgaminggearwidget
