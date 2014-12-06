@@ -1,3 +1,4 @@
+ * Changed: libraries now installed in base folder, leaving ld.so search paths umodified
  * Fixed: Missing direct dependencies
  * Fixed: Gtk text != NULL assertions
 

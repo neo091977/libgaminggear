@@ -54,4 +54,4 @@ SET_TARGET_PROPERTIES(libgaminggearwidget
     COMPILE_FLAGS "-DG_LOG_DOMAIN=\\\"GamingGear\\\""
 )
 
-INSTALL(TARGETS libgaminggearwidget DESTINATION ${INSTALL_LIBDIR}/gaminggear-${V_MAJOR})
+INSTALL(TARGETS libgaminggearwidget DESTINATION ${INSTALL_LIBDIR})

@@ -68,9 +68,8 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 %files
 %defattr(-,root,root)
 %doc INSTALL README COPYING Changelog
-%{prefix}/lib*/gaminggear-%{vmajor}
+%{prefix}/lib*
 %{prefix}/share/gaminggear/icons
-/etc/ld.so.conf.d/gaminggear-%{vmajor}.conf
 
 %files devel
 %defattr(-,root,root)
