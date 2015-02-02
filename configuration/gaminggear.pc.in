@@ -9,4 +9,4 @@ URL:
 Version: @V_MAJOR@.@V_MINOR@.@V_MICRO@
 Requires.private: gtk+-2.0
 Cflags: -I${includedir}/gaminggear-@V_MAJOR@
-Libs: -L${libdir}/gaminggear-@V_MAJOR@ -lgaminggear -lgaminggearwidget
+Libs: -L${libdir} -lgaminggear -lgaminggearwidget

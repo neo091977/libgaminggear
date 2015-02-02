@@ -40,7 +40,8 @@ gchar *gaminggear_text_dialog(GtkWindow *parent, gchar const *title, gchar const
 	gchar *result;
 
 	text_dialog = GAMINGGEAR_TEXT_DIALOG(gaminggear_text_dialog_new(parent, title, caption));
-	gaminggear_text_dialog_set_text(text_dialog, text);
+	if (text)
+		gaminggear_text_dialog_set_text(text_dialog, text);
 	result = gaminggear_text_dialog_run(text_dialog);
 	gtk_widget_destroy(GTK_WIDGET(text_dialog));
 
