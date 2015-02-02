@@ -1,3 +1,5 @@
+0.6.0 2015-02-02
+
  * Improved: detection of cmake-finder install directory
  * Changed: configuration option to build documentation from WITHOUT_DOC to WITH_DOC
  * Changed: libraries now installed in base folder, leaving ld.so search paths umodified
