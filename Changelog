@@ -1,3 +1,4 @@
+ * Changed: configuration option to build documentation from WITHOUT_DOC to WITH_DOC
  * Changed: libraries now installed in base folder, leaving ld.so search paths umodified
  * Fixed: Missing direct dependencies
  * Fixed: Gtk text != NULL assertions
