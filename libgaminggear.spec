@@ -13,6 +13,7 @@ BuildRequires: gtk2-devel >= 2.20
 BuildRequires: sqlite >= 3.7
 BuildRequires: libcanberra-devel
 BuildRequires: libnotify-devel
+BuildRequires: doxygen
 ExclusiveOS: linux
 Prefix: /usr
 URL: http://sourceforge.net/projects/libgaminggear/
@@ -37,7 +38,7 @@ Here are the development headers needed to compile software that uses libgamingg
 %setup -q -n %{name}-%{version}
 %{__mkdir} build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX="%{prefix}" ..
+cmake -DCMAKE_INSTALL_PREFIX="%{prefix}" -DWITH_DOC ..
 
 %build
 cd build
