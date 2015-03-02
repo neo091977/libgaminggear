@@ -38,7 +38,7 @@ Here are the development headers needed to compile software that uses libgamingg
 %setup -q -n %{name}-%{version}
 %{__mkdir} build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX="%{prefix}" -DWITH_DOC ..
+cmake -DCMAKE_INSTALL_PREFIX="%{prefix}" -DWITH_DOC=TRUE ..
 
 %build
 cd build
@@ -69,12 +69,12 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 %files
 %defattr(-,root,root)
 %doc INSTALL README COPYING Changelog
-%{prefix}/lib*
+%{prefix}/lib*/libgaminggear*
 %{prefix}/share/gaminggear/icons
 
 %files devel
 %defattr(-,root,root)
-%{prefix}/include/gaminggear-%{vmajor}/gaminggear
+%{prefix}/include/gaminggear-%{vmajor}
 %{prefix}/share/gaminggear/html
 /usr/share/pkgconfig/gaminggear-%{vmajor}.pc
 /usr/share/cmake/Modules/FindGAMINGGEAR%{vmajor}.cmake
