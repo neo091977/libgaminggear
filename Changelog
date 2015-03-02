@@ -1,3 +1,5 @@
+ * Fixed: spec file
+
 0.6.0 2015-02-02
 
  * Improved: detection of cmake-finder install directory
