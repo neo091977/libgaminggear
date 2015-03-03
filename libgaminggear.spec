@@ -70,6 +70,7 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 %doc INSTALL README COPYING Changelog
 %{_libdir}/libgaminggear*
 %{_datadir}/gaminggear/icons
+%{_bindir}/gaminggearfxinfo
 
 %files devel
 %defattr(-,root,root)
