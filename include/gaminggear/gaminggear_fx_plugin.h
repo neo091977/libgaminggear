@@ -38,9 +38,9 @@ struct _GaminggearFxPlugin {
 	GfxResult (*get_light_position)(GaminggearFxPlugin *self, unsigned int const light_index,
 			GfxPosition * const light_position);
 	GfxResult (*get_light_color)(GaminggearFxPlugin *self, unsigned int const light_index,
-			GfxColor * const color);
+			uint32_t * const color);
 	GfxResult (*set_light_color)(GaminggearFxPlugin *self, unsigned int const light_index,
-			GfxColor const * const color);
+			uint32_t const color);
 	GfxResult (*update)(GaminggearFxPlugin *self);
 	void (*finalize)(GaminggearFxPlugin *self);
 };

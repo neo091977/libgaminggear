@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 	unsigned int light_index;
 	GfxDevtype device_type;
 	GfxPosition light_position;
-	GfxColor light_color;
+	uint32_t light_color;
 
 	gfx_result = gfx_initialize();
 	if (gfx_result != GFX_SUCCESS) {
@@ -99,7 +99,11 @@ int main(int argc, char **argv) {
 				g_warning("There was an error getting light color");
 				goto exit_2;
 			}
-			g_print("    Color: 0x%02x, 0x%02x, 0x%02x, 0x%02x\n", light_color.brightness, light_color.red, light_color.green, light_color.blue);
+			g_print("    Color: 0x%02x, 0x%02x, 0x%02x, 0x%02x\n",
+					gfx_color_get_brightness_raw(light_color),
+					gfx_color_get_red_raw(light_color),
+					gfx_color_get_green_raw(light_color),
+					gfx_color_get_blue_raw(light_color));
 		}
 	}
 

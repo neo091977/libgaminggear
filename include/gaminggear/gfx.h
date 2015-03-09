@@ -18,21 +18,60 @@
  * along with libgaminggear. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdint.h>
+
 #ifdef  __cplusplus
 extern "C" {
 #endif
 
-typedef struct {
-	unsigned char brightness;
-	unsigned char red;
-	unsigned char green;
-	unsigned char blue;
-} GfxColor;
+static inline void gfx_color_set_brightness(uint32_t * const color, uint8_t const brightness) {
+	*color = (*color & 0x00ffffff) | (uint32_t)brightness << 24;
+}
+
+static inline void gfx_color_set_red(uint32_t * const color, uint8_t const red) {
+	*color = (*color & 0xff00ffff) | (uint32_t)red << 16;
+}
+
+static inline void gfx_color_set_green(uint32_t * const color, uint8_t const green) {
+	*color = (*color & 0xffff00ff) | (uint32_t)green << 8;
+}
+
+static inline void gfx_color_set_blue(uint32_t * const color, uint8_t const blue) {
+	*color = (*color & 0xffffff00) | (uint32_t)blue;
+}
+
+static inline uint8_t gfx_color_get_brightness_raw(uint32_t const color) {
+	return (color & 0xff000000) >> 24;
+}
+
+static inline uint8_t gfx_color_get_red_raw(uint32_t const color) {
+	return (color & 0x00ff0000) >> 16;
+}
+
+static inline uint8_t gfx_color_get_green_raw(uint32_t const color) {
+	return (color & 0x0000ff00) >> 8;
+}
+
+static inline uint8_t gfx_color_get_blue_raw(uint32_t const color) {
+	return color & 0x000000ff;
+}
+
+static inline uint8_t gfx_color_get_red(uint32_t const color) {
+	return gfx_color_get_red_raw(color) * gfx_color_get_brightness_raw(color) / 0xff;
+}
+
+static inline uint8_t gfx_color_get_green(uint32_t const color) {
+	return gfx_color_get_green_raw(color) * gfx_color_get_brightness_raw(color) / 0xff;
+}
+
+static inline uint8_t gfx_color_get_blue(uint32_t const color) {
+	return gfx_color_get_blue_raw(color) * gfx_color_get_brightness_raw(color) / 0xff;
+}
 
 typedef struct {
-	unsigned char x;
-	unsigned char y;
-	unsigned char z;
+	uint8_t x;
+	uint8_t y;
+	uint8_t z;
 } GfxPosition;
 
 typedef enum {
@@ -97,12 +136,12 @@ GfxResult gfx_get_light_description(unsigned int const device_index, unsigned in
 		char * const light_description, unsigned int const light_description_size);
 GfxResult gfx_get_light_position(unsigned int const device_index, unsigned int const light_index,
 		GfxPosition * const light_position);
-GfxResult gfx_get_light_color(unsigned int const device_index, unsigned int const light_index, GfxColor * const color);
-GfxResult gfx_set_light_color(unsigned int const device_index, unsigned int const light_index, GfxColor const * const color);
+GfxResult gfx_get_light_color(unsigned int const device_index, unsigned int const light_index, uint32_t * const color);
+GfxResult gfx_set_light_color(unsigned int const device_index, unsigned int const light_index, uint32_t const color);
 
 GfxResult gfx_reset(void);
 GfxResult gfx_update(void);
-GfxResult gfx_light(unsigned int const location_mask, GfxColor const * const color);
+GfxResult gfx_light(uint32_t const location_mask, uint32_t const color);
 
 #ifdef  __cplusplus
 }

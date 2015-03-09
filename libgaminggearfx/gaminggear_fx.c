@@ -183,7 +183,7 @@ GfxResult gfx_get_light_position(unsigned int const device_index, unsigned int c
 	return plugin->get_light_position(plugin, light_index, light_position);
 }
 
-GfxResult gfx_get_light_color(unsigned int const device_index, unsigned int const light_index, GfxColor * const color) {
+GfxResult gfx_get_light_color(unsigned int const device_index, unsigned int const light_index, uint32_t * const color) {
 	GaminggearFxPlugin *plugin;
 
 	if (!initialized) return GFX_ERROR_NOINIT;
@@ -195,7 +195,7 @@ GfxResult gfx_get_light_color(unsigned int const device_index, unsigned int cons
 	return plugin->get_light_color(plugin, light_index, color);
 }
 
-GfxResult gfx_set_light_color(unsigned int const device_index, unsigned int const light_index, GfxColor const * const color) {
+GfxResult gfx_set_light_color(unsigned int const device_index, unsigned int const light_index, uint32_t const color) {
 	GaminggearFxPlugin *plugin;
 
 	if (!initialized) return GFX_ERROR_NOINIT;
@@ -207,7 +207,7 @@ GfxResult gfx_set_light_color(unsigned int const device_index, unsigned int cons
 	return plugin->set_light_color(plugin, light_index, color);
 }
 
-GfxResult gfx_light(unsigned int const location_mask, GfxColor const * const color) {
+GfxResult gfx_light(unsigned int const location_mask, uint32_t const color) {
 	unsigned int num_devices;
 	unsigned int num_lights;
 	unsigned int device_index;
@@ -235,8 +235,7 @@ GfxResult gfx_light(unsigned int const location_mask, GfxColor const * const col
 }
 
 GfxResult gfx_reset(void) {
-	GfxColor color = { .brightness = 0, .red = 0, .green = 0, .blue = 0 };
-	return gfx_light(GFX_LOCATION_ALL, &color);
+	return gfx_light(GFX_LOCATION_ALL, 0);
 }
 
 GfxResult gfx_update(void) {

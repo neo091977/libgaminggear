@@ -48,13 +48,6 @@ static GOptionContext *commandline_parse(int *argc, char ***argv) {
 	return context;
 }
 
-static void convert_int_to_color(gint64 value, GfxColor *color) {
-	color->brightness = (value & 0xff000000) >> 24;
-	color->red = (value & 0x00ff0000) >> 16;
-	color->green = (value & 0x0000ff00) >> 8;
-	color->blue = (value & 0x000000ff) >> 0;
-}
-
 static void commandline_free(GOptionContext *context) {
 }
 
@@ -62,7 +55,6 @@ int main(int argc, char **argv) {
 	GOptionContext *context;
 	GfxResult gfx_result;
 	int retval = EXIT_FAILURE;
-	GfxColor color1;
 
 	context = commandline_parse(&argc, &argv);
 
@@ -72,10 +64,8 @@ int main(int argc, char **argv) {
 		goto exit_1;
 	}
 
-	convert_int_to_color(parameter_color1, &color1);
-
 	if (parameter_color) {
-		gfx_result = gfx_light(GFX_LOCATION_ALL, &color1);
+		gfx_result = gfx_light(GFX_LOCATION_ALL, parameter_color1);
 		if (gfx_result != GFX_SUCCESS) {
 			g_warning("There was an error setting color");
 			goto exit_2;
