@@ -33,6 +33,8 @@
     * WITH_DOC                 Set this to TRUE if you want to build the API
       documentation.
 
+    * GFX_PLUGIN_DIR
+
   * It is strongly recommended to install everything in /usr instead of the default
     directory /usr/local.
 

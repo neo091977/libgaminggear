@@ -1,5 +1,5 @@
 %define vmajor 0
-%define vminor 6
+%define vminor 7
 %define vmicro 0
 
 Name: libgaminggear
@@ -13,8 +13,8 @@ BuildRequires: gtk2-devel >= 2.20
 BuildRequires: sqlite >= 3.7
 BuildRequires: libcanberra-devel
 BuildRequires: libnotify-devel
+BuildRequires: doxygen
 ExclusiveOS: linux
-Prefix: /usr
 URL: http://sourceforge.net/projects/libgaminggear/
 Packager: Stefan Achatz <erazor_de@users.sourceforge.net>
 
@@ -37,7 +37,7 @@ Here are the development headers needed to compile software that uses libgamingg
 %setup -q -n %{name}-%{version}
 %{__mkdir} build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX="%{prefix}" ..
+cmake -DCMAKE_INSTALL_PREFIX="%{_prefix}" -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBDIR="%{_libdir}" -DWITH_DOC=TRUE ..
 
 %build
 cd build
@@ -68,16 +68,18 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 %files
 %defattr(-,root,root)
 %doc INSTALL README COPYING Changelog
-%{prefix}/lib*
-%{prefix}/share/gaminggear/icons
+%{_libdir}/libgaminggear*
+%{_datadir}/gaminggear/icons
+%{_bindir}/gaminggearfxinfo
+%{_bindir}/gaminggearfxcontrol
 
 %files devel
 %defattr(-,root,root)
-%{prefix}/include/gaminggear-%{vmajor}/gaminggear
-%{prefix}/share/gaminggear/html
-/usr/share/pkgconfig/gaminggear-%{vmajor}.pc
-/usr/share/cmake/Modules/FindGAMINGGEAR%{vmajor}.cmake
+%{_includedir}/gaminggear-%{vmajor}
+%{_datadir}/gaminggear/html
+%{_datadir}/pkgconfig/gaminggear-%{vmajor}.pc
+%{_datadir}/cmake/Modules/FindGAMINGGEAR%{vmajor}.cmake
 
 %changelog
-* Mon Feb 02 2015 Stefan Achatz <erazor_de@users.sourceforge.net> 0.6.0-1
+* Tue Mar 10 2015 Stefan Achatz <erazor_de@users.sourceforge.net> 0.7.0-1
 - Initial version

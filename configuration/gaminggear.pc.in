@@ -5,7 +5,7 @@ libdir=@INSTALL_LIBDIR@
 
 Name: GamingGear
 Description: The GamingGear library
-URL:
+URL: http://sourceforge.net/projects/libgaminggear
 Version: @V_MAJOR@.@V_MINOR@.@V_MICRO@
 Requires.private: gtk+-2.0
 Cflags: -I${includedir}/gaminggear-@V_MAJOR@
