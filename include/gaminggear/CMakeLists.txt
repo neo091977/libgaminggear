@@ -26,6 +26,7 @@ INSTALL(
     audio_notificator.h
     evdev.h
     gaminggear_device.h
+    gaminggear_fx_plugin.h
     gaminggear_hscale.h
     gaminggear_macro_dialog.h
     gaminggear_macro_editor_dialog.h
@@ -35,6 +36,7 @@ INSTALL(
     gaminggear_xy_scales.h
 	${CMAKE_CURRENT_BINARY_DIR}/gaminggear.h
     gdk_key_translations.h
+    gfx.h
     hid_uid.h
     key_translations.h
     macro.h

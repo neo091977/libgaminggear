@@ -1,0 +1,24 @@
+ADD_EXECUTABLE(gaminggearfxinfo
+  gaminggearfxinfo.c
+)
+
+ADD_DEPENDENCIES(gaminggearfxinfo
+  libgaminggearfx
+  ${GLIB2_LIBRARIES}
+)
+
+SET_TARGET_PROPERTIES(gaminggearfxinfo
+  PROPERTIES
+    COMPILE_FLAGS "-fvisibility=hidden"
+)
+
+TARGET_LINK_LIBRARIES(gaminggearfxinfo
+  libgaminggearfx
+  ${GLIB2_LIBRARIES}
+)
+
+INSTALL(TARGETS gaminggearfxinfo
+  DESTINATION bin
+  PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+)
+  
