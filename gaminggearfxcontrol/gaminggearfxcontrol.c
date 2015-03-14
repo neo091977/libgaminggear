@@ -18,17 +18,58 @@
 #include "gaminggear/gfx.h"
 #include <glib.h>
 #include <stdlib.h>
+#include <string.h>
 
+static guint const description_size = 255;
+
+static gchar *parameter_device = NULL;
+static gboolean parameter_all = FALSE;
+static gboolean parameter_single = FALSE;
 static gboolean parameter_color = FALSE;
+static gint parameter_light_index = -1;
 static gint64 parameter_color1 = 0;
 
 static GOptionEntry entries[] = {
+	{ "device", 'd', 0, G_OPTION_ARG_STRING, &parameter_device, "use device STRING", "STRING" },
+	{ "light", 'l', 0, G_OPTION_ARG_INT, &parameter_light_index, "use light index INDEX", "INDEX" },
+	{ "all", 'a', 0, G_OPTION_ARG_NONE, &parameter_all, "set all colors", NULL },
+	{ "single", 'a', 0, G_OPTION_ARG_NONE, &parameter_single, "set single color", NULL },
 	{ "color", 'c', 0, G_OPTION_ARG_NONE, &parameter_color, "set plain color", NULL },
-	{ "color1", '1', 0, G_OPTION_ARG_INT64, &parameter_color1, "COLOR", "COLOR" },
+	{ "color1", '1', 0, G_OPTION_ARG_INT64, &parameter_color1, "COLOR1", "COLOR1" },
 	{ NULL }
 };
 
 static gboolean post_parse_func(GOptionContext *context, GOptionGroup *group, gpointer data, GError **error) {
+	if (!parameter_all && !parameter_single) {
+		g_set_error(error, G_OPTION_ERROR, G_OPTION_ERROR_FAILED, "give one of -all or --single");
+		return FALSE;
+	}
+
+	if (parameter_all && parameter_single) {
+		g_set_error(error, G_OPTION_ERROR, G_OPTION_ERROR_FAILED, "--all and --single are mutual exclusive");
+		return FALSE;
+	}
+
+	if ((parameter_all || parameter_single) && !parameter_color) {
+		g_set_error(error, G_OPTION_ERROR, G_OPTION_ERROR_FAILED, "--all and --single need --color");
+		return FALSE;
+	}
+
+	if (parameter_all && (parameter_device || parameter_light_index != -1)) {
+		g_set_error(error, G_OPTION_ERROR, G_OPTION_ERROR_FAILED, "--all does not need --device and --light");
+		return FALSE;
+	}
+
+	if (parameter_single && !parameter_device && parameter_light_index == -1) {
+		g_set_error(error, G_OPTION_ERROR, G_OPTION_ERROR_FAILED, "--single needs --device and --light");
+		return FALSE;
+	}
+
+	if (parameter_color && !parameter_color1) {
+		g_set_error(error, G_OPTION_ERROR, G_OPTION_ERROR_FAILED, "--color needs --color1");
+		return FALSE;
+	}
+
 	return TRUE;
 }
 
@@ -49,12 +90,40 @@ static GOptionContext *commandline_parse(int *argc, char ***argv) {
 }
 
 static void commandline_free(GOptionContext *context) {
+	g_free(parameter_device);
+}
+
+static gint get_device_index(gchar const *parameter) {
+	GfxResult gfx_result;
+	unsigned int num_devices;
+	unsigned int device_index;
+	char description[description_size];
+	GfxDevtype device_type;
+
+	gfx_result = gfx_get_num_devices(&num_devices);
+	if (gfx_result != GFX_SUCCESS) {
+		g_warning("There was an error getting devices");
+		return -1;
+	}
+
+	for (device_index = 0; device_index < num_devices; ++device_index) {
+		gfx_result = gfx_get_device_description(device_index, description, description_size, &device_type);
+		if (gfx_result != GFX_SUCCESS) {
+			g_warning("There was an error getting device description");
+			return -1;
+		}
+
+		if (!strcmp(description, parameter))
+			return device_index;
+	}
+	return -1;
 }
 
 int main(int argc, char **argv) {
 	GOptionContext *context;
 	GfxResult gfx_result;
 	int retval = EXIT_FAILURE;
+	gint device_index;
 
 	context = commandline_parse(&argc, &argv);
 
@@ -64,15 +133,30 @@ int main(int argc, char **argv) {
 		goto exit_1;
 	}
 
-	if (parameter_color) {
-		gfx_result = gfx_light(GFX_LOCATION_ALL, parameter_color1);
-		if (gfx_result != GFX_SUCCESS) {
-			g_warning("There was an error setting color");
+	if (parameter_single) {
+		device_index = get_device_index(parameter_device);
+		if (device_index == -1) {
+			g_warning("no such device");
 			goto exit_2;
+		}
+		if (parameter_color) {
+			gfx_result = gfx_set_light_color(device_index, parameter_light_index, parameter_color1);
+			if (gfx_result != GFX_SUCCESS) {
+				g_warning("There was an error setting color");
+				goto exit_2;
+			}
+		}
+	} else if (parameter_all) {
+		if (parameter_color) {
+			gfx_result = gfx_light(GFX_LOCATION_ALL, parameter_color1);
+			if (gfx_result != GFX_SUCCESS) {
+				g_warning("There was an error setting colors");
+				goto exit_2;
+			}
 		}
 	}
 
-	if (parameter_color) {
+	if (parameter_all || parameter_single) {
 		gfx_result = gfx_update();
 		if (gfx_result != GFX_SUCCESS) {
 			g_warning("There was an error updating");
