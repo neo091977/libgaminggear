@@ -150,7 +150,7 @@ static gpointer worker(gpointer data) {
 }
 
 static PluginListData *plugin_list_data_new(gchar const * const filename) {
-	GaminggearFxPlugin *(*gaminggear_fx_plugin_new)(void);
+	GAMINGGEAR_FX_PLUGIN_NEW gaminggear_fx_plugin_new;
 	GaminggearFxPlugin *plugin;
 	PluginListData *list_data;
 	GModule *module;
@@ -159,7 +159,7 @@ static PluginListData *plugin_list_data_new(gchar const * const filename) {
 	if (!module)
 		goto exit_1;
 
-	if (!g_module_symbol(module, "gaminggear_fx_plugin_new", (gpointer *)&gaminggear_fx_plugin_new))
+	if (!g_module_symbol(module, GAMINGGEAR_FX_SYMBOL_PLUGIN_NEW, (gpointer *)&gaminggear_fx_plugin_new))
 		goto exit_2;
 
 	plugin = gaminggear_fx_plugin_new();

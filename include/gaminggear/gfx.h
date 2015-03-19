@@ -126,9 +126,7 @@ typedef enum {
 
 GfxResult gfx_initialize(void);
 GfxResult gfx_release(void);
-
 GfxResult gfx_get_num_devices(unsigned int * const num_devices);
-
 GfxResult gfx_get_device_description(unsigned int const device_index, char * const device_description,
 		unsigned int const device_description_size, GfxDevtype * const device_type);
 GfxResult gfx_get_num_lights(unsigned int const device_index, unsigned int *const num_lights);
@@ -138,10 +136,38 @@ GfxResult gfx_get_light_position(unsigned int const device_index, unsigned int c
 		GfxPosition * const light_position);
 GfxResult gfx_get_light_color(unsigned int const device_index, unsigned int const light_index, uint32_t * const color);
 GfxResult gfx_set_light_color(unsigned int const device_index, unsigned int const light_index, uint32_t const color);
-
 GfxResult gfx_reset(void);
 GfxResult gfx_update(void);
 GfxResult gfx_light(uint32_t const location_mask, uint32_t const color);
+
+#define GFX_SYMBOL_INITIALIZE "gfx_initialize"
+#define GFX_SYMBOL_RELEASE "gfx_release"
+#define GFX_SYMBOL_GET_NUM_DEVICES "gfx_get_num_devices"
+#define GFX_SYMBOL_GET_DEVICE_DESCRIPTION "gfx_get_device_description"
+#define GFX_SYMBOL_GET_NUM_LIGHTS "gfx_get_num_lights"
+#define GFX_SYMBOL_GET_LIGHT_DESCRIPTION "gfx_get_light_description"
+#define GFX_SYMBOL_GET_LIGHT_POSITION "gfx_get_light_position"
+#define GFX_SYMBOL_GET_LIGHT_COLOR "gfx_get_light_color"
+#define GFX_SYMBOL_SET_LIGHT_COLOR "gfx_set_light_color"
+#define GFX_SYMBOL_RESET "gfx_reset"
+#define GFX_SYMBOL_UPDATE "gfx_update"
+#define GFX_SYMBOL_LIGHT "gfx_light"
+
+typedef GfxResult (*GFX_INITIALIZE)(void);
+typedef GfxResult (*GFX_RELEASE)(void);
+typedef GfxResult (*GFX_GET_NUM_DEVICES)(unsigned int * const num_devices);
+typedef GfxResult (*GFX_GET_DEVICE_DESCRIPTION)(unsigned int const device_index, char * const device_description,
+		unsigned int const device_description_size, GfxDevtype * const device_type);
+typedef GfxResult (*GFX_GET_NUM_LIGHTS)(unsigned int const device_index, unsigned int *const num_lights);
+typedef GfxResult (*GFX_GET_LIGHT_DESCRIPTION)(unsigned int const device_index, unsigned int const light_index,
+		char * const light_description, unsigned int const light_description_size);
+typedef GfxResult (*GFX_GET_LIGHT_POSITION)(unsigned int const device_index, unsigned int const light_index,
+		GfxPosition * const light_position);
+typedef GfxResult (*GFX_GET_LIGHT_COLOR)(unsigned int const device_index, unsigned int const light_index, uint32_t * const color);
+typedef GfxResult (*GFX_SET_LIGHT_COLOR)(unsigned int const device_index, unsigned int const light_index, uint32_t const color);
+typedef GfxResult (*GFX_RESET)(void);
+typedef GfxResult (*GFX_UPDATE)(void);
+typedef GfxResult (*GFX_LIGHT)(uint32_t const location_mask, uint32_t const color);
 
 #ifdef  __cplusplus
 }

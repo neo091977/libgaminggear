@@ -1,4 +1,5 @@
  * Added: GaminggearRWLock
+ * Added: definitions for runtime dynamic loading 
  * Improved: gfx supports threading
  * Improved: gaminggearfxcontrol now has more options to control single lights
 
