@@ -2,6 +2,7 @@
  * Added: definitions for runtime dynamic loading 
  * Improved: gfx supports threading
  * Improved: gaminggearfxcontrol now has more options to control single lights
+ * Fixed: pkg-config file
 
 0.7.0 2015-03-10
 
