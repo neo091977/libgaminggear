@@ -11,7 +11,7 @@ IF(CMAKE_COMPILER_IS_GNUCC)
   # * Force gcc to generate single line error messages (used for eclipse cdt)
   # * Play it save with all warning messages
   # * Define GNU source for some extras
-  ADD_DEFINITIONS(-fmessage-length=0 -Wall -D_GNU_SOURCE)
+  ADD_DEFINITIONS(-fmessage-length=0 -Wall -Wl,--no-undefined -D_GNU_SOURCE)
 ENDIF(CMAKE_COMPILER_IS_GNUCC)
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DG_DISABLE_CAST_CHECKS")
 
