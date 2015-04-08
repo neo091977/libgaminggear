@@ -17,6 +17,7 @@
 
 #include "gaminggear_macro_tree_store.h"
 #include "gaminggearwidget_helper.h"
+#include "i18n-lib.h"
 #include <string.h>
 
 #define GAMINGGEAR_MACRO_TREE_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_TREE_STORE_TYPE, GaminggearMacroTreeStoreClass))
@@ -194,7 +195,7 @@ gboolean gaminggear_macro_tree_store_add_macros(GaminggearMacroTreeStore *macro_
 		macro_names = gaminggear_macros_get_macros(gaminggear_macros, *macroset_name, NULL, &error);
 		/* This happens only if macroset is not found */
 		if (!macro_names)
-			g_error("gaminggear_macro_tree_store_add_macros(): %s", error->message);
+			g_error(_("gaminggear_macro_tree_store_add_macros(): %s"), error->message);
 
 		/*
 		 * Add macroset event if its empty.
@@ -209,7 +210,7 @@ gboolean gaminggear_macro_tree_store_add_macros(GaminggearMacroTreeStore *macro_
 		for (macro_name = macro_names; *macro_name; ++macro_name) {
 			gaminggear_macro = gaminggear_macros_get(gaminggear_macros, *macroset_name, *macro_name, &error);
 			if (error)
-				g_error("%s", error->message);
+				g_error(_("%s"), error->message);
 
 			/* not adding already included macros */
 			if (gaminggear_macro_tree_store_is_macro_name_unique(macro_tree_store, &macroset_iter, *macro_name)) {

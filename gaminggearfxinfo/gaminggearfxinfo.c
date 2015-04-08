@@ -16,7 +16,10 @@
  */
 
 #include "gaminggear/gfx.h"
+#include "config.h"
+#include "i18n.h"
 #include <glib.h>
+#include <locale.h>
 #include <stdlib.h>
 
 static unsigned int const description_size = 255;
@@ -24,13 +27,13 @@ static unsigned int const description_size = 255;
 static void print_device_type(GfxDevtype device_type) {
 	switch(device_type) {
 	case GFX_DEVTYPE_MOUSE:
-		g_print("  DevType: MOUSE\n");
+		g_print(_("  DevType: MOUSE\n"));
 		break;
 	case GFX_DEVTYPE_KEYBOARD:
-		g_print("  DevType: KEYBOARD\n");
+		g_print(_("  DevType: KEYBOARD\n"));
 		break;
 	default:
-		g_print("  DevType: INVALID (%u)\n", device_type);
+		g_print(_("  DevType: INVALID (%u)\n"), device_type);
 		break;
 	}
 }
@@ -47,33 +50,38 @@ int main(int argc, char **argv) {
 	GfxPosition light_position;
 	uint32_t light_color;
 
+	setlocale(LC_ALL, "");
+	bindtextdomain(PROJECT_NAME, LOCALEDIR);
+	bind_textdomain_codeset(PROJECT_NAME, "UTF-8");
+	textdomain(PROJECT_NAME);
+
 	gfx_result = gfx_initialize();
 	if (gfx_result != GFX_SUCCESS) {
-		g_warning("There was an error initializing the fx system");
+		g_warning(_("There was an error initializing the fx system"));
 		goto exit_1;
 	}
 
 	gfx_result = gfx_get_num_devices(&num_devices);
 	if (gfx_result != GFX_SUCCESS) {
-		g_warning("There was an error getting devices");
+		g_warning(_("There was an error getting devices"));
 		goto exit_2;
 	}
 
 	for (device_index = 0; device_index < num_devices; ++device_index) {
-		g_print("Device[%u]\n", device_index);
+		g_print(_("Device[%u]\n"), device_index);
 
 		gfx_result = gfx_get_device_description(device_index, description, description_size, &device_type);
 		if (gfx_result != GFX_SUCCESS) {
-			g_warning("There was an error getting device description");
+			g_warning(_("There was an error getting device description"));
 			goto exit_2;
 		}
 
-		g_print("  Description: %s\n", description);
+		g_print(_("  Description: %s\n"), description);
 		print_device_type(device_type);
 
 		gfx_result = gfx_get_num_lights(device_index, &num_lights);
 		if (gfx_result != GFX_SUCCESS) {
-			g_warning("There was an error getting lights");
+			g_warning(_("There was an error getting lights"));
 			goto exit_2;
 		}
 
@@ -82,24 +90,24 @@ int main(int argc, char **argv) {
 
 			gfx_result = gfx_get_light_description(device_index, light_index, description, description_size);
 			if (gfx_result != GFX_SUCCESS) {
-				g_warning("There was an error getting light description");
+				g_warning(_("There was an error getting light description"));
 				goto exit_2;
 			}
-			g_print("    Description: %s\n", description);
+			g_print(_("    Description: %s\n"), description);
 
 			gfx_result = gfx_get_light_position(device_index, light_index, &light_position);
 			if (gfx_result != GFX_SUCCESS) {
-				g_warning("There was an error getting light position");
+				g_warning(_("There was an error getting light position"));
 				goto exit_2;
 			}
 			g_print("    Position: %u, %u, %u\n", light_position.x, light_position.y, light_position.z);
 
 			gfx_result = gfx_get_light_color(device_index, light_index, &light_color);
 			if (gfx_result != GFX_SUCCESS) {
-				g_warning("There was an error getting light color");
+				g_warning(_("There was an error getting light color"));
 				goto exit_2;
 			}
-			g_print("    Color: 0x%02x, 0x%02x, 0x%02x, 0x%02x\n",
+			g_print(_("    Color: 0x%02x, 0x%02x, 0x%02x, 0x%02x\n"),
 					gfx_color_get_brightness_raw(light_color),
 					gfx_color_get_red_raw(light_color),
 					gfx_color_get_green_raw(light_color),
@@ -111,7 +119,7 @@ int main(int argc, char **argv) {
 exit_2:
 	gfx_result = gfx_release();
 	if (gfx_result != GFX_SUCCESS) {
-		g_warning("There was an error releasing the fx system");
+		g_warning(_("There was an error releasing the fx system"));
 		retval = EXIT_FAILURE;
 		goto exit_1;
 	}

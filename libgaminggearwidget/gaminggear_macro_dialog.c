@@ -17,6 +17,7 @@
 
 #include "gaminggear/gaminggear_macro_dialog.h"
 #include "gaminggear_macro_combo_box.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_DIALOG_TYPE, GaminggearMacroDialogClass))
 #define IS_GAMINGGEAR_MACRO_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_DIALOG_TYPE))
@@ -79,7 +80,7 @@ GtkWidget *gaminggear_macro_dialog_new(GtkWindow *parent) {
 
 	gtk_dialog_add_button(GTK_DIALOG(macro_dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT);
 
-	gtk_window_set_title(GTK_WINDOW(macro_dialog), "Select macro");
+	gtk_window_set_title(GTK_WINDOW(macro_dialog), _("Select macro"));
 	gtk_window_set_transient_for(GTK_WINDOW(macro_dialog), parent);
 	gtk_window_set_modal(GTK_WINDOW(macro_dialog), TRUE);
 	gtk_window_set_destroy_with_parent(GTK_WINDOW(macro_dialog), TRUE);

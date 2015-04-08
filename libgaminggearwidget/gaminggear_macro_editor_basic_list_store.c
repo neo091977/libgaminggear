@@ -18,6 +18,7 @@
 #include "gaminggear_macro_editor_basic_list_store.h"
 #include "gaminggear/gdk_key_translations.h"
 #include "gaminggearwidget_helper.h"
+#include "i18n-lib.h"
 #include <stdlib.h>
 
 #define GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_TYPE, GaminggearMacroEditorBasicListStoreClass))
@@ -308,7 +309,7 @@ GaminggearMacroKeystrokes *gaminggear_macro_editor_basic_list_store_get_keystrok
 			added = FALSE;
 		} else {
 			if (added)
-				g_critical("dangling period");
+				g_critical(_("dangling period"));
 			gaminggear_macro_keystroke_set_period(&keystroke, period);
 		}
 

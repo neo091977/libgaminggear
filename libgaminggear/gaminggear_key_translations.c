@@ -17,6 +17,7 @@
 
 #include "gaminggear/key_translations.h"
 #include "gaminggear/macro.h"
+#include "i18n-lib.h"
 #include <linux/input.h>
 
 /*
@@ -88,7 +89,7 @@ guint8 gaminggear_xkeycode_to_hid(guint16 xkeycode) {
 	guint8 result;
 	result = gaminggear_kbd_keycode_to_hid(gaminggear_xkeycode_to_kbd_keycode(xkeycode));
 	if (result == 0)
-		g_warning("in gaminggear_xkeycode_to_hid: xkeycode 0x%02x delivered zero value!", xkeycode);
+		g_warning(_("in gaminggear_xkeycode_to_hid: xkeycode 0x%02x delivered zero value!"), xkeycode);
 	return result;
 }
 
@@ -96,6 +97,6 @@ guint16 gaminggear_hid_to_xkeycode(guint8 usage_id) {
 	guint16 result;
 	result = gaminggear_kbd_keycode_to_xkeycode(gaminggear_hid_to_kbd_keycode(usage_id));
 	if (result == 0)
-		g_warning("in gaminggear_hid_to_xkeycode: usage_id 0x%02x! delivered zero value", usage_id);
+		g_warning(_("in gaminggear_hid_to_xkeycode: usage_id 0x%02x! delivered zero value"), usage_id);
 	return result;
 }

@@ -17,6 +17,7 @@
 
 #include "gaminggear_macro_editor_basic_tree_view.h"
 #include "gaminggear/gdk_key_translations.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_TYPE, GaminggearMacroEditorBasicTreeViewClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_TYPE))
@@ -157,17 +158,17 @@ static GtkWidget *subsubmenu(GaminggearMacroEditorBasicTreeView *tree_view, guin
 
 	menu = gtk_menu_new();
 
-	item = gtk_menu_item_new_with_label("Down");
+	item = gtk_menu_item_new_with_label(_("Down"));
 	g_object_set_data(G_OBJECT(item), macro_list_key_key, GUINT_TO_POINTER(key));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_insert_button_down_cb), tree_view);
 
-	item = gtk_menu_item_new_with_label("Up");
+	item = gtk_menu_item_new_with_label(_("Up"));
 	g_object_set_data(G_OBJECT(item), macro_list_key_key, GUINT_TO_POINTER(key));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_insert_button_up_cb), tree_view);
 
-	item = gtk_menu_item_new_with_label("Click");
+	item = gtk_menu_item_new_with_label(_("Click"));
 	g_object_set_data(G_OBJECT(item), macro_list_key_key, GUINT_TO_POINTER(key));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_insert_button_click_cb), tree_view);
@@ -202,11 +203,11 @@ static GtkWidget *menu_new(GaminggearMacroEditorBasicTreeView *tree_view) {
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_remove_cb), tree_view);
 
-	item = gtk_menu_item_new_with_label("Insert delay");
+	item = gtk_menu_item_new_with_label(_("Insert delay"));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_insert_delay_cb), tree_view);
 
-	item = gtk_menu_item_new_with_label("Insert mouse event");
+	item = gtk_menu_item_new_with_label(_("Insert mouse event"));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), submenu(tree_view));
 

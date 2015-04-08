@@ -19,6 +19,7 @@
 #include "gaminggear_macro_editor.h"
 #include "gaminggear_macro_editor_dialog_internal.h"
 #include "gaminggear_dialogs.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_DIALOG_TYPE, GaminggearMacroEditorDialogClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_DIALOG_TYPE))
@@ -54,7 +55,7 @@ static void gaminggear_macro_editor_dialog_load_macros(GaminggearMacroEditorDial
 
 	gaminggear_macros = gaminggear_macros_load();
 	if (error) {
-		g_warning("Error loading macros: %s", error->message);
+		g_warning(_("Error loading macros: %s"), error->message);
 		g_error_free(error);
 		return;
 	}
@@ -75,7 +76,7 @@ gboolean gaminggear_macro_editor_dialog_save_macros(GaminggearMacroEditorDialog 
 	gaminggear_macros_free(gaminggear_macros);
 
 	if (error) {
-		gaminggear_warning_dialog(GTK_WINDOW(dialog), "Error saving macros", error->message);
+		gaminggear_warning_dialog(GTK_WINDOW(dialog), _("Error saving macros"), error->message);
 		g_clear_error(&error);
 	} else
 		gaminggear_macro_editor_set_modified(dialog->priv->macro_editor, FALSE);
@@ -113,7 +114,7 @@ GtkWidget *gaminggear_macro_editor_dialog_new(GtkWindow *parent) {
 			GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
 			NULL);
-	gtk_window_set_title(GTK_WINDOW(macro_editor_dialog), "Edit macros");
+	gtk_window_set_title(GTK_WINDOW(macro_editor_dialog), _("Edit macros"));
 	gtk_window_set_transient_for(GTK_WINDOW(macro_editor_dialog), parent);
 	gtk_window_set_modal(GTK_WINDOW(macro_editor_dialog), TRUE);
 	gtk_window_set_destroy_with_parent(GTK_WINDOW(macro_editor_dialog), TRUE);

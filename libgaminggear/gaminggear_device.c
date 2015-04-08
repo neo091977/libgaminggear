@@ -18,6 +18,7 @@
 #include "gaminggear/gaminggear_device.h"
 #include "gaminggear/threads.h"
 #include "gaminggear/evdev.h"
+#include "i18n-lib.h"
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
@@ -56,13 +57,13 @@ int gaminggear_device_open(GaminggearDevice *gaminggear_device, gchar const *key
 
 	path = gaminggear_device_get_path(gaminggear_device, key);
 	if (!path) {
-		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, "GaminggearDevice: error opening file for key %s: no path", key);
+		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, _("GaminggearDevice: error opening file for key %s: no path"), key);
 		return -1;
 	}
 
 	fd = open(path, flags, 0);
 	if (fd < 0)
-		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), "GaminggearDevice: error opening %s for key %s: %s", path, key, g_strerror(errno));
+		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("GaminggearDevice: error opening %s for key %s: %s"), path, key, g_strerror(errno));
 
 	g_hash_table_insert(gaminggear_device->priv->fds, g_strdup(key), GINT_TO_POINTER(fd));
 
@@ -74,13 +75,13 @@ gboolean gaminggear_device_close(GaminggearDevice *gaminggear_device, gchar cons
 	int fd;
 
 	if (!g_hash_table_lookup_extended(gaminggear_device->priv->fds, key, NULL, &value)) {
-		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, "GaminggearDevice: error closing fd for key %s: no entry", key);
+		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, _("GaminggearDevice: error closing fd for key %s: no entry"), key);
 		return FALSE;
 	}
 
 	fd = GPOINTER_TO_INT(value);
 	if (close(fd) < 0) {
-		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), "GaminggearDevice: error closing fd for key %s: %s", key, g_strerror(errno));
+		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("GaminggearDevice: error closing fd for key %s: %s"), key, g_strerror(errno));
 		return FALSE;
 	}
 	g_hash_table_remove(gaminggear_device->priv->fds, key);
@@ -148,7 +149,7 @@ static void destroy_str(gpointer data) {
 static void destroy_fd(gpointer data) {
 	int fd = GPOINTER_TO_INT(data);
 	if (close(fd) < 0)
-		g_warning("GaminggearDevice: error closing fd %i: %s", fd, g_strerror(errno));
+		g_warning(_("GaminggearDevice: error closing fd %i: %s"), fd, g_strerror(errno));
 }
 
 static void gaminggear_device_init(GaminggearDevice *gaminggear_dev) {

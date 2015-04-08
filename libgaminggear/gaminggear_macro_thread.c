@@ -20,6 +20,7 @@
 #include "gaminggear_helper.h"
 #include "gaminggear/threads.h"
 #include "gaminggear/evdev.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_THREAD_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_THREAD_TYPE, GaminggearMacroThreadClass))
 #define IS_GAMINGGEAR_MACRO_THREAD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_THREAD_TYPE))
@@ -119,7 +120,7 @@ static gpointer thread(gpointer user_data) {
 	guint loop_count, loop;
 	GaminggearMacroKeystroke const *keystroke;
 
-	g_debug("Playing macro %s/%s", priv->macro->macroset, priv->macro->macro);
+	g_debug(_("Playing macro %s/%s"), priv->macro->macroset, priv->macro->macro);
 
 	key_count = gaminggear_macro_keystrokes_get_count(&priv->macro->keystrokes);
 	loop_count = priv->macro->keystrokes.loop;
@@ -130,16 +131,16 @@ static gpointer thread(gpointer user_data) {
 			gaminggear_mutex_lock(&priv->mutex);
 
 			if (priv->paused && !priv->cancelled)
-				g_debug("Pausing macro %s/%s", priv->macro->macroset, priv->macro->macro);
+				g_debug(_("Pausing macro %s/%s"), priv->macro->macroset, priv->macro->macro);
 			
 			while (priv->paused && !priv->cancelled) {
 				gaminggear_cond_wait(&priv->condition, &priv->mutex);
 				if (!priv->paused && !priv->cancelled)
-					g_debug("Continuing macro %s/%s", priv->macro->macroset, priv->macro->macro);
+					g_debug(_("Continuing macro %s/%s"), priv->macro->macroset, priv->macro->macro);
 			}
 			
 			if (priv->cancelled) {
-				g_debug("Cancelling macro %s/%s", priv->macro->macroset, priv->macro->macro);
+				g_debug(_("Cancelling macro %s/%s"), priv->macro->macroset, priv->macro->macro);
 				gaminggear_mutex_unlock(&priv->mutex);
 				goto exit;
 			}
@@ -158,7 +159,7 @@ static gpointer thread(gpointer user_data) {
 		}
 	}
 
-	g_debug("Finished macro %s/%s", priv->macro->macroset, priv->macro->macro);
+	g_debug(_("Finished macro %s/%s"), priv->macro->macroset, priv->macro->macro);
 exit:
 	gaminggear_macro_thread_set_running(macro_thread, FALSE);
 	return NULL;
@@ -184,7 +185,7 @@ GaminggearMacroThread *gaminggear_macro_thread_new(int kbd_file, int mouse_file,
 	priv->thread = gaminggear_thread_try_new("GaminggearMacro", thread, macro_thread, &error);
 
 	if (error) {
-		g_warning("Can't create macro thread: %s", error->message);
+		g_warning(_("Can't create macro thread: %s"), error->message);
 		g_clear_error(&error);
 	}
 	

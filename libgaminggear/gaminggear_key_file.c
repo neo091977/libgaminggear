@@ -17,6 +17,7 @@
 
 #include "gaminggear_key_file.h"
 #include "gaminggear_helper.h"
+#include "i18n-lib.h"
 #include <string.h>
 
 struct _GaminggearKeyFile {
