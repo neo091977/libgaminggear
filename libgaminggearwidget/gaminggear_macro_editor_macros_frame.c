@@ -17,6 +17,7 @@
 
 #include "gaminggear_macro_editor_macros_frame.h"
 #include "gaminggear_macro_tree_view.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_TYPE, GaminggearMacroEditorMacrosFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_TYPE))
@@ -49,7 +50,7 @@ GtkWidget *gaminggear_macro_editor_macros_frame_new(void) {
 	GaminggearMacroEditorMacrosFrame *macros_frame;
 
 	macros_frame = g_object_new(GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_TYPE,
-			"label", "Macros",
+			"label", _("Macros"),
 			NULL);
 
 	return GTK_WIDGET(macros_frame);
@@ -99,7 +100,7 @@ static void gaminggear_macro_editor_macros_frame_init(GaminggearMacroEditorMacro
 	hbox = gtk_hbox_new(FALSE, 0);
 	scrolled_window = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	button = gtk_button_new_with_label("Add macroset");
+	button = gtk_button_new_with_label(_("Add macroset"));
 
 	gtk_container_add(GTK_CONTAINER(scrolled_window), GTK_WIDGET(priv->tree_view));
 

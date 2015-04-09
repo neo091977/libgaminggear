@@ -19,6 +19,7 @@
 #include "gaminggear_macro_editor_advanced.h"
 #include "gaminggear_macro_editor_basic.h"
 #include "g_cclosure_gaminggear_marshaller.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_TYPE, GaminggearMacroEditorKeySequenceFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_TYPE))
@@ -187,7 +188,7 @@ GtkWidget *gaminggear_macro_editor_key_sequence_frame_new(void) {
 	GaminggearMacroEditorKeySequenceFrame *key_sequence_frame;
 
 	key_sequence_frame = g_object_new(GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_TYPE,
-			"label", "Key sequence",
+			"label", _("Key sequence"),
 			NULL);
 
 	set_clear_button_sensitive(key_sequence_frame);
@@ -219,7 +220,7 @@ static void gaminggear_macro_editor_key_sequence_frame_init(GaminggearMacroEdito
 
 	hbox = gtk_hbox_new(FALSE, 0);
 
-	priv->clear_button = GTK_BUTTON(gtk_button_new_with_label("Clear"));
+	priv->clear_button = GTK_BUTTON(gtk_button_new_with_label(_("Clear")));
 	g_object_ref_sink(priv->clear_button);
 
 	priv->views[0] = GAMINGGEAR_MACRO_EDITOR_INTERFACE(gaminggear_macro_editor_advanced_new());

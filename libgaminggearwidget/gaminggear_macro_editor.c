@@ -27,6 +27,7 @@
 #include "gaminggearwidget_helper.h"
 #include "gaminggear/gdk_key_translations.h"
 #include "gaminggear/hid_uid.h"
+#include "i18n-lib.h"
 #include <time.h>
 
 #define GAMINGGEAR_MACRO_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_TYPE, GaminggearMacroEditorClass))
@@ -135,8 +136,8 @@ static void store_if_needed(GaminggearMacroEditor *macro_editor) {
 			!gtk_tree_row_reference_valid(priv->reference))
 		return;
 
-	dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "Would you like to store actual modifications?");
-	gtk_window_set_title(GTK_WINDOW(dialog), "Store modifications");
+	dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _("Would you like to store actual modifications?"));
+	gtk_window_set_title(GTK_WINDOW(dialog), _("Store modifications"));
 
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_YES)
 		store(macro_editor);
@@ -197,8 +198,8 @@ static GdkKeymapKey *get_key_with_group_0(GdkKeymapKey *keys, gint n_keys) {
 		if (keys[i].group == 0)
 			return &keys[i];
 
+	g_warning(_("Could not find key for group 0 in keymap"));
 	/* fallback: return first element */
-	g_warning("can't find keycode for group 0");
 	return keys;
 }
 
@@ -236,7 +237,7 @@ static void paste_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *fra
 			keyval = gdk_unicode_to_keyval(character);
 
 			if (!gdk_keymap_get_entries_for_keyval(keymap, keyval, &keys, &n_keys)) {
-				g_warning("keyval 0x%04x has no keycode!", keyval);
+				g_warning(_("Keyval 0x%04x has no corresponding keys in keymap"), keyval);
 				break;
 			}
 
@@ -407,7 +408,7 @@ static void gaminggear_macro_editor_init(GaminggearMacroEditor *macro_editor) {
 	vbox = gtk_vbox_new(FALSE, 0);
 	hbox = gtk_hbox_new(FALSE, 0);
 
-	priv->save_button = GTK_BUTTON(gtk_button_new_with_label("Save"));
+	priv->save_button = GTK_BUTTON(gtk_button_new_with_label(_("Save")));
 	g_object_ref_sink(priv->save_button);
 	priv->macros_frame = GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME(gaminggear_macro_editor_macros_frame_new());
 	g_object_ref_sink(priv->macros_frame);

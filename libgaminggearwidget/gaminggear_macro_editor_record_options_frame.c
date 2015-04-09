@@ -18,6 +18,7 @@
 #include "gaminggear_macro_editor_record_options_frame.h"
 #include "gaminggear_macro_editor_advanced_list_store.h"
 #include "gaminggear_helper.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_TYPE, GaminggearMacroEditorRecordOptionsFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_TYPE))
@@ -52,7 +53,7 @@ GtkWidget *gaminggear_macro_editor_record_options_frame_new(void) {
 	GaminggearMacroEditorRecordOptionsFrame *record_options_frame;
 
 	record_options_frame = g_object_new(GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_TYPE,
-			"label", "Record options",
+			"label", _("Record options"),
 			NULL);
 
 	return GTK_WIDGET(record_options_frame);
@@ -93,15 +94,15 @@ static void gaminggear_macro_editor_record_options_frame_init(GaminggearMacroEdi
 	vbox1 = gtk_vbox_new(FALSE, 0);
 	vbox2 = gtk_vbox_new(FALSE, 0);
 	hbox = gtk_hbox_new(FALSE, 0);
-	delay_frame = gtk_frame_new("Delay");
+	delay_frame = gtk_frame_new(_("Delay"));
 
-	priv->record_button = GTK_TOGGLE_BUTTON(gtk_toggle_button_new_with_label("Record"));
+	priv->record_button = GTK_TOGGLE_BUTTON(gtk_toggle_button_new_with_label(_("Record")));
 	g_object_ref_sink(priv->record_button);
-	priv->paste_button = GTK_BUTTON(gtk_button_new_with_label("Paste"));
+	priv->paste_button = GTK_BUTTON(gtk_button_new_with_label(_("Paste")));
 	g_object_ref_sink(priv->paste_button);
-	priv->delay_as_recorded = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label(NULL, "As recorded"));
+	priv->delay_as_recorded = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label(NULL, _("As recorded")));
 	g_object_ref_sink(priv->delay_as_recorded);
-	priv->delay_fixed = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(priv->delay_as_recorded, "Fixed"));
+	priv->delay_fixed = GTK_RADIO_BUTTON(gtk_radio_button_new_with_label_from_widget(priv->delay_as_recorded, _("Fixed")));
 	g_object_ref_sink(priv->delay_fixed);
 	priv->delay_value = GTK_SPIN_BUTTON(gtk_spin_button_new_with_range(0, G_GAMINGGEAR_MSEC_PER_SEC, 1));
 	g_object_ref_sink(priv->delay_value);

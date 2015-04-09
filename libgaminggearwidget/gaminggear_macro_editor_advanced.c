@@ -18,6 +18,7 @@
 #include "gaminggear_macro_editor_advanced.h"
 #include "gaminggear_macro_editor_advanced_list_store.h"
 #include "gaminggear_macro_editor_advanced_table.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_ADVANCED_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_TYPE, GaminggearMacroEditorAdvancedClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_ADVANCED_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_TYPE))
@@ -35,7 +36,7 @@ struct _GaminggearMacroEditorAdvancedPrivate {
 };
 
 static gchar const *gaminggear_macro_editor_advanced_name(GaminggearMacroEditorInterface *self) {
-	return "Advanced";
+	return _("Advanced");
 }
 
 static void gaminggear_macro_editor_advanced_set_keystrokes(GaminggearMacroEditorInterface *self, GaminggearMacroKeystrokes const *keystrokes) {

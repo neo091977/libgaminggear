@@ -21,6 +21,7 @@
 #include "gaminggearwidget_helper.h"
 #include "gaminggear_helper.h"
 #include "gaminggear_dialogs.h"
+#include "i18n-lib.h"
 #include <math.h>
 
 // TODO bookkeeping of max for speedup
@@ -415,9 +416,8 @@ static void add_single_action(GaminggearMacroEditorAdvancedListStore *macro_edit
 		if (iter_is_valid)
 			add_release(macro_editor_advanced_list_store, &iter, &press_iter, key, action);
 		else
-			g_warning("no up for %x", key);
+			g_warning(_("There is no corresponding press event for key %x"), key);
 	}
-
 }
 
 static void add_wait(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, glong rel_time) {
@@ -612,9 +612,9 @@ void gaminggear_macro_editor_advanced_list_store_set_keystrokes(GaminggearMacroE
 	if (keystroke) {
 		final_wait = gaminggear_macro_keystroke_get_period(keystroke);
 		if (final_wait != 0) {
-			text = g_strdup_printf("This macro contains a final wait of %u ms", final_wait);
+			text = g_strdup_printf(_("This macro contains a final wait of %u ms"), final_wait);
 			gaminggear_warning_dialog(NULL, text,
-					"Advanced view does not support final waits. Please switch to another view to add it again if needed.");
+					_("Advanced view does not support final waits. Please switch to another view to add it again if needed."));
 			g_free(text);
 		}
 	}

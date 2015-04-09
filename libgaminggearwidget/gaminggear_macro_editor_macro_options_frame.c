@@ -17,6 +17,7 @@
 
 #include "gaminggear_macro_editor_macro_options_frame.h"
 #include "gaminggear_macro_editor_advanced_list_store.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_TYPE, GaminggearMacroEditorMacroOptionsFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_TYPE))
@@ -47,7 +48,7 @@ GtkWidget *gaminggear_macro_editor_macro_options_frame_new(void) {
 	GaminggearMacroEditorMacroOptionsFrame *macro_options_frame;
 
 	macro_options_frame = g_object_new(GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_TYPE,
-			"label", "Macro options",
+			"label", _("Macro options"),
 			NULL);
 
 	return GTK_WIDGET(macro_options_frame);
@@ -74,7 +75,7 @@ static void gaminggear_macro_editor_macro_options_frame_init(GaminggearMacroEdit
 	hbox = gtk_hbox_new(FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
-	loop_label = gtk_label_new("Loop");
+	loop_label = gtk_label_new(_("Loop"));
 	gtk_box_pack_start(GTK_BOX(hbox), loop_label, FALSE, FALSE, 0);
 
 	priv->loop_button = GTK_SPIN_BUTTON(gtk_spin_button_new_with_range(1, 255, 1));

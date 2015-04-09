@@ -18,6 +18,7 @@
 #include "gaminggear_macro_editor_basic.h"
 #include "gaminggear_macro_editor_basic_list_store.h"
 #include "gaminggear_macro_editor_basic_tree_view.h"
+#include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_EDITOR_BASIC_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_TYPE, GaminggearMacroEditorBasicClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_BASIC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_TYPE))
@@ -35,7 +36,7 @@ struct _GaminggearMacroEditorBasicPrivate {
 };
 
 static gchar const *gaminggear_macro_editor_basic_name(GaminggearMacroEditorInterface *self) {
-	return "Basic";
+	return _("Basic");
 }
 
 static void gaminggear_macro_editor_basic_set_keystrokes(GaminggearMacroEditorInterface *self, GaminggearMacroKeystrokes const *keystrokes) {
