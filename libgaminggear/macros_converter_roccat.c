@@ -193,12 +193,12 @@ static void gaminggear_macro_import_iterate_keys(GaminggearMacros *gaminggear_ma
 
 	key_names = g_key_file_get_keys(other_macro_file, group_name, NULL, &error);
 	if (!key_names)
-		g_error(_("iterate_keys(): %s"), error->message);
+		g_error(_("Could not find group %s: %s"), group_name, error->message);
 
 	key_name = key_names;
 	while (*key_name) {
 		if (!eval_key(gaminggear_macros, other_macro_file, group_name, *key_name, &error)) {
-			g_critical(_("%s"), error->message);
+			g_critical(_("Could not find key %s/%s: %s"), group_name, *key_name, error->message);
 			g_clear_error(&error);
 		}
 		++key_name;
@@ -288,7 +288,7 @@ GaminggearMacros *macros_conversions_roccat_import(gchar const *filename, GError
 		goto free;
 
 	if (!is_roccat_original_file(roccat_orig_macros)) {
-		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, _("%s is no Roccat macro file"), filename);
+		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, _("%s is no %s macro file"), filename, "Roccat");
 		goto free;
 	}
 

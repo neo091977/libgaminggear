@@ -185,7 +185,7 @@ GaminggearMacroThread *gaminggear_macro_thread_new(int kbd_file, int mouse_file,
 	priv->thread = gaminggear_thread_try_new("GaminggearMacro", thread, macro_thread, &error);
 
 	if (error) {
-		g_warning(_("Can't create macro thread: %s"), error->message);
+		g_warning(_("Could not create macro thread: %s"), error->message);
 		g_clear_error(&error);
 	}
 	

@@ -195,7 +195,7 @@ gboolean gaminggear_macro_tree_store_add_macros(GaminggearMacroTreeStore *macro_
 		macro_names = gaminggear_macros_get_macros(gaminggear_macros, *macroset_name, NULL, &error);
 		/* This happens only if macroset is not found */
 		if (!macro_names)
-			g_error(_("gaminggear_macro_tree_store_add_macros(): %s"), error->message);
+			g_error(_("Could not find macroset %s: %s"), *macroset_name, error->message);
 
 		/*
 		 * Add macroset event if its empty.
@@ -210,7 +210,7 @@ gboolean gaminggear_macro_tree_store_add_macros(GaminggearMacroTreeStore *macro_
 		for (macro_name = macro_names; *macro_name; ++macro_name) {
 			gaminggear_macro = gaminggear_macros_get(gaminggear_macros, *macroset_name, *macro_name, &error);
 			if (error)
-				g_error(_("%s"), error->message);
+				g_error(_("Could not find macro %s/%s: %s"), *macroset_name, *macro_name, error->message);
 
 			/* not adding already included macros */
 			if (gaminggear_macro_tree_store_is_macro_name_unique(macro_tree_store, &macroset_iter, *macro_name)) {

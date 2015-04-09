@@ -101,7 +101,7 @@ static void show_import_cb(GtkMenuItem *item, gpointer user_data) {
 		g_free(filename);
 		
 		if (error) {
-			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Error importing macros"), error->message);
+			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Could not import macros"), error->message);
 			g_clear_error(&error);
 		} else {
 			gaminggear_macro_editor_dialog_add_macros(parent, gaminggear_macros);
@@ -158,7 +158,7 @@ static void show_export_cb(GtkMenuItem *item, gpointer user_data) {
 		gaminggear_macros_free(gaminggear_macros);
 
 		if (error) {
-			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Error exporting macros"), error->message);
+			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Could not export macros"), error->message);
 			g_clear_error(&error);
 		}
 	}
@@ -185,7 +185,7 @@ static void show_open_cb(GtkMenuItem *item, gpointer user_data) {
 
 	config = gaminggear_configuration_load();
 
-	dialog = gtk_file_chooser_dialog_new(_("Open gaminggear macros"),
+	dialog = gtk_file_chooser_dialog_new(_("Load gaminggear macros"),
 			GTK_WINDOW(parent),
 			GTK_FILE_CHOOSER_ACTION_OPEN,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -219,7 +219,7 @@ static void show_open_cb(GtkMenuItem *item, gpointer user_data) {
 		g_free(filename);
 
 		if (error) {
-			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Error loading macros"), error->message);
+			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Could not load macros"), error->message);
 			g_clear_error(&error);
 		} else {
 			gaminggear_macro_editor_dialog_clear(parent);
@@ -284,7 +284,7 @@ static void show_save_as_cb(GtkMenuItem *item, gpointer user_data) {
 		gaminggear_macros_free(gaminggear_macros);
 
 		if (error) {
-			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Error saving macros"), error->message);
+			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Could not save macros"), error->message);
 			g_clear_error(&error);
 		}
 	}

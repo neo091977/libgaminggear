@@ -33,7 +33,7 @@ GaminggearScreenNotificator *gaminggear_screen_notificator_init(gchar const *app
 	GaminggearScreenNotificator *notificator;
 
 	if (!notify_init(app_name)) {
-		g_warning(_("Error initializing notify"));
+		g_warning(_("Could not initialize notify"));
 		return NULL;
 	}
 

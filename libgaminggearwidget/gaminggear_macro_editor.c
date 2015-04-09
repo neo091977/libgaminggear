@@ -198,8 +198,8 @@ static GdkKeymapKey *get_key_with_group_0(GdkKeymapKey *keys, gint n_keys) {
 		if (keys[i].group == 0)
 			return &keys[i];
 
+	g_warning(_("Could not find key for group 0 in keymap"));
 	/* fallback: return first element */
-	g_warning(_("can't find keycode for group 0"));
 	return keys;
 }
 
@@ -237,7 +237,7 @@ static void paste_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *fra
 			keyval = gdk_unicode_to_keyval(character);
 
 			if (!gdk_keymap_get_entries_for_keyval(keymap, keyval, &keys, &n_keys)) {
-				g_warning(_("keyval 0x%04x has no keycode!"), keyval);
+				g_warning(_("Keyval 0x%04x has no corresponding keys in keymap"), keyval);
 				break;
 			}
 

@@ -29,7 +29,7 @@ static guint gaminggear_xkeycode_to_keyval(guint keycode) {
 	keymap = gdk_keymap_get_default();
 	keyval = gdk_keymap_lookup_key(keymap, &key);
 	if (keyval == 0)
-		g_warning(_("in gaminggear_xkeycode_to_keyval: keycode %i has no keyval!"), keycode);
+		g_warning(_("Xkeycode 0x%04x has no corresponding keyval in keymap"), keycode);
 	return keyval;
 }
 
@@ -62,7 +62,7 @@ gchar *gaminggear_hid_to_keyname(guint8 usage_id) {
 		string = g_strdup(_("Button middle"));
 		break;
 	default:
-		if (usage_id > GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT)
+		if (usage_id >= GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT)
 			string = g_strdup_printf(_("Button %u"), usage_id - GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT + 1);
 		else
 			string = gaminggear_xkeycode_to_keyname(gaminggear_hid_to_xkeycode(usage_id));

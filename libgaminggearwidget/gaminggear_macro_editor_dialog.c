@@ -51,19 +51,14 @@ GaminggearMacros *gaminggear_macro_editor_dialog_get_macros(GaminggearMacroEdito
 
 static void gaminggear_macro_editor_dialog_load_macros(GaminggearMacroEditorDialog *dialog) {
 	GaminggearMacros *gaminggear_macros;
-	GError *error = NULL;
-
-	gaminggear_macros = gaminggear_macros_load();
-	if (error) {
-		g_warning(_("Error loading macros: %s"), error->message);
-		g_error_free(error);
-		return;
-	}
 
 	gaminggear_macro_editor_clear(dialog->priv->macro_editor);
+
+	gaminggear_macros = gaminggear_macros_load();
 	gaminggear_macro_editor_add_macros(dialog->priv->macro_editor, gaminggear_macros);
-	gaminggear_macro_editor_set_modified(dialog->priv->macro_editor, FALSE);
 	gaminggear_macros_free(gaminggear_macros);
+
+	gaminggear_macro_editor_set_modified(dialog->priv->macro_editor, FALSE);
 }
 
 gboolean gaminggear_macro_editor_dialog_save_macros(GaminggearMacroEditorDialog *dialog) {
@@ -76,7 +71,7 @@ gboolean gaminggear_macro_editor_dialog_save_macros(GaminggearMacroEditorDialog 
 	gaminggear_macros_free(gaminggear_macros);
 
 	if (error) {
-		gaminggear_warning_dialog(GTK_WINDOW(dialog), _("Error saving macros"), error->message);
+		gaminggear_warning_dialog(GTK_WINDOW(dialog), _("Could not save macros"), error->message);
 		g_clear_error(&error);
 	} else
 		gaminggear_macro_editor_set_modified(dialog->priv->macro_editor, FALSE);

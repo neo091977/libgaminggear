@@ -416,9 +416,8 @@ static void add_single_action(GaminggearMacroEditorAdvancedListStore *macro_edit
 		if (iter_is_valid)
 			add_release(macro_editor_advanced_list_store, &iter, &press_iter, key, action);
 		else
-			g_warning(_("no up for %x"), key);
+			g_warning(_("There is no corresponding press event for key %x"), key);
 	}
-
 }
 
 static void add_wait(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store, glong rel_time) {

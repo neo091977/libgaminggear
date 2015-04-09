@@ -47,14 +47,14 @@ GaminggearAudioNotificator *gaminggear_audio_notificator_init(gchar const *app_n
 	/* Creating own context to be independent of sound scheme. */
 	retval = ca_context_create(&notificator->context);
 	if (retval) {
-		g_warning(_("Error initializing canberra: %s"), ca_strerror(retval));
+		g_warning(_("Could not create canberra context: %s"), ca_strerror(retval));
 		goto out;
 	}
 
 	/* Setting driver explicit to be independent of warning sound volume */
 	retval = ca_context_set_driver(notificator->context, sound_driver);
 	if (retval) {
-		g_warning(_("Error setting canberra driver: %s"), ca_strerror(retval));
+		g_warning(_("Could not set driver %s for canberra context: %s"), sound_driver, ca_strerror(retval));
 		goto destroy_context;
 	}
 
@@ -66,13 +66,13 @@ GaminggearAudioNotificator *gaminggear_audio_notificator_init(gchar const *app_n
 			NULL);
 	g_free(pid_string);
 	if (retval) {
-		g_warning(_("Error setting canberra properties: %s"), ca_strerror(retval));
+		g_warning(_("Could not set properties for canberra context: %s"), ca_strerror(retval));
 		goto destroy_context;
 	}
 
 	retval = ca_context_open(notificator->context);
 	if (retval) {
-		g_warning(_("Error connecting canberra context: %s"), ca_strerror(retval));
+		g_warning(_("Could not open canberra context: %s"), ca_strerror(retval));
 		goto destroy_context;
 	}
 
@@ -95,7 +95,7 @@ void gaminggear_audio_notificator_deinit(GaminggearAudioNotificator *notificator
 
 	retval = ca_context_destroy(notificator->context);
 	if (retval)
-		g_warning(_("Error deinitializing canberra: %s"), ca_strerror(retval));
+		g_warning(_("Could not destroy canberra context: %s"), ca_strerror(retval));
 	g_free(notificator);
 }
 
@@ -123,7 +123,7 @@ gboolean gaminggear_audio_notification_cancel(GaminggearAudioNotification *notif
 
 	retval = ca_context_cancel(notification->notificator->context, notification->id);
 	if (retval != 0 && retval != CA_ERROR_STATE) {
-		g_warning(_("Error cancelling audio notificator: %s"), ca_strerror(retval));
+		g_warning(_("Could not cancel audio notificator: %s"), ca_strerror(retval));
 		return FALSE;
 	}
 	return TRUE;
@@ -145,7 +145,7 @@ gboolean gaminggear_audio_notification_update(GaminggearAudioNotification *notif
 			NULL);
 	g_free(volume_string);
 	if (retval) {
-		g_warning(_("Error updating audio notificator: %s"), ca_strerror(retval));
+		g_warning(_("Could not update audio notificator: %s"), ca_strerror(retval));
 		return FALSE;
 	}
 	return TRUE;

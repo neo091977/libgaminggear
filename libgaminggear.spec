@@ -14,6 +14,7 @@ BuildRequires: sqlite >= 3.7
 BuildRequires: libcanberra-devel
 BuildRequires: libnotify-devel
 BuildRequires: doxygen
+BuildRequires: gettext >= 0.15
 ExclusiveOS: linux
 URL: http://sourceforge.net/projects/libgaminggear/
 Packager: Stefan Achatz <erazor_de@users.sourceforge.net>

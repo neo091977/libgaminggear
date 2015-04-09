@@ -309,7 +309,7 @@ GaminggearMacroKeystrokes *gaminggear_macro_editor_basic_list_store_get_keystrok
 			added = FALSE;
 		} else {
 			if (added)
-				g_critical(_("dangling period"));
+				g_critical(_("Wait without corresponding key event"));
 			gaminggear_macro_keystroke_set_period(&keystroke, period);
 		}
 

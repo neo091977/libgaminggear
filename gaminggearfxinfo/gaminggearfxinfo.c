@@ -24,16 +24,16 @@
 
 static unsigned int const description_size = 255;
 
-static void print_device_type(GfxDevtype device_type) {
+static gchar const *get_device_type_string(GfxDevtype device_type) {
 	switch(device_type) {
 	case GFX_DEVTYPE_MOUSE:
-		g_print(_("  DevType: MOUSE\n"));
+		return _("MOUSE");
 		break;
 	case GFX_DEVTYPE_KEYBOARD:
-		g_print(_("  DevType: KEYBOARD\n"));
+		return _("KEYBOARD");
 		break;
 	default:
-		g_print(_("  DevType: INVALID (%u)\n"), device_type);
+		return _("INVALID");
 		break;
 	}
 }
@@ -57,13 +57,13 @@ int main(int argc, char **argv) {
 
 	gfx_result = gfx_initialize();
 	if (gfx_result != GFX_SUCCESS) {
-		g_warning(_("There was an error initializing the fx system"));
+		g_warning(_("Could not initialize fx system"));
 		goto exit_1;
 	}
 
 	gfx_result = gfx_get_num_devices(&num_devices);
 	if (gfx_result != GFX_SUCCESS) {
-		g_warning(_("There was an error getting devices"));
+		g_warning(_("Could not get devices"));
 		goto exit_2;
 	}
 
@@ -72,42 +72,42 @@ int main(int argc, char **argv) {
 
 		gfx_result = gfx_get_device_description(device_index, description, description_size, &device_type);
 		if (gfx_result != GFX_SUCCESS) {
-			g_warning(_("There was an error getting device description"));
+			g_warning(_("Could not get device description"));
 			goto exit_2;
 		}
 
-		g_print(_("  Description: %s\n"), description);
-		print_device_type(device_type);
+		g_print(_("%*sDescription: %s\n"), 2, "", description);
+		g_print(_("%*sDevice type: %i (%s)\n"), 2, "", device_type, get_device_type_string(device_type));
 
 		gfx_result = gfx_get_num_lights(device_index, &num_lights);
 		if (gfx_result != GFX_SUCCESS) {
-			g_warning(_("There was an error getting lights"));
+			g_warning(_("Could not get lights"));
 			goto exit_2;
 		}
 
 		for (light_index = 0; light_index < num_lights; ++light_index) {
-			g_print("  Light[%u]\n", light_index);
+			g_print("%*sLight[%u]\n", 2, "", light_index);
 
 			gfx_result = gfx_get_light_description(device_index, light_index, description, description_size);
 			if (gfx_result != GFX_SUCCESS) {
-				g_warning(_("There was an error getting light description"));
+				g_warning(_("Could not get light description"));
 				goto exit_2;
 			}
-			g_print(_("    Description: %s\n"), description);
+			g_print(_("%*sDescription: %s\n"), 4, "", description);
 
 			gfx_result = gfx_get_light_position(device_index, light_index, &light_position);
 			if (gfx_result != GFX_SUCCESS) {
-				g_warning(_("There was an error getting light position"));
+				g_warning(_("Could not get light position"));
 				goto exit_2;
 			}
-			g_print("    Position: %u, %u, %u\n", light_position.x, light_position.y, light_position.z);
+			g_print(_("%*sPosition: %u, %u, %u\n"), 4, "", light_position.x, light_position.y, light_position.z);
 
 			gfx_result = gfx_get_light_color(device_index, light_index, &light_color);
 			if (gfx_result != GFX_SUCCESS) {
-				g_warning(_("There was an error getting light color"));
+				g_warning(_("Could not get light color"));
 				goto exit_2;
 			}
-			g_print(_("    Color: 0x%02x, 0x%02x, 0x%02x, 0x%02x\n"),
+			g_print(_("%*sColor: 0x%02x, 0x%02x%02x%02x\n"), 4, "",
 					gfx_color_get_brightness_raw(light_color),
 					gfx_color_get_red_raw(light_color),
 					gfx_color_get_green_raw(light_color),
@@ -119,7 +119,7 @@ int main(int argc, char **argv) {
 exit_2:
 	gfx_result = gfx_release();
 	if (gfx_result != GFX_SUCCESS) {
-		g_warning(_("There was an error releasing the fx system"));
+		g_warning(_("Could not release fx system"));
 		retval = EXIT_FAILURE;
 		goto exit_1;
 	}
