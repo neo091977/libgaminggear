@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: libgaminggear 0.7.0\n"
+"Project-Id-Version: libgaminggear 0.7.\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-09 17:40+0200\n"
+"POT-Creation-Date: 2015-04-10 18:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,687 +17,683 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:110
-#, c-format
-msgid "%*sColor: 0x%02x, 0x%02x%02x%02x\n"
-msgstr ""
-
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:79
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:96
+#: gaminggearfxinfo/gaminggearfxinfo.c:79
+#: gaminggearfxinfo/gaminggearfxinfo.c:96
 #, c-format
 msgid "%*sDescription: %s\n"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:80
+#: libgaminggear/macros_converter_roccat_kone.c:283
+#: libgaminggear/macros_converter_roccat_valo.c:283
+#: libgaminggear/macros_converter_roccat_arvo.c:217
+#: libgaminggear/macros_converter_roccat.c:291
 #, c-format
-msgid "%*sDevice type: %i (%s)\n"
+msgid "%1$s is no %2$s macro file"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:103
+#: gaminggearfxinfo/gaminggearfxinfo.c:110
 #, c-format
-msgid "%*sPosition: %u, %u, %u\n"
+msgid "%2$*1$sColor: 0x%3$02x, 0x%4$02x%5$02x%6$02x\n"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_kone.c:283
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_valo.c:283
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_arvo.c:217
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat.c:291
+#: gaminggearfxinfo/gaminggearfxinfo.c:80
 #, c-format
-msgid "%s is no %s macro file"
+msgid "%2$*1$sDevice type: %3$i (%4$s)\n"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:86
+#: gaminggearfxinfo/gaminggearfxinfo.c:103
+#, c-format
+msgid "%2$*1$sPosition: %3$u, %4$u, %5$u\n"
+msgstr ""
+
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:86
 msgid "- control Gaminggear FX"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:65
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:65
 msgid "--all and --single need --color"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:60
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:60
 msgid "--all, --single and --reset are mutual exclusive"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:75
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:75
 msgid "--color needs --color1"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:70
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:70
 msgid "--single needs --device and --light"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:467
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:467
 msgid "Add macro"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_macros_frame.c:103
+#: libgaminggearwidget/gaminggear_macro_editor_macros_frame.c:103
 msgid "Add macroset"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_advanced.c:39
+#: libgaminggearwidget/gaminggear_macro_editor_advanced.c:39
 msgid "Advanced"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_advanced_list_store.c:617
+#: libgaminggearwidget/gaminggear_macro_editor_advanced_list_store.c:617
 msgid ""
 "Advanced view does not support final waits. Please switch to another view to "
 "add it again if needed."
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:202
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:202
 msgid "All files"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:174
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:174
 msgid "Application to edit gaminggear macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:103
+#: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:103
 msgid "As recorded"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_basic.c:39
+#: libgaminggearwidget/gaminggear_macro_editor_basic.c:39
 msgid "Basic"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_helper.c:37
+#: libgaminggear/gaminggear_helper.c:37
 #, c-format
-msgid "Binary data has wrong length: %lu bytes instead of %lu"
+msgid "Binary data has wrong length: %1$lu bytes instead of %2$lu"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_gdk_key_translations.c:66
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:66
 #, c-format
 msgid "Button %u"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_gdk_key_translations.c:56
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:56
 msgid "Button left"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_gdk_key_translations.c:62
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:62
 msgid "Button middle"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_gdk_key_translations.c:59
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:59
 msgid "Button right"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:43
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:43
 msgid "COLOR1"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_macro_thread.c:143
+#: libgaminggear/gaminggear_macro_thread.c:143
 #, c-format
 msgid "Cancelling macro %s/%s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_key_sequence_frame.c:223
+#: libgaminggearwidget/gaminggear_macro_editor_key_sequence_frame.c:223
 msgid "Clear"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:171
+#: libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:171
 msgid "Click"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_macro_thread.c:139
+#: libgaminggear/gaminggear_macro_thread.c:139
 #, c-format
 msgid "Continuing macro %s/%s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:453
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:453
 msgid "Copy"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_audio_notificator_canberra.c:126
+#: libgaminggear/gaminggear_audio_notificator_canberra.c:126
 #, c-format
 msgid "Could not cancel audio notificator: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_device.c:86
+#: libgaminggear/gaminggear_device.c:86
 #, c-format
-msgid "Could not close file descriptor %i for device key %s: %s"
+msgid "Could not close file descriptor %1$i for device key %2$s: %3$s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_device.c:154
+#: libgaminggear/gaminggear_device.c:154
 #, c-format
 msgid "Could not close file descriptor %i: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_device.c:80
+#: libgaminggear/gaminggear_device.c:80
 #, c-format
 msgid "Could not close file descriptor for device key %s: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_audio_notificator_canberra.c:50
+#: libgaminggear/gaminggear_audio_notificator_canberra.c:50
 #, c-format
 msgid "Could not create canberra context: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_helper.c:80
+#: libgaminggear/gaminggear_helper.c:80
 #, c-format
 msgid "Could not create directory: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_macro_thread.c:188
+#: libgaminggear/gaminggear_macro_thread.c:188
 #, c-format
 msgid "Could not create macro thread: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:76
+#: libgaminggear/gaminggear_evdev.c:76
 #, c-format
 msgid "Could not create uinput %i: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_audio_notificator_canberra.c:98
+#: libgaminggear/gaminggear_audio_notificator_canberra.c:98
 #, c-format
 msgid "Could not destroy canberra context: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:92
+#: libgaminggear/gaminggear_evdev.c:92
 #, c-format
 msgid "Could not destroy uinput %i: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:161
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:161
 msgid "Could not export macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:152
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:152
 #, c-format
 msgid "Could not find device %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_kone.c:189
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_valo.c:189
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_arvo.c:104
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat.c:196
+#: libgaminggear/macros_converter_roccat_kone.c:189
+#: libgaminggear/macros_converter_roccat_valo.c:189
+#: libgaminggear/macros_converter_roccat_arvo.c:104
+#: libgaminggear/macros_converter_roccat.c:196
 #, c-format
 msgid "Could not find group %s: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_kone.c:194
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_valo.c:194
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_arvo.c:109
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat.c:201
+#: libgaminggear/macros_converter_roccat_kone.c:194
+#: libgaminggear/macros_converter_roccat_valo.c:194
+#: libgaminggear/macros_converter_roccat_arvo.c:109
+#: libgaminggear/macros_converter_roccat.c:201
 #, c-format
 msgid "Could not find key %s/%s: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor.c:201
+#: libgaminggearwidget/gaminggear_macro_editor.c:201
 msgid "Could not find key for group 0 in keymap"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_store.c:213
+#: libgaminggearwidget/gaminggear_macro_tree_store.c:213
 #, c-format
 msgid "Could not find macro %s/%s: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_store.c:198
+#: libgaminggearwidget/gaminggear_macro_tree_store.c:198
 #, c-format
 msgid "Could not find macroset %s: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:75
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:120
+#: gaminggearfxinfo/gaminggearfxinfo.c:75
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:120
 msgid "Could not get device description"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:66
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:113
+#: gaminggearfxinfo/gaminggearfxinfo.c:66
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:113
 msgid "Could not get devices"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:107
+#: gaminggearfxinfo/gaminggearfxinfo.c:107
 msgid "Could not get light color"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:93
+#: gaminggearfxinfo/gaminggearfxinfo.c:93
 msgid "Could not get light description"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:100
+#: gaminggearfxinfo/gaminggearfxinfo.c:100
 msgid "Could not get light position"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:84
+#: gaminggearfxinfo/gaminggearfxinfo.c:84
 msgid "Could not get lights"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:104
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:104
 msgid "Could not import macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:60
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:145
+#: gaminggearfxinfo/gaminggearfxinfo.c:60
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:145
 msgid "Could not initialize fx system"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_screen_notificator_notify.c:36
+#: libgaminggear/gaminggear_screen_notificator_notify.c:36
 msgid "Could not initialize notify"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:71
+#: libgaminggear/gaminggear_evdev.c:71
 #, c-format
 msgid "Could not initialize uinput %i: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:222
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:222
 msgid "Could not load macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_audio_notificator_canberra.c:75
+#: libgaminggear/gaminggear_audio_notificator_canberra.c:75
 #, c-format
 msgid "Could not open canberra context: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_device.c:66
+#: libgaminggear/gaminggear_device.c:66
 #, c-format
-msgid "Could not open file %s for device key %s: %s"
+msgid "Could not open file %1$s for device key %2$s: %3$s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_device.c:60
+#: libgaminggear/gaminggear_device.c:60
 #, c-format
 msgid "Could not open file for device key %s: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:35
+#: libgaminggear/gaminggear_evdev.c:35
 #, c-format
 msgid "Could not open uinput: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:122
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:190
+#: gaminggearfxinfo/gaminggearfxinfo.c:122
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:190
 msgid "Could not release fx system"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:173
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:173
 msgid "Could not reset all lights"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog.c:74
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:287
+#: libgaminggearwidget/gaminggear_macro_editor_dialog.c:74
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:287
 msgid "Could not save macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:166
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:166
 msgid "Could not set all lights to color1"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_audio_notificator_canberra.c:57
+#: libgaminggear/gaminggear_audio_notificator_canberra.c:57
 #, c-format
 msgid "Could not set driver %s for canberra context: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:158
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:158
 #, c-format
-msgid "Could not set light %i on device %s to color1"
+msgid "Could not set light %1$i on device %2$s to color1"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_audio_notificator_canberra.c:69
+#: libgaminggear/gaminggear_audio_notificator_canberra.c:69
 #, c-format
 msgid "Could not set properties for canberra context: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:41
+#: libgaminggear/gaminggear_evdev.c:41
 #, c-format
 msgid "Could not set uinput event bit %u: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:43
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:45
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:47
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:49
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:51
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:53
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:55
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:59
+#: libgaminggear/gaminggear_evdev.c:43 libgaminggear/gaminggear_evdev.c:45
+#: libgaminggear/gaminggear_evdev.c:47 libgaminggear/gaminggear_evdev.c:49
+#: libgaminggear/gaminggear_evdev.c:51 libgaminggear/gaminggear_evdev.c:53
+#: libgaminggear/gaminggear_evdev.c:55 libgaminggear/gaminggear_evdev.c:59
 #, c-format
 msgid "Could not set uinput key bit %u: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_audio_notificator_canberra.c:148
+#: libgaminggear/gaminggear_audio_notificator_canberra.c:148
 #, c-format
 msgid "Could not update audio notificator: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:181
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:181
 msgid "Could not update lights"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:109
+#: libgaminggear/gaminggear_evdev.c:109
 #, c-format
-msgid "Could not write key event %i/%i to uinput %i: %i"
+msgid "Could not write key event %1$i/%2$i to uinput %3$i: %4$i"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_evdev.c:117
+#: libgaminggear/gaminggear_evdev.c:117
 #, c-format
 msgid "Could not write sync event to uinput %i: %i"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:97
+#: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:97
 msgid "Delay"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:71
+#: gaminggearfxinfo/gaminggearfxinfo.c:71
 #, c-format
 msgid "Device[%u]\n"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:402
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:402
 msgid "Do you really want to remove this macro?"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:399
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:399
 msgid "Do you really want to remove this macroset?"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_dialogs.c:36
+#: libgaminggearwidget/gaminggear_dialogs.c:36
 msgid "Do you want to save?"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:161
+#: libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:161
 msgid "Down"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog.c:112
+#: libgaminggearwidget/gaminggear_macro_editor_dialog.c:112
 msgid "Edit macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:323
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:323
 msgid "Export"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:128
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:128
 msgid "Export macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:302
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:302
 msgid "File"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_macro_thread.c:162
+#: libgaminggear/gaminggear_macro_thread.c:162
 #, c-format
 msgid "Finished macro %s/%s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:105
+#: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:105
 msgid "Fixed"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:174
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:174
 msgid "Gaminggear macro editor"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:197
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:261
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:197
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:261
 msgid "Gaminggear macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_key_translations.c:100
+#: libgaminggear/gaminggear_key_translations.c:100
 #, c-format
 msgid "HID usage id 0x%02x has no corresponding xkeycode"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:331
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:331
 msgid "Help"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:38
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:38
 msgid "INDEX"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:36
+#: gaminggearfxinfo/gaminggearfxinfo.c:36
 msgid "INVALID"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_steelseries_engine3.c:97
+#: libgaminggear/macros_converter_steelseries_engine3.c:97
 #, c-format
 msgid "Ignoring unknown event type %u"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_steelseries_engine3.c:92
+#: libgaminggear/macros_converter_steelseries_engine3.c:92
 msgid "Ignoring wait as first event type"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:319
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:319
 msgid "Import"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:75
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:75
 msgid "Import macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:206
+#: libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:206
 msgid "Insert delay"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:210
+#: libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:210
 msgid "Insert mouse event"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:33
+#: gaminggearfxinfo/gaminggearfxinfo.c:33
 msgid "KEYBOARD"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_key_sequence_frame.c:191
+#: libgaminggearwidget/gaminggear_macro_editor_key_sequence_frame.c:191
 msgid "Key sequence"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor.c:240
+#: libgaminggearwidget/gaminggear_macro_editor.c:240
 #, c-format
 msgid "Keyval 0x%04x has no corresponding keys in keymap"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:188
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:188
 msgid "Load gaminggear macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_macro_options_frame.c:78
+#: libgaminggearwidget/gaminggear_macro_editor_macro_options_frame.c:78
 msgid "Loop"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxinfo/gaminggearfxinfo.c:30
+#: gaminggearfxinfo/gaminggearfxinfo.c:30
 msgid "MOUSE"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:499
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:499
 msgid "Macro"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_kone.c:99
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_valo.c:99
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_arvo.c:189
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat.c:106
+#: libgaminggear/macros_converter_roccat_kone.c:99
+#: libgaminggear/macros_converter_roccat_valo.c:99
+#: libgaminggear/macros_converter_roccat_arvo.c:189
+#: libgaminggear/macros_converter_roccat.c:106
 #, c-format
 msgid "Macro %s/%s is too long to convert"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_macro_options_frame.c:51
+#: libgaminggearwidget/gaminggear_macro_editor_macro_options_frame.c:51
 msgid "Macro options"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_macros_frame.c:53
+#: libgaminggearwidget/gaminggear_macro_editor_macros_frame.c:53
 msgid "Macros"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:309
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:309
 msgid "New macro"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:87
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:87
 msgid "New macroset"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:94
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:94
 #, c-format
 msgid "Option parsing failed: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:101
+#: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:101
 msgid "Paste"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_macro_thread.c:134
+#: libgaminggear/gaminggear_macro_thread.c:134
 #, c-format
 msgid "Pausing macro %s/%s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_macro_thread.c:123
+#: libgaminggear/gaminggear_macro_thread.c:123
 #, c-format
 msgid "Playing macro %s/%s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:309
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:309
 msgid "Please enter name of macro"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:87
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:87
 msgid "Please enter name of macroset"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:99
+#: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:99
 msgid "Record"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:56
+#: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:56
 msgid "Record options"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:402
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:402
 msgid "Remove macro"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:399
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:399
 msgid "Remove macroset"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_tree_view.c:438
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:438
 msgid "Rename"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_arvo.c:301
+#: libgaminggear/macros_converter_roccat_arvo.c:301
 msgid "Roccat Arvo macro files"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_kone.c:303
+#: libgaminggear/macros_converter_roccat_kone.c:303
 msgid "Roccat Kone macro files"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat_valo.c:303
+#: libgaminggear/macros_converter_roccat_valo.c:303
 msgid "Roccat Valo macro files"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_roccat.c:311
+#: libgaminggear/macros_converter_roccat.c:311
 msgid "Roccat macro files"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:37
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:37
 msgid "STRING"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor.c:411
+#: libgaminggearwidget/gaminggear_macro_editor.c:411
 msgid "Save"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:252
+#: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:252
 msgid "Save gaminggear macros as"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_dialog.c:83
+#: libgaminggearwidget/gaminggear_macro_dialog.c:83
 msgid "Select macro"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_steelseries_engine3.c:160
+#: libgaminggear/macros_converter_steelseries_engine3.c:160
 #, c-format
 msgid "Sqlite3 could not evaluate statement: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_steelseries_engine3.c:153
+#: libgaminggear/macros_converter_steelseries_engine3.c:153
 #, c-format
 msgid "Sqlite3 could not open database: %s"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/macros_converter_steelseries_engine3.c:174
+#: libgaminggear/macros_converter_steelseries_engine3.c:174
 msgid "SteelSeries Engine 3 database"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor.c:140
+#: libgaminggearwidget/gaminggear_macro_editor.c:140
 msgid "Store modifications"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_advanced_list_store.c:419
+#: libgaminggearwidget/gaminggear_macro_editor_advanced_list_store.c:419
 #, c-format
 msgid "There is no corresponding press event for key %x"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_dialogs.c:55
+#: libgaminggearwidget/gaminggear_dialogs.c:55
 msgid "There is unsaved data."
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_advanced_list_store.c:615
+#: libgaminggearwidget/gaminggear_macro_editor_advanced_list_store.c:615
 #, c-format
 msgid "This macro contains a final wait of %u ms"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:166
+#: libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:166
 msgid "Up"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor_basic_list_store.c:312
+#: libgaminggearwidget/gaminggear_macro_editor_basic_list_store.c:312
 msgid "Wait without corresponding key event"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_dialogs.c:25
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_dialogs.c:63
+#: libgaminggearwidget/gaminggear_dialogs.c:25
+#: libgaminggearwidget/gaminggear_dialogs.c:63
 msgid "Warning"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_macro_editor.c:139
+#: libgaminggearwidget/gaminggear_macro_editor.c:139
 msgid "Would you like to store actual modifications?"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_key_translations.c:92
+#: libgaminggear/gaminggear_key_translations.c:92
 #, c-format
 msgid "Xkeycode 0x%04x has no corresponding HID usage id"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggearwidget/gaminggear_gdk_key_translations.c:32
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:32
 #, c-format
 msgid "Xkeycode 0x%04x has no corresponding keyval in keymap"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:55
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:55
 msgid "give one of --all, --single or --reset"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_device.c:80
+#: libgaminggear/gaminggear_device.c:80
 msgid "no entry"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/libgaminggear/gaminggear_device.c:60
+#: libgaminggear/gaminggear_device.c:60
 msgid "no path"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:41
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:41
 msgid "reset colors"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:39
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:39
 msgid "set all colors"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:42
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:42
 msgid "set plain color"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:40
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:40
 msgid "set single color"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:37
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:37
 msgid "use device STRING"
 msgstr ""
 
-#: /home/stefan/workspace/libgaminggear/gaminggearfxcontrol/gaminggearfxcontrol.c:38
+#: gaminggearfxcontrol/gaminggearfxcontrol.c:38
 msgid "use light index INDEX"
 msgstr ""

@@ -155,7 +155,7 @@ int main(int argc, char **argv) {
 		if (parameter_color) {
 			gfx_result = gfx_set_light_color(device_index, parameter_light_index, parameter_color1);
 			if (gfx_result != GFX_SUCCESS) {
-				g_warning(_("Could not set light %i on device %s to color1"), parameter_light_index, parameter_device);
+				g_warning(_("Could not set light %1$i on device %2$s to color1"), parameter_light_index, parameter_device);
 				goto exit_2;
 			}
 		}

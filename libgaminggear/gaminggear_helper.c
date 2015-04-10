@@ -34,7 +34,7 @@ gpointer g_gaminggear_key_file_get_binary(GKeyFile *key_file, gchar const *group
 		return NULL;
 
 	if (strlen(string) != size * 2) {
-		g_set_error(error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE, _("Binary data has wrong length: %lu bytes instead of %lu"), (gulong)strlen(string), (gulong)(size * 2));
+		g_set_error(error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE, _("Binary data has wrong length: %1$lu bytes instead of %2$lu"), (gulong)strlen(string), (gulong)(size * 2));
 		g_free(string);
 		return NULL;
 	}

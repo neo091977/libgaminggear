@@ -35,7 +35,7 @@ int gaminggear_open_misc_evdev(gchar const * identifier, guint vendor, guint pro
 		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not open uinput: %s"), g_strerror(errno));
 		goto error;
 	}
-	g_debug("uinput %s has file descriptor %i", identifier, fd);
+	g_debug("uinput %1$s has file descriptor %2$i", identifier, fd);
 
 	if (ioctl(fd, UI_SET_EVBIT, EV_KEY) < 0)
 		g_warning(_("Could not set uinput event bit %u: %s"), EV_KEY, g_strerror(errno));
@@ -106,7 +106,7 @@ void gaminggear_input_event_write_with_sync(int fd, int code, int value) {
 
 	written = write(fd, (const void*) &event, sizeof(event));
 	if (written != sizeof(event))
-		g_warning(_("Could not write key event %i/%i to uinput %i: %i"), code, value, fd, written);
+		g_warning(_("Could not write key event %1$i/%2$i to uinput %3$i: %4$i"), code, value, fd, written);
 
 	event.type = EV_SYN;
 	event.code = SYN_REPORT;

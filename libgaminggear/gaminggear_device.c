@@ -63,7 +63,7 @@ int gaminggear_device_open(GaminggearDevice *gaminggear_device, gchar const *key
 
 	fd = open(path, flags, 0);
 	if (fd < 0)
-		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not open file %s for device key %s: %s"), path, key, g_strerror(errno));
+		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not open file %1$s for device key %2$s: %3$s"), path, key, g_strerror(errno));
 	else
 		g_debug("File %s for device key %s has file descriptor %i", path, key, fd);
 		
@@ -83,7 +83,7 @@ gboolean gaminggear_device_close(GaminggearDevice *gaminggear_device, gchar cons
 
 	fd = GPOINTER_TO_INT(value);
 	if (close(fd) < 0) {
-		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not close file descriptor %i for device key %s: %s"), fd, key, g_strerror(errno));
+		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not close file descriptor %1$i for device key %2$s: %3$s"), fd, key, g_strerror(errno));
 		return FALSE;
 	}
 	g_hash_table_remove(gaminggear_device->priv->fds, key);

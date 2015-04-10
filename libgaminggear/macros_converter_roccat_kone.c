@@ -280,7 +280,7 @@ GaminggearMacros *macros_conversions_roccat_kone_import(gchar const *filename, G
 		goto free;
 
 	if (!is_kone_file(kone_original_macro_file)) {
-		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, _("%s is no %s macro file"), filename, "Roccat Kone");
+		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, _("%1$s is no %2$s macro file"), filename, "Roccat Kone");
 		goto free;
 	}
 

@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
 		}
 
 		g_print(_("%*sDescription: %s\n"), 2, "", description);
-		g_print(_("%*sDevice type: %i (%s)\n"), 2, "", device_type, get_device_type_string(device_type));
+		g_print(_("%2$*1$sDevice type: %3$i (%4$s)\n"), 2, "", device_type, get_device_type_string(device_type));
 
 		gfx_result = gfx_get_num_lights(device_index, &num_lights);
 		if (gfx_result != GFX_SUCCESS) {
@@ -100,14 +100,14 @@ int main(int argc, char **argv) {
 				g_warning(_("Could not get light position"));
 				goto exit_2;
 			}
-			g_print(_("%*sPosition: %u, %u, %u\n"), 4, "", light_position.x, light_position.y, light_position.z);
+			g_print(_("%2$*1$sPosition: %3$u, %4$u, %5$u\n"), 4, "", light_position.x, light_position.y, light_position.z);
 
 			gfx_result = gfx_get_light_color(device_index, light_index, &light_color);
 			if (gfx_result != GFX_SUCCESS) {
 				g_warning(_("Could not get light color"));
 				goto exit_2;
 			}
-			g_print(_("%*sColor: 0x%02x, 0x%02x%02x%02x\n"), 4, "",
+			g_print(_("%2$*1$sColor: 0x%3$02x, 0x%4$02x%5$02x%6$02x\n"), 4, "",
 					gfx_color_get_brightness_raw(light_color),
 					gfx_color_get_red_raw(light_color),
 					gfx_color_get_green_raw(light_color),

@@ -288,7 +288,7 @@ GaminggearMacros *macros_conversions_roccat_import(gchar const *filename, GError
 		goto free;
 
 	if (!is_roccat_original_file(roccat_orig_macros)) {
-		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, _("%s is no %s macro file"), filename, "Roccat");
+		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, _("%1$s is no %2$s macro file"), filename, "Roccat");
 		goto free;
 	}
 
