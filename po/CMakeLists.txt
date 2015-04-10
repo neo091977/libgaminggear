@@ -1,5 +1,8 @@
-FILE(GLOB_RECURSE _GETTEXT_SOURCES ${CMAKE_SOURCE_DIR}/*.c)
-# Add further sources here
+FILE(GLOB_RECURSE _GETTEXT_SOURCES_REL RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/*.c)
+
+FOREACH(path ${_GETTEXT_SOURCES_REL})
+  LIST(APPEND _GETTEXT_SOURCES_ABS ${CMAKE_SOURCE_DIR}/${path})  
+ENDFOREACH(path)
 
 SET(_GETTEXT_MACHINE_OBJECTS)
 SET(_GETTEXT_PORTABLE_OBJECTS)
@@ -13,9 +16,10 @@ ADD_CUSTOM_COMMAND(
     --output=${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.pot --sort-output
     --keyword --keyword=_ --keyword=N_ --keyword=C_:1c,2 --keyword=NC_:1c,2
     --from-code=UTF-8 --language=C
-    --package-name=${CMAKE_PROJECT_NAME} --package-version=${V_MAJOR}.${V_MINOR}.${V_MICRO}
-    ${_GETTEXT_SOURCES}
-  DEPENDS ${_GETTEXT_SOURCES}
+    --package-name=${CMAKE_PROJECT_NAME} --package-version=${V_MAJOR}.${V_MINOR}.${V_PATCH}
+    ${_GETTEXT_SOURCES_REL}
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  DEPENDS ${_GETTEXT_SOURCES_ABS}
 )
 
 # Needed to eliminate race condition on parallel builds
@@ -68,4 +72,5 @@ ADD_DEPENDENCIES(gettext_machine_objects gettext_portable_object_template)
 
 UNSET(_GETTEXT_PORTABLE_OBJECTS)
 UNSET(_GETTEXT_MACHINE_OBJECTS)
-UNSET(_GETTEXT_SOURCES)
+UNSET(_GETTEXT_SOURCES_ABS)
+UNSET(_GETTEXT_SOURCES_REL)
