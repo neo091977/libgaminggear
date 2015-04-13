@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgaminggear 0.7.\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 18:51+0200\n"
+"POT-Creation-Date: 2015-04-13 15:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,33 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gaminggearfxinfo/gaminggearfxinfo.c:79
-#: gaminggearfxinfo/gaminggearfxinfo.c:96
-#, c-format
-msgid "%*sDescription: %s\n"
-msgstr ""
-
 #: libgaminggear/macros_converter_roccat_kone.c:283
 #: libgaminggear/macros_converter_roccat_valo.c:283
 #: libgaminggear/macros_converter_roccat_arvo.c:217
 #: libgaminggear/macros_converter_roccat.c:291
 #, c-format
 msgid "%1$s is no %2$s macro file"
-msgstr ""
-
-#: gaminggearfxinfo/gaminggearfxinfo.c:110
-#, c-format
-msgid "%2$*1$sColor: 0x%3$02x, 0x%4$02x%5$02x%6$02x\n"
-msgstr ""
-
-#: gaminggearfxinfo/gaminggearfxinfo.c:80
-#, c-format
-msgid "%2$*1$sDevice type: %3$i (%4$s)\n"
-msgstr ""
-
-#: gaminggearfxinfo/gaminggearfxinfo.c:103
-#, c-format
-msgid "%2$*1$sPosition: %3$u, %4$u, %5$u\n"
 msgstr ""
 
 #: gaminggearfxcontrol/gaminggearfxcontrol.c:86
@@ -137,6 +116,10 @@ msgstr ""
 
 #: libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:171
 msgid "Click"
+msgstr ""
+
+#: gaminggearfxinfo/gaminggearfxinfo.c:110
+msgid "Color: "
 msgstr ""
 
 #: libgaminggear/gaminggear_macro_thread.c:139
@@ -374,9 +357,17 @@ msgstr ""
 msgid "Delay"
 msgstr ""
 
+#: gaminggearfxinfo/gaminggearfxinfo.c:79
+#: gaminggearfxinfo/gaminggearfxinfo.c:96
+msgid "Description: "
+msgstr ""
+
 #: gaminggearfxinfo/gaminggearfxinfo.c:71
-#, c-format
-msgid "Device[%u]\n"
+msgid "Device"
+msgstr ""
+
+#: gaminggearfxinfo/gaminggearfxinfo.c:80
+msgid "Device type: "
 msgstr ""
 
 #: libgaminggearwidget/gaminggear_macro_tree_view.c:402
@@ -484,6 +475,10 @@ msgstr ""
 msgid "Keyval 0x%04x has no corresponding keys in keymap"
 msgstr ""
 
+#: gaminggearfxinfo/gaminggearfxinfo.c:89
+msgid "Light"
+msgstr ""
+
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:188
 msgid "Load gaminggear macros"
 msgstr ""
@@ -549,6 +544,10 @@ msgstr ""
 
 #: libgaminggearwidget/gaminggear_macro_tree_view.c:87
 msgid "Please enter name of macroset"
+msgstr ""
+
+#: gaminggearfxinfo/gaminggearfxinfo.c:103
+msgid "Position: "
 msgstr ""
 
 #: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:99

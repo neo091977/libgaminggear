@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
 	}
 
 	for (device_index = 0; device_index < num_devices; ++device_index) {
-		g_print(_("Device[%u]\n"), device_index);
+		g_print("%s[%u]\n", _("Device"), device_index);
 
 		gfx_result = gfx_get_device_description(device_index, description, description_size, &device_type);
 		if (gfx_result != GFX_SUCCESS) {
@@ -76,8 +76,8 @@ int main(int argc, char **argv) {
 			goto exit_2;
 		}
 
-		g_print(_("%*sDescription: %s\n"), 2, "", description);
-		g_print(_("%2$*1$sDevice type: %3$i (%4$s)\n"), 2, "", device_type, get_device_type_string(device_type));
+		g_print("%*s%-*s%s\n", 2, "", 16, _("Description: "), description);
+		g_print("%*s%-*s%i (%s)\n", 2, "", 16, _("Device type: "), device_type, get_device_type_string(device_type));
 
 		gfx_result = gfx_get_num_lights(device_index, &num_lights);
 		if (gfx_result != GFX_SUCCESS) {
@@ -86,28 +86,28 @@ int main(int argc, char **argv) {
 		}
 
 		for (light_index = 0; light_index < num_lights; ++light_index) {
-			g_print("%*sLight[%u]\n", 2, "", light_index);
+			g_print("%*s%s[%u]\n", 2, "", _("Light"), light_index);
 
 			gfx_result = gfx_get_light_description(device_index, light_index, description, description_size);
 			if (gfx_result != GFX_SUCCESS) {
 				g_warning(_("Could not get light description"));
 				goto exit_2;
 			}
-			g_print(_("%*sDescription: %s\n"), 4, "", description);
+			g_print("%*s%-*s%s\n", 4, "", 14, _("Description: "), description);
 
 			gfx_result = gfx_get_light_position(device_index, light_index, &light_position);
 			if (gfx_result != GFX_SUCCESS) {
 				g_warning(_("Could not get light position"));
 				goto exit_2;
 			}
-			g_print(_("%2$*1$sPosition: %3$u, %4$u, %5$u\n"), 4, "", light_position.x, light_position.y, light_position.z);
+			g_print("%*s%-*s%u, %u, %u\n", 4, "", 14, _("Position: "), light_position.x, light_position.y, light_position.z);
 
 			gfx_result = gfx_get_light_color(device_index, light_index, &light_color);
 			if (gfx_result != GFX_SUCCESS) {
 				g_warning(_("Could not get light color"));
 				goto exit_2;
 			}
-			g_print(_("%2$*1$sColor: 0x%3$02x, 0x%4$02x%5$02x%6$02x\n"), 4, "",
+			g_print("%*s%-*s0x%02x, 0x%02x%02x%02x\n", 4, "", 14, _("Color: "),
 					gfx_color_get_brightness_raw(light_color),
 					gfx_color_get_red_raw(light_color),
 					gfx_color_get_green_raw(light_color),

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgaminggear 0.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 18:51+0200\n"
+"POT-Creation-Date: 2015-04-13 15:36+0200\n"
 "PO-Revision-Date: 2015-04-09 16:36+0200\n"
 "Last-Translator: Stefan <erazor_de@users.sourceforge.net>\n"
 "Language-Team: English\n"
@@ -17,12 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: gaminggearfxinfo/gaminggearfxinfo.c:79
-#: gaminggearfxinfo/gaminggearfxinfo.c:96
-#, c-format
-msgid "%*sDescription: %s\n"
-msgstr "%*sDescription: %s\n"
-
 #: libgaminggear/macros_converter_roccat_kone.c:283
 #: libgaminggear/macros_converter_roccat_valo.c:283
 #: libgaminggear/macros_converter_roccat_arvo.c:217
@@ -30,21 +24,6 @@ msgstr "%*sDescription: %s\n"
 #, c-format
 msgid "%1$s is no %2$s macro file"
 msgstr "%1$s is no %2$s macro file"
-
-#: gaminggearfxinfo/gaminggearfxinfo.c:110
-#, c-format
-msgid "%2$*1$sColor: 0x%3$02x, 0x%4$02x%5$02x%6$02x\n"
-msgstr "%2$*1$sColor: 0x%3$02x, 0x%4$02x%5$02x%6$02x\n"
-
-#: gaminggearfxinfo/gaminggearfxinfo.c:80
-#, c-format
-msgid "%2$*1$sDevice type: %3$i (%4$s)\n"
-msgstr "%2$*1$sDevice type: %3$i (%4$s)\n"
-
-#: gaminggearfxinfo/gaminggearfxinfo.c:103
-#, c-format
-msgid "%2$*1$sPosition: %3$u, %4$u, %5$u\n"
-msgstr "%2$*1$sPosition: %3$u, %4$u, %5$u\n"
 
 #: gaminggearfxcontrol/gaminggearfxcontrol.c:86
 msgid "- control Gaminggear FX"
@@ -82,8 +61,7 @@ msgstr "Advanced"
 msgid ""
 "Advanced view does not support final waits. Please switch to another view to "
 "add it again if needed."
-msgstr ""
-"Advanced view does not support final waits. Please switch to another view to "
+msgstr "Advanced view does not support final waits. Please switch to another view to "
 "add it again if needed."
 
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:202
@@ -140,6 +118,10 @@ msgstr "Clear"
 #: libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:171
 msgid "Click"
 msgstr "Click"
+
+#: gaminggearfxinfo/gaminggearfxinfo.c:110
+msgid "Color: "
+msgstr "Color: "
 
 #: libgaminggear/gaminggear_macro_thread.c:139
 #, c-format
@@ -345,10 +327,14 @@ msgstr "Could not set properties for canberra context: %s"
 msgid "Could not set uinput event bit %u: %s"
 msgstr "Could not set uinput event bit %u: %s"
 
-#: libgaminggear/gaminggear_evdev.c:43 libgaminggear/gaminggear_evdev.c:45
-#: libgaminggear/gaminggear_evdev.c:47 libgaminggear/gaminggear_evdev.c:49
-#: libgaminggear/gaminggear_evdev.c:51 libgaminggear/gaminggear_evdev.c:53
-#: libgaminggear/gaminggear_evdev.c:55 libgaminggear/gaminggear_evdev.c:59
+#: libgaminggear/gaminggear_evdev.c:43
+#: libgaminggear/gaminggear_evdev.c:45
+#: libgaminggear/gaminggear_evdev.c:47
+#: libgaminggear/gaminggear_evdev.c:49
+#: libgaminggear/gaminggear_evdev.c:51
+#: libgaminggear/gaminggear_evdev.c:53
+#: libgaminggear/gaminggear_evdev.c:55
+#: libgaminggear/gaminggear_evdev.c:59
 #, c-format
 msgid "Could not set uinput key bit %u: %s"
 msgstr "Could not set uinput key bit %u: %s"
@@ -376,10 +362,18 @@ msgstr "Could not write sync event to uinput %i: %i"
 msgid "Delay"
 msgstr "Delay"
 
+#: gaminggearfxinfo/gaminggearfxinfo.c:79
+#: gaminggearfxinfo/gaminggearfxinfo.c:96
+msgid "Description: "
+msgstr "Description: "
+
 #: gaminggearfxinfo/gaminggearfxinfo.c:71
-#, c-format
-msgid "Device[%u]\n"
-msgstr "Device[%u]\n"
+msgid "Device"
+msgstr "Device"
+
+#: gaminggearfxinfo/gaminggearfxinfo.c:80
+msgid "Device type: "
+msgstr "Device type: "
 
 #: libgaminggearwidget/gaminggear_macro_tree_view.c:402
 msgid "Do you really want to remove this macro?"
@@ -486,6 +480,10 @@ msgstr "Key sequence"
 msgid "Keyval 0x%04x has no corresponding keys in keymap"
 msgstr "Keyval 0x%04x has no corresponding keys in keymap"
 
+#: gaminggearfxinfo/gaminggearfxinfo.c:89
+msgid "Light"
+msgstr "Light"
+
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:188
 msgid "Load gaminggear macros"
 msgstr "Load gaminggear macros"
@@ -552,6 +550,10 @@ msgstr "Please enter name of macro"
 #: libgaminggearwidget/gaminggear_macro_tree_view.c:87
 msgid "Please enter name of macroset"
 msgstr "Please enter name of macroset"
+
+#: gaminggearfxinfo/gaminggearfxinfo.c:103
+msgid "Position: "
+msgstr "Position: "
 
 #: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:99
 msgid "Record"
@@ -699,3 +701,4 @@ msgstr "use device STRING"
 #: gaminggearfxcontrol/gaminggearfxcontrol.c:38
 msgid "use light index INDEX"
 msgstr "use light index INDEX"
+
