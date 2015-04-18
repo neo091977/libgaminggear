@@ -17,6 +17,7 @@
 
 #include "gaminggear/evdev.h"
 #include "config.h"
+#include "i18n-lib.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -31,30 +32,31 @@ int gaminggear_open_misc_evdev(gchar const * identifier, guint vendor, guint pro
 
 	fd = open(UINPUT_DIR "/uinput", O_WRONLY | O_NONBLOCK);
 	if (fd < 0) {
-		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), "Error opening misc evdev: %s", g_strerror(errno));
+		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not open uinput: %s"), g_strerror(errno));
 		goto error;
 	}
+	g_debug("uinput %1$s has file descriptor %2$i", identifier, fd);
 
 	if (ioctl(fd, UI_SET_EVBIT, EV_KEY) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+		g_warning(_("Could not set uinput event bit %u: %s"), EV_KEY, g_strerror(errno));
 	if (ioctl(fd, UI_SET_KEYBIT, KEY_MUTE) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+		g_warning(_("Could not set uinput key bit %u: %s"), KEY_MUTE, g_strerror(errno));
 	if (ioctl(fd, UI_SET_KEYBIT, KEY_VOLUMEDOWN) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+		g_warning(_("Could not set uinput key bit %u: %s"), KEY_VOLUMEDOWN, g_strerror(errno));
 	if (ioctl(fd, UI_SET_KEYBIT, KEY_VOLUMEUP) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+		g_warning(_("Could not set uinput key bit %u: %s"), KEY_VOLUMEUP, g_strerror(errno));
 	if (ioctl(fd, UI_SET_KEYBIT, KEY_PREVIOUSSONG) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+		g_warning(_("Could not set uinput key bit %u: %s"), KEY_PREVIOUSSONG, g_strerror(errno));
 	if (ioctl(fd, UI_SET_KEYBIT, KEY_NEXTSONG) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+		g_warning(_("Could not set uinput key bit %u: %s"), KEY_NEXTSONG, g_strerror(errno));
 	if (ioctl(fd, UI_SET_KEYBIT, KEY_PLAYPAUSE) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+		g_warning(_("Could not set uinput key bit %u: %s"), KEY_PLAYPAUSE, g_strerror(errno));
 	if (ioctl(fd, UI_SET_KEYBIT, KEY_STOPCD) < 0)
-		g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+		g_warning(_("Could not set uinput key bit %u: %s"), KEY_STOPCD, g_strerror(errno));
 
 	for (i = BTN_LEFT; i <= BTN_BACK; ++i) {
 		if (ioctl(fd, UI_SET_KEYBIT, i) < 0)
-			g_warning("gaminggear_open_misc_evdev: %s", g_strerror(errno));
+			g_warning(_("Could not set uinput key bit %u: %s"), i, g_strerror(errno));
 	}
 
 	memset(&uidev, 0, sizeof(uidev));
@@ -66,12 +68,12 @@ int gaminggear_open_misc_evdev(gchar const * identifier, guint vendor, guint pro
 	uidev.id.version = 1;
 
 	if (write(fd, &uidev, sizeof(uidev)) < 0) {
-		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), "Error writing to misc evdev: %s", g_strerror(errno));
+		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not initialize uinput %i: %s"), fd, g_strerror(errno));
 		goto close;
 	}
 
 	if (ioctl(fd, UI_DEV_CREATE) < 0) {
-		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), "Error creating uinput: %s", g_strerror(errno));
+		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not create uinput %i: %s"), fd, g_strerror(errno));
 		goto close;
 	}
 
@@ -87,7 +89,7 @@ void gaminggear_close_misc_evdev(int fd, GError **error) {
 		return;
 
 	if (ioctl(fd, UI_DEV_DESTROY) < 0)
-		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), "Error closing misc evdev: %s", g_strerror(errno));
+		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not destroy uinput %i: %s"), fd, g_strerror(errno));
 	close(fd);
 }
 
@@ -104,7 +106,7 @@ void gaminggear_input_event_write_with_sync(int fd, int code, int value) {
 
 	written = write(fd, (const void*) &event, sizeof(event));
 	if (written != sizeof(event))
-		g_warning("error with event %d", written);
+		g_warning(_("Could not write key event %1$i/%2$i to uinput %3$i: %4$i"), code, value, fd, written);
 
 	event.type = EV_SYN;
 	event.code = SYN_REPORT;
@@ -112,7 +114,7 @@ void gaminggear_input_event_write_with_sync(int fd, int code, int value) {
 
 	written = write(fd, (const void*) &event, sizeof(event));
 	if (written != sizeof(event))
-		g_warning("error with sync event %d", written);
+		g_warning(_("Could not write sync event to uinput %i: %i"), fd, written);
 }
 
 void gaminggear_input_event_write_single(int fd, int code) {

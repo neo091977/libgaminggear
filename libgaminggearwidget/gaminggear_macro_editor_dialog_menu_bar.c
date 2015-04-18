@@ -29,6 +29,7 @@
 #ifdef SQLITE3_FOUND
 #include "macros_converter_steelseries_engine3.h"
 #endif
+#include "i18n-lib.h"
 
 static gchar const * const filter_converter_key = "converter";
 
@@ -43,7 +44,7 @@ static void add_file_filter_from_converter(GtkFileChooser *chooser, GaminggearMa
 
 	filter = gtk_file_filter_new();
 	g_object_set_data(G_OBJECT(filter), filter_converter_key, (gpointer)converter);
-	gtk_file_filter_set_name(filter, converter->name);
+	gtk_file_filter_set_name(filter, _N(converter->name));
 	gtk_file_filter_add_pattern(filter, converter->pattern);
 
 	gtk_file_chooser_add_filter(chooser, filter);
@@ -71,7 +72,7 @@ static void show_import_cb(GtkMenuItem *item, gpointer user_data) {
 
 	config = gaminggear_configuration_load();
 
-	dialog = gtk_file_chooser_dialog_new("Import macros",
+	dialog = gtk_file_chooser_dialog_new(_("Import macros"),
 			GTK_WINDOW(parent),
 			GTK_FILE_CHOOSER_ACTION_OPEN,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -100,7 +101,7 @@ static void show_import_cb(GtkMenuItem *item, gpointer user_data) {
 		g_free(filename);
 		
 		if (error) {
-			gaminggear_warning_dialog(GTK_WINDOW(parent), "Error importing macros", error->message);
+			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Could not import macros"), error->message);
 			g_clear_error(&error);
 		} else {
 			gaminggear_macro_editor_dialog_add_macros(parent, gaminggear_macros);
@@ -124,7 +125,7 @@ static void show_export_cb(GtkMenuItem *item, gpointer user_data) {
 
 	config = gaminggear_configuration_load();
 
-	dialog = gtk_file_chooser_dialog_new("Export macros",
+	dialog = gtk_file_chooser_dialog_new(_("Export macros"),
 			GTK_WINDOW(parent),
 			GTK_FILE_CHOOSER_ACTION_SAVE,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -157,7 +158,7 @@ static void show_export_cb(GtkMenuItem *item, gpointer user_data) {
 		gaminggear_macros_free(gaminggear_macros);
 
 		if (error) {
-			gaminggear_warning_dialog(GTK_WINDOW(parent), "Error exporting macros", error->message);
+			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Could not export macros"), error->message);
 			g_clear_error(&error);
 		}
 	}
@@ -170,7 +171,7 @@ static void show_quit_cb(GtkMenuItem *item, gpointer user_data) {
 }
 
 static void show_about_cb(GtkMenuItem *item, gpointer user_data) {
-	gaminggear_about_dialog(GTK_WINDOW(user_data), "Gaminggear macro editor", "Application to edit gaminggear macros");
+	gaminggear_about_dialog(GTK_WINDOW(user_data), _("Gaminggear macro editor"), _("Application to edit gaminggear macros"));
 }
 
 static void show_open_cb(GtkMenuItem *item, gpointer user_data) {
@@ -184,7 +185,7 @@ static void show_open_cb(GtkMenuItem *item, gpointer user_data) {
 
 	config = gaminggear_configuration_load();
 
-	dialog = gtk_file_chooser_dialog_new("Open gaminggear macros",
+	dialog = gtk_file_chooser_dialog_new(_("Load gaminggear macros"),
 			GTK_WINDOW(parent),
 			GTK_FILE_CHOOSER_ACTION_OPEN,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -193,12 +194,12 @@ static void show_open_cb(GtkMenuItem *item, gpointer user_data) {
 	);
 
 	filter = gtk_file_filter_new();
-	gtk_file_filter_set_name(filter, "Gaminggear macros");
+	gtk_file_filter_set_name(filter, _("Gaminggear macros"));
 	gtk_file_filter_add_pattern(filter, "*.ini");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 
 	filter = gtk_file_filter_new();
-	gtk_file_filter_set_name(filter, "All files");
+	gtk_file_filter_set_name(filter, _("All files"));
 	gtk_file_filter_add_pattern(filter, "*");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 
@@ -218,7 +219,7 @@ static void show_open_cb(GtkMenuItem *item, gpointer user_data) {
 		g_free(filename);
 
 		if (error) {
-			gaminggear_warning_dialog(GTK_WINDOW(parent), "Error loading macros", error->message);
+			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Could not load macros"), error->message);
 			g_clear_error(&error);
 		} else {
 			gaminggear_macro_editor_dialog_clear(parent);
@@ -248,7 +249,7 @@ static void show_save_as_cb(GtkMenuItem *item, gpointer user_data) {
 
 	config = gaminggear_configuration_load();
 
-	dialog = gtk_file_chooser_dialog_new("Save gaminggear macros as",
+	dialog = gtk_file_chooser_dialog_new(_("Save gaminggear macros as"),
 			GTK_WINDOW(parent),
 			GTK_FILE_CHOOSER_ACTION_SAVE,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -257,7 +258,7 @@ static void show_save_as_cb(GtkMenuItem *item, gpointer user_data) {
 	);
 
 	filter = gtk_file_filter_new();
-	gtk_file_filter_set_name(filter, "Gaminggear macros");
+	gtk_file_filter_set_name(filter, _("Gaminggear macros"));
 	gtk_file_filter_add_pattern(filter, "*.ini");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 
@@ -283,7 +284,7 @@ static void show_save_as_cb(GtkMenuItem *item, gpointer user_data) {
 		gaminggear_macros_free(gaminggear_macros);
 
 		if (error) {
-			gaminggear_warning_dialog(GTK_WINDOW(parent), "Error exporting macros", error->message);
+			gaminggear_warning_dialog(GTK_WINDOW(parent), _("Could not save macros"), error->message);
 			g_clear_error(&error);
 		}
 	}
@@ -298,7 +299,7 @@ GtkWidget *gaminggear_macro_editor_dialog_menu_bar_new(GaminggearMacroEditorDial
 
 	menu_bar = gtk_menu_bar_new();
 
-	menu_item = gtk_menu_item_new_with_label("File");
+	menu_item = gtk_menu_item_new_with_label(_("File"));
 	menu = gtk_menu_new();
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu_item), menu);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu_bar), menu_item);
@@ -315,15 +316,11 @@ GtkWidget *gaminggear_macro_editor_dialog_menu_bar_new(GaminggearMacroEditorDial
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_item);
 	g_signal_connect(G_OBJECT(menu_item), "activate", G_CALLBACK(show_save_as_cb), dialog);
 
-	menu_item = gtk_image_menu_item_new_with_label("Import");
+	menu_item = gtk_image_menu_item_new_with_label(_("Import"));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_item);
 	g_signal_connect(G_OBJECT(menu_item), "activate", G_CALLBACK(show_import_cb), dialog);
 
-	menu_item = gtk_image_menu_item_new_with_label("Import");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_item);
-	g_signal_connect(G_OBJECT(menu_item), "activate", G_CALLBACK(show_import_cb), dialog);
-
-	menu_item = gtk_image_menu_item_new_with_label("Export");
+	menu_item = gtk_image_menu_item_new_with_label(_("Export"));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_item);
 	g_signal_connect(G_OBJECT(menu_item), "activate", G_CALLBACK(show_export_cb), dialog);
 
@@ -331,7 +328,7 @@ GtkWidget *gaminggear_macro_editor_dialog_menu_bar_new(GaminggearMacroEditorDial
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_item);
 	g_signal_connect(G_OBJECT(menu_item), "activate", G_CALLBACK(show_quit_cb), dialog);
 
-	menu_item = gtk_menu_item_new_with_label("Help");
+	menu_item = gtk_menu_item_new_with_label(_("Help"));
 	menu = gtk_menu_new();
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu_item), menu);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu_bar), menu_item);

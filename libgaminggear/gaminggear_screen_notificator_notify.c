@@ -17,6 +17,7 @@
 
 #include "gaminggear/screen_notificator.h"
 #include "config.h"
+#include "i18n-lib.h"
 #include <libnotify/notify.h>
 
 struct _GaminggearScreenNotificator {
@@ -32,7 +33,7 @@ GaminggearScreenNotificator *gaminggear_screen_notificator_init(gchar const *app
 	GaminggearScreenNotificator *notificator;
 
 	if (!notify_init(app_name)) {
-		g_warning("Error initializing notify");
+		g_warning(_("Could not initialize notify"));
 		return NULL;
 	}
 

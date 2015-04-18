@@ -1,4 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+IF(POLICY CMP0022)
+  CMAKE_POLICY(SET CMP0022 OLD)
+ENDIF()
 
 PROJECT(libgaminggear C)
 
@@ -11,7 +14,7 @@ IF(CMAKE_COMPILER_IS_GNUCC)
   # * Force gcc to generate single line error messages (used for eclipse cdt)
   # * Play it save with all warning messages
   # * Define GNU source for some extras
-  ADD_DEFINITIONS(-fmessage-length=0 -Wall -D_GNU_SOURCE)
+  ADD_DEFINITIONS(-fmessage-length=0 -Wall -Wl,--no-undefined -D_GNU_SOURCE)
 ENDIF(CMAKE_COMPILER_IS_GNUCC)
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DG_DISABLE_CAST_CHECKS")
 
@@ -44,8 +47,9 @@ ADD_CUSTOM_TARGET(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 SET(V_MAJOR 0)
-SET(V_MINOR 7)
+SET(V_MINOR 8)
 SET(V_MICRO 0)
+SET(TRANSLATION_LANGUAGES de en)
 
 INCLUDE_DIRECTORIES(
   ${CMAKE_SOURCE_DIR}/include
@@ -64,3 +68,4 @@ ADD_SUBDIRECTORY(include)
 ADD_SUBDIRECTORY(libgaminggear)
 ADD_SUBDIRECTORY(libgaminggearfx)
 ADD_SUBDIRECTORY(libgaminggearwidget)
+ADD_SUBDIRECTORY(po)

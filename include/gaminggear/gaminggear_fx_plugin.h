@@ -46,6 +46,8 @@ struct _GaminggearFxPlugin {
 };
 
 GaminggearFxPlugin *gaminggear_fx_plugin_new(void);
+#define GAMINGGEAR_FX_SYMBOL_PLUGIN_NEW "gaminggear_fx_plugin_new"
+typedef GaminggearFxPlugin *(*GAMINGGEAR_FX_PLUGIN_NEW)(void);
 
 #ifdef  __cplusplus
 }

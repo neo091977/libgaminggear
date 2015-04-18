@@ -19,6 +19,7 @@
 #include "gaminggear/key_translations.h"
 #include "gaminggear/macro.h"
 #include "gaminggear_helper.h"
+#include "i18n-lib.h"
 
 static guint gaminggear_xkeycode_to_keyval(guint keycode) {
 	GdkKeymap *keymap;
@@ -28,7 +29,7 @@ static guint gaminggear_xkeycode_to_keyval(guint keycode) {
 	keymap = gdk_keymap_get_default();
 	keyval = gdk_keymap_lookup_key(keymap, &key);
 	if (keyval == 0)
-		g_warning("in gaminggear_xkeycode_to_keyval: keycode %i has no keyval!\n", keycode);
+		g_warning(_("Xkeycode 0x%04x has no corresponding keyval in keymap"), keycode);
 	return keyval;
 }
 
@@ -52,17 +53,17 @@ gchar *gaminggear_hid_to_keyname(guint8 usage_id) {
 
 	switch (usage_id) {
 	case GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT:
-		string = g_strdup("Button left");
+		string = g_strdup(_("Button left"));
 		break;
 	case GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_RIGHT:
-		string = g_strdup("Button right");
+		string = g_strdup(_("Button right"));
 		break;
 	case GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_MIDDLE:
-		string = g_strdup("Button middle");
+		string = g_strdup(_("Button middle"));
 		break;
 	default:
-		if (usage_id > GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT)
-			string = g_strdup_printf("Button %u", usage_id - GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT + 1);
+		if (usage_id >= GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT)
+			string = g_strdup_printf(_("Button %u"), usage_id - GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT + 1);
 		else
 			string = gaminggear_xkeycode_to_keyname(gaminggear_hid_to_xkeycode(usage_id));
 	}

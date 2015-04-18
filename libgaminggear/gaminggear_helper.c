@@ -16,6 +16,7 @@
  */
 
 #include "gaminggear_helper.h"
+#include "i18n-lib.h"
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -33,7 +34,7 @@ gpointer g_gaminggear_key_file_get_binary(GKeyFile *key_file, gchar const *group
 		return NULL;
 
 	if (strlen(string) != size * 2) {
-		g_set_error(error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE, "Data has wrong length %lu instead of %lu", (gulong)strlen(string), (gulong)(size * 2));
+		g_set_error(error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE, _("Binary data has wrong length: %1$lu bytes instead of %2$lu"), (gulong)strlen(string), (gulong)(size * 2));
 		g_free(string);
 		return NULL;
 	}
@@ -76,7 +77,7 @@ void g_gaminggear_key_file_set_binary(GKeyFile *key_file, gchar const *group_nam
 static gboolean gaminggear_create_dir_if_needed_with_mode(gchar const *dir, int mode, GError **error) {
 	if (!g_file_test(dir, G_FILE_TEST_IS_DIR)) {
 		if (g_mkdir_with_parents(dir, mode)) {
-			g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), "Error creating directory: %s", g_strerror(errno));
+			g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not create directory: %s"), g_strerror(errno));
 			return FALSE;
 		}
 	}

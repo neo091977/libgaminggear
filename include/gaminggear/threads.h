@@ -45,14 +45,20 @@ G_BEGIN_DECLS
  *  \brief A recursive mutex.
  */
 
+/*! \typedef GaminggearRWLock
+ *  \brief A reader/writer lock.
+ */
+
 #if (GLIB_CHECK_VERSION(2, 32, 0))
 	typedef GMutex GaminggearMutex;
 	typedef GCond GaminggearCond;
 	typedef GRecMutex GaminggearRecMutex;
+	typedef GRWLock GaminggearRWLock;
 #else
 	typedef GMutex *GaminggearMutex;
 	typedef GCond *GaminggearCond;
 	typedef GStaticRecMutex GaminggearRecMutex;
+	typedef GStaticRWLock GaminggearRWLock;
 #endif
 
 /*! \brief Create new thread.
@@ -195,6 +201,72 @@ static inline void gaminggear_rec_mutex_unlock(GaminggearRecMutex *mutex) {
 	g_rec_mutex_unlock(mutex);
 #else
 	g_static_rec_mutex_unlock(mutex);
+#endif
+}
+
+/*! \brief Initializes a GaminggearRWLock.
+ *  \since 1.0
+ */
+static inline void gaminggear_rw_lock_init(GaminggearRWLock *lock) {
+#if (GLIB_CHECK_VERSION(2, 32, 0))
+	g_rw_lock_init(lock);
+#else
+	g_static_rw_lock_init(lock);
+#endif
+}
+
+/*! \brief Frees resources of a GaminggearRWLock.
+ *  \since 1.0
+ */
+static inline void gaminggear_rw_lock_clear(GaminggearRWLock *lock) {
+#if (GLIB_CHECK_VERSION(2, 32, 0))
+	g_rw_lock_clear(lock);
+#else
+	g_static_rw_lock_free(lock);
+#endif
+}
+
+/*! \brief Locks a GaminggearRWLock in reader mode.
+ *  \since 1.0
+ */
+static inline void gaminggear_rw_lock_reader_lock(GaminggearRWLock *lock) {
+#if (GLIB_CHECK_VERSION(2, 32, 0))
+	g_rw_lock_reader_lock(lock);
+#else
+	g_static_rw_lock_reader_lock(lock);
+#endif
+}
+
+/*! \brief Unlocks a reader mode locked GaminggearRWLock.
+ *  \since 1.0
+ */
+static inline void gaminggear_rw_lock_reader_unlock(GaminggearRWLock *lock) {
+#if (GLIB_CHECK_VERSION(2, 32, 0))
+	g_rw_lock_reader_unlock(lock);
+#else
+	g_static_rw_lock_reader_unlock(lock);
+#endif
+}
+
+/*! \brief Locks a GaminggearRWLock in writer mode.
+ *  \since 1.0
+ */
+static inline void gaminggear_rw_lock_writer_lock(GaminggearRWLock *lock) {
+#if (GLIB_CHECK_VERSION(2, 32, 0))
+	g_rw_lock_writer_lock(lock);
+#else
+	g_static_rw_lock_writer_lock(lock);
+#endif
+}
+
+/*! \brief Unlocks a writer mode locked GaminggearRWLock.
+ *  \since 1.0
+ */
+static inline void gaminggear_rw_lock_writer_unlock(GaminggearRWLock *lock) {
+#if (GLIB_CHECK_VERSION(2, 32, 0))
+	g_rw_lock_writer_unlock(lock);
+#else
+	g_static_rw_lock_writer_unlock(lock);
 #endif
 }
 

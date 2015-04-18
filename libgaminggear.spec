@@ -1,5 +1,5 @@
 %define vmajor 0
-%define vminor 7
+%define vminor 8
 %define vmicro 0
 
 Name: libgaminggear
@@ -14,6 +14,7 @@ BuildRequires: sqlite >= 3.7
 BuildRequires: libcanberra-devel
 BuildRequires: libnotify-devel
 BuildRequires: doxygen
+BuildRequires: gettext >= 0.15
 ExclusiveOS: linux
 URL: http://sourceforge.net/projects/libgaminggear/
 Packager: Stefan Achatz <erazor_de@users.sourceforge.net>
@@ -72,6 +73,7 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 %{_datadir}/gaminggear/icons
 %{_bindir}/gaminggearfxinfo
 %{_bindir}/gaminggearfxcontrol
+%{_datadir}/locale/*/LC_MESSAGES/libgaminggear.mo
 
 %files devel
 %defattr(-,root,root)

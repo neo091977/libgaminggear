@@ -19,6 +19,7 @@
 #include "gaminggear_macro_tree_store.h"
 #include "gaminggear/gaminggear_text_dialog.h"
 #include "gaminggearwidget_helper.h"
+#include "i18n-lib.h"
 #include <string.h>
 
 #define GAMINGGEAR_MACRO_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_TREE_VIEW_TYPE, GaminggearMacroTreeViewClass))
@@ -83,7 +84,7 @@ void gaminggear_macro_tree_view_add_macroset(GaminggearMacroTreeView *macro_tree
 
 	store = gaminggear_macro_tree_view_get_store(macro_tree_view);
 
-	new_name = gaminggear_text_dialog(NULL, "New macroset", "Please enter name of macroset", NULL);
+	new_name = gaminggear_text_dialog(NULL, _("New macroset"), _("Please enter name of macroset"), NULL);
 	if (!name_is_valid(new_name))
 		goto out_free;
 
@@ -305,7 +306,7 @@ static void popup_add_macro_cb(GtkMenuItem *item, gpointer user_data) {
 	if (!gaminggear_macro_tree_store_is_macroset_with_iter(macro_tree_store, &macroset))
 		return;
 
-	macro_name = gaminggear_text_dialog(NULL, "New macro", "Please enter name of macro", NULL);
+	macro_name = gaminggear_text_dialog(NULL, _("New macro"), _("Please enter name of macro"), NULL);
 	if (!name_is_valid(macro_name))
 		goto out_free;
 
@@ -395,10 +396,10 @@ static void popup_remove_cb(GtkMenuItem *item, gpointer user_data) {
 	macro_tree_store = GAMINGGEAR_MACRO_TREE_STORE(model);
 
 	if (gaminggear_macro_tree_store_is_macroset_with_iter(macro_tree_store, &macro)) {
-		if (should_remove("Remove macroset", "Do you really want to remove this macroset?"))
+		if (should_remove(_("Remove macroset"), _("Do you really want to remove this macroset?")))
 			gaminggear_macro_tree_store_remove(macro_tree_store, &macro);
 	} else {
-		if (should_remove("Remove macro", "Do you really want to remove this macro?"))
+		if (should_remove(_("Remove macro"), _("Do you really want to remove this macro?")))
 			gaminggear_macro_tree_store_remove(macro_tree_store, &macro);
 	}
 	removed(macro_tree_view);
@@ -434,7 +435,7 @@ static gboolean popup_menu_on_right_mouse_button_cb(GtkTreeView *treeview, GdkEv
 static void menu_add_common(GtkWidget *menu, GaminggearMacroTreeView *macro_tree_view) {
 	GtkWidget *item;
 
-	item = gtk_image_menu_item_new_with_label("Rename");
+	item = gtk_image_menu_item_new_with_label(_("Rename"));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_rename_cb), macro_tree_view);
 
@@ -449,7 +450,7 @@ static GtkWidget *macro_menu_new(GaminggearMacroTreeView *macro_tree_view) {
 	menu = gtk_menu_new();
 	menu_add_common(menu, macro_tree_view);
 
-	item = gtk_image_menu_item_new_with_label("Copy");
+	item = gtk_image_menu_item_new_with_label(_("Copy"));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_copy_macro_cb), macro_tree_view);
 
@@ -463,7 +464,7 @@ static GtkWidget *macroset_menu_new(GaminggearMacroTreeView *macro_tree_view) {
 	menu = gtk_menu_new();
 	menu_add_common(menu, macro_tree_view);
 
-	item = gtk_image_menu_item_new_with_label("Add macro");
+	item = gtk_image_menu_item_new_with_label(_("Add macro"));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_add_macro_cb), macro_tree_view);
 
@@ -495,7 +496,7 @@ static void gaminggear_macro_tree_view_init(GaminggearMacroTreeView *macro_tree_
 	g_object_ref_sink(priv->macroset_menu);
 
 	renderer = gtk_cell_renderer_text_new();
-	column = gtk_tree_view_column_new_with_attributes("Macro", renderer, "text", gaminggear_macro_tree_store_name_column(), NULL);
+	column = gtk_tree_view_column_new_with_attributes(_("Macro"), renderer, "text", gaminggear_macro_tree_store_name_column(), NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(macro_tree_view), column);
 
 	/* renderer is not set editable. Editing is not started through click, but via popup menu entry */

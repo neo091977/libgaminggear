@@ -44,7 +44,10 @@ TARGET_LINK_LIBRARIES(libgaminggearwidget
   libgaminggear
   ${M_LIBRARY}
   ${GTK_LIBRARIES}
+  ${GDK_LIBRARIES}
 )
+
+TARGET_LINK_LIBRARIES(libgaminggearwidget LINK_INTERFACE_LIBRARIES)
 
 SET_TARGET_PROPERTIES(libgaminggearwidget
   PROPERTIES

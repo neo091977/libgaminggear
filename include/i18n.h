@@ -1,5 +1,5 @@
-#ifndef __CONFIG_H__
-#define __CONFIG_H__
+#ifndef __GAMINGGEAR_I18N_H__
+#define __GAMINGGEAR_I18N_H__
 
 /*
  * This file is part of libgaminggear.
@@ -18,12 +18,12 @@
  * along with libgaminggear. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define GAMINGGEAR_ICON_PATH "${CMAKE_INSTALL_PREFIX}/share/gaminggear/icons"
-#define UINPUT_DIR "${UINPUTDIR}"
-#define GAMINGGEAR_FX_PLUGIN_DIR "${GFX_PLUGIN_DIR}"
-#cmakedefine SQLITE3_FOUND
-#cmakedefine HAVE_NOTIFY_0_7
-#define PROJECT_NAME "${CMAKE_PROJECT_NAME}"
-#define LOCALEDIR "${CMAKE_INSTALL_PREFIX}/share/locale"
+#include <glib/gi18n.h>
+
+/* That's meant to be used for the action that translates N_ marked strings.
+   Do not add to xgettext keywords.
+ */
+#define _N(Reference) _(Reference)
+#define _NC(Context,Reference) C_(Context,Reference)
 
 #endif

@@ -16,6 +16,7 @@
  */
 
 #include "macros_converter_steelseries_engine3.h"
+#include "i18n-lib.h"
 #include <sqlite3.h>
 #include <string.h>
 #include <stdlib.h>
@@ -88,12 +89,12 @@ static GaminggearMacroKeystrokes *steelseries_events_to_gaminggear_macro_keystro
 			break;
 		case STEELSERIES_MACRO_EVENT_TYPE_WAIT:
 			if (index == 0)
-				g_warning("steelseries_events_to_gaminggear_macro_keystrokes: wait without first event");
+				g_warning(_("Ignoring wait as first event type"));
 			else
 				gaminggear_macro_keystroke_set_period(&keystrokes->keystrokes[index - 1], get_uint(extra_regex, *event));
 			break;
 		default:
-			g_warning("steelseries_events_to_gaminggear_macro_keystrokes: unknown type %u", type);
+			g_warning(_("Ignoring unknown event type %u"), type);
 			break;
 		}
 
@@ -149,14 +150,14 @@ GaminggearMacros *macros_conversions_steelseries_engine3_import(gchar const *fil
 
 	retval = sqlite3_open(filename, &database);
 	if (retval) {
-		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_FAILED, "sqlite3 could not open database %s", filename);
+		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Sqlite3 could not open database: %s"), filename);
 		sqlite3_close(database);
 		return NULL;
 	}
 
 	retval = sqlite3_exec(database, "SELECT name, events FROM macros;", callback, gaminggear_macros, &message);
 	if (retval != SQLITE_OK) {
-		g_set_error(error, G_FILE_ERROR_FAILED, G_FILE_ERROR_FAILED, "sqlite3 could not exec statement %s", message);
+		g_set_error(error, G_FILE_ERROR_FAILED, G_FILE_ERROR_FAILED, _("Sqlite3 could not evaluate statement: %s"), message);
 		sqlite3_free(message);
 	}
 
@@ -170,7 +171,7 @@ static GaminggearMacrosConverter converter = {
 	.export = NULL,
 	.file_extension = "db",
 	.pattern = "*.db",
-	.name = "SteelSeries Engine 3 database",
+	.name = N_("SteelSeries Engine 3 database"),
 };
 
 GaminggearMacrosConverter const * const macros_converter_steelseries_engine3(void) {
