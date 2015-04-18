@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgaminggear 0.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-13 15:36+0200\n"
+"POT-Creation-Date: 2015-04-18 15:07+0200\n"
 "PO-Revision-Date: 2015-04-09 16:36+0200\n"
 "Last-Translator: Stefan <erazor_de@users.sourceforge.net>\n"
 "Language-Team: German\n"
@@ -61,7 +61,8 @@ msgstr "Erweitert"
 msgid ""
 "Advanced view does not support final waits. Please switch to another view to "
 "add it again if needed."
-msgstr "Erweiterte Ansicht unterstützt keine finalen Wartezeiten. Bitte wechsle zu "
+msgstr ""
+"Erweiterte Ansicht unterstützt keine finalen Wartezeiten. Bitte wechsle zu "
 "einer anderen Ansicht um diese wieder hinzuzufügen."
 
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:202
@@ -140,7 +141,8 @@ msgstr "Konnte Tonnachricht nicht abbrechen: %s"
 #: libgaminggear/gaminggear_device.c:86
 #, c-format
 msgid "Could not close file descriptor %1$i for device key %2$s: %3$s"
-msgstr "Konnte Dateideskriptor %1$i für Geräteschlüssel %2$s nicht schließen: %3$s"
+msgstr ""
+"Konnte Dateideskriptor %1$i für Geräteschlüssel %2$s nicht schließen: %3$s"
 
 #: libgaminggear/gaminggear_device.c:154
 #, c-format
@@ -327,14 +329,10 @@ msgstr "Konnte Eigenschaften des canberra Kontext nicht setzen: %s"
 msgid "Could not set uinput event bit %u: %s"
 msgstr "Konnte uinput Ereignisbit %u nicht setzen: %s"
 
-#: libgaminggear/gaminggear_evdev.c:43
-#: libgaminggear/gaminggear_evdev.c:45
-#: libgaminggear/gaminggear_evdev.c:47
-#: libgaminggear/gaminggear_evdev.c:49
-#: libgaminggear/gaminggear_evdev.c:51
-#: libgaminggear/gaminggear_evdev.c:53
-#: libgaminggear/gaminggear_evdev.c:55
-#: libgaminggear/gaminggear_evdev.c:59
+#: libgaminggear/gaminggear_evdev.c:43 libgaminggear/gaminggear_evdev.c:45
+#: libgaminggear/gaminggear_evdev.c:47 libgaminggear/gaminggear_evdev.c:49
+#: libgaminggear/gaminggear_evdev.c:51 libgaminggear/gaminggear_evdev.c:53
+#: libgaminggear/gaminggear_evdev.c:55 libgaminggear/gaminggear_evdev.c:59
 #, c-format
 msgid "Could not set uinput key bit %u: %s"
 msgstr "Konnte uinput Tastenbit %u nicht setzen: %s"
@@ -701,4 +699,3 @@ msgstr "benutze Gerät ZEICHENKETTE"
 #: gaminggearfxcontrol/gaminggearfxcontrol.c:38
 msgid "use light index INDEX"
 msgstr "benutze Lichtindex INDEX"
-
