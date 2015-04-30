@@ -69,4 +69,14 @@ typedef enum {
 	HID_UID_KB_RIGHT_GUI = 0xe7,
 } HidUsageIdKeyboard;
 
+typedef enum {
+	HID_UID_CP_NEXTSONG = 0xb5,
+	HID_UID_CP_PREVIOUSSONG = 0xb6,
+	HID_UID_CP_STOP = 0xb7,
+	HID_UID_CP_PLAYPAUSE = 0xcd,
+	HID_UID_CP_MUTE = 0xe2,
+	HID_UID_CP_VOLUMEUP = 0xe9,
+	HID_UID_CP_VOLUMEDOWN = 0xea,
+} HidUsageIdConsumer;
+
 #endif

@@ -24,7 +24,7 @@ ENDIF()
 INSTALL(
   FILES
     audio_notificator.h
-    evdev.h
+    input_events.h
     gaminggear_device.h
     gaminggear_fx_plugin.h
     gaminggear_hscale.h

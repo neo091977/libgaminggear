@@ -17,7 +17,7 @@
 
 #include "gaminggear/gaminggear_device.h"
 #include "gaminggear/threads.h"
-#include "gaminggear/evdev.h"
+#include "gaminggear/input_events.h"
 #include "i18n-lib.h"
 #include <fcntl.h>
 #include <errno.h>
