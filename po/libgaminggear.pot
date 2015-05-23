@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgaminggear 0.8.\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-18 15:07+0200\n"
+"POT-Creation-Date: 2015-04-30 16:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,7 +105,7 @@ msgstr ""
 msgid "COLOR1"
 msgstr ""
 
-#: libgaminggear/gaminggear_macro_thread.c:143
+#: libgaminggear/gaminggear_macro_thread.c:136
 #, c-format
 msgid "Cancelling macro %s/%s"
 msgstr ""
@@ -122,7 +122,7 @@ msgstr ""
 msgid "Color: "
 msgstr ""
 
-#: libgaminggear/gaminggear_macro_thread.c:139
+#: libgaminggear/gaminggear_macro_thread.c:132
 #, c-format
 msgid "Continuing macro %s/%s"
 msgstr ""
@@ -161,12 +161,12 @@ msgstr ""
 msgid "Could not create directory: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_macro_thread.c:188
+#: libgaminggear/gaminggear_macro_thread.c:179
 #, c-format
 msgid "Could not create macro thread: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_evdev.c:76
+#: libgaminggear/gaminggear_input_events_uinput.c:87
 #, c-format
 msgid "Could not create uinput %i: %s"
 msgstr ""
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Could not destroy canberra context: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_evdev.c:92
+#: libgaminggear/gaminggear_input_events_uinput.c:106
 #, c-format
 msgid "Could not destroy uinput %i: %s"
 msgstr ""
@@ -259,7 +259,7 @@ msgstr ""
 msgid "Could not initialize notify"
 msgstr ""
 
-#: libgaminggear/gaminggear_evdev.c:71
+#: libgaminggear/gaminggear_input_events_uinput.c:82
 #, c-format
 msgid "Could not initialize uinput %i: %s"
 msgstr ""
@@ -283,7 +283,7 @@ msgstr ""
 msgid "Could not open file for device key %s: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_evdev.c:35
+#: libgaminggear/gaminggear_input_events_uinput.c:41
 #, c-format
 msgid "Could not open uinput: %s"
 msgstr ""
@@ -321,15 +321,20 @@ msgstr ""
 msgid "Could not set properties for canberra context: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_evdev.c:41
+#: libgaminggear/gaminggear_input_events_uinput.c:52
 #, c-format
 msgid "Could not set uinput event bit %u: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_evdev.c:43 libgaminggear/gaminggear_evdev.c:45
-#: libgaminggear/gaminggear_evdev.c:47 libgaminggear/gaminggear_evdev.c:49
-#: libgaminggear/gaminggear_evdev.c:51 libgaminggear/gaminggear_evdev.c:53
-#: libgaminggear/gaminggear_evdev.c:55 libgaminggear/gaminggear_evdev.c:59
+#: libgaminggear/gaminggear_input_events_uinput.c:48
+#: libgaminggear/gaminggear_input_events_uinput.c:54
+#: libgaminggear/gaminggear_input_events_uinput.c:56
+#: libgaminggear/gaminggear_input_events_uinput.c:58
+#: libgaminggear/gaminggear_input_events_uinput.c:60
+#: libgaminggear/gaminggear_input_events_uinput.c:62
+#: libgaminggear/gaminggear_input_events_uinput.c:64
+#: libgaminggear/gaminggear_input_events_uinput.c:66
+#: libgaminggear/gaminggear_input_events_uinput.c:70
 #, c-format
 msgid "Could not set uinput key bit %u: %s"
 msgstr ""
@@ -343,12 +348,12 @@ msgstr ""
 msgid "Could not update lights"
 msgstr ""
 
-#: libgaminggear/gaminggear_evdev.c:109
+#: libgaminggear/gaminggear_input_events_uinput.c:130
 #, c-format
 msgid "Could not write key event %1$i/%2$i to uinput %3$i: %4$i"
 msgstr ""
 
-#: libgaminggear/gaminggear_evdev.c:117
+#: libgaminggear/gaminggear_input_events_uinput.c:138
 #, c-format
 msgid "Could not write sync event to uinput %i: %i"
 msgstr ""
@@ -402,7 +407,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: libgaminggear/gaminggear_macro_thread.c:162
+#: libgaminggear/gaminggear_macro_thread.c:155
 #, c-format
 msgid "Finished macro %s/%s"
 msgstr ""
@@ -420,7 +425,7 @@ msgstr ""
 msgid "Gaminggear macros"
 msgstr ""
 
-#: libgaminggear/gaminggear_key_translations.c:100
+#: libgaminggear/gaminggear_key_translations.c:124
 #, c-format
 msgid "HID usage id 0x%02x has no corresponding xkeycode"
 msgstr ""
@@ -528,12 +533,12 @@ msgstr ""
 msgid "Paste"
 msgstr ""
 
-#: libgaminggear/gaminggear_macro_thread.c:134
+#: libgaminggear/gaminggear_macro_thread.c:127
 #, c-format
 msgid "Pausing macro %s/%s"
 msgstr ""
 
-#: libgaminggear/gaminggear_macro_thread.c:123
+#: libgaminggear/gaminggear_macro_thread.c:116
 #, c-format
 msgid "Playing macro %s/%s"
 msgstr ""
@@ -634,6 +639,15 @@ msgstr ""
 msgid "This macro contains a final wait of %u ms"
 msgstr ""
 
+#: libgaminggear/gaminggear_input_events_uinput.c:44
+#, c-format
+msgid "Uinput %1$s has file descriptor %2$i"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uinput.c:120
+msgid "Uinput is not initialized"
+msgstr ""
+
 #: libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:166
 msgid "Up"
 msgstr ""
@@ -651,7 +665,7 @@ msgstr ""
 msgid "Would you like to store actual modifications?"
 msgstr ""
 
-#: libgaminggear/gaminggear_key_translations.c:92
+#: libgaminggear/gaminggear_key_translations.c:116
 #, c-format
 msgid "Xkeycode 0x%04x has no corresponding HID usage id"
 msgstr ""

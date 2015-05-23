@@ -12,8 +12,8 @@ SET(SOURCES
   gaminggear_audio_notificator_canberra.c
   gaminggear_configuration.c
   gaminggear_device.c
-  gaminggear_evdev.c
   gaminggear_helper.c
+  gaminggear_input_events_uinput.c
   gaminggear_key_file.c
   gaminggear_key_translations.c
   gaminggear_macro_keystrokes.c

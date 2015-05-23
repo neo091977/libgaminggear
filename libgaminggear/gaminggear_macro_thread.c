@@ -19,7 +19,7 @@
 #include "gaminggear/key_translations.h"
 #include "gaminggear_helper.h"
 #include "gaminggear/threads.h"
-#include "gaminggear/evdev.h"
+#include "gaminggear/input_events.h"
 #include "i18n-lib.h"
 
 #define GAMINGGEAR_MACRO_THREAD_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_THREAD_TYPE, GaminggearMacroThreadClass))
@@ -42,15 +42,8 @@ struct _GaminggearMacroThreadPrivate {
 
 	gint running;
 
-	int kbd_file;
-	int mouse_file;
 	GaminggearMacro *macro;
 };
-
-typedef enum {
-	GAMINGGEAR_INPUT_EVENT_VALUE_PRESS = 1,
-	GAMINGGEAR_INPUT_EVENT_VALUE_RELEASE = 0,
-} GaminggearInputEventValue;
 
 G_DEFINE_TYPE(GaminggearMacroThread, gaminggear_macro_thread, G_TYPE_OBJECT);
 
@@ -149,9 +142,9 @@ static gpointer thread(gpointer user_data) {
 
 			keystroke = &priv->macro->keystrokes.keystrokes[key];
 			if (gaminggear_hid_is_mouse_button(keystroke->key))
-				gaminggear_input_event_write_with_sync(priv->mouse_file, gaminggear_hid_to_btn_keycode(keystroke->key), gaminggear_keystroke_action_to_event_action(keystroke->action));
+				gaminggear_input_event_write_button(keystroke->key, gaminggear_keystroke_action_to_event_action(keystroke->action));
 			else
-				gaminggear_input_event_write_with_sync(priv->kbd_file, gaminggear_hid_to_kbd_keycode(keystroke->key), gaminggear_keystroke_action_to_event_action(keystroke->action));
+				gaminggear_input_event_write_keyboard(keystroke->key, gaminggear_keystroke_action_to_event_action(keystroke->action));
 			
 			/* Skip wait of last key in last loop to improve cancel/restart behaviour. */
 			if (key != key_count - 1 || loop != loop_count - 1)
@@ -165,7 +158,7 @@ exit:
 	return NULL;
 }
 
-GaminggearMacroThread *gaminggear_macro_thread_new(int kbd_file, int mouse_file, GaminggearMacro const *macro) {
+GaminggearMacroThread *gaminggear_macro_thread_new(GaminggearMacro const *macro) {
 	GObject *object;
 	GaminggearMacroThread *macro_thread;
 	GaminggearMacroThreadPrivate *priv;
@@ -175,8 +168,6 @@ GaminggearMacroThread *gaminggear_macro_thread_new(int kbd_file, int mouse_file,
 	macro_thread = GAMINGGEAR_MACRO_THREAD(object);
 	priv = macro_thread->priv;
 	
-	priv->kbd_file = kbd_file;
-	priv->mouse_file = mouse_file;
 	priv->macro = gaminggear_macro_dup(macro);
 	priv->cancelled = FALSE;
 	priv->paused = FALSE;

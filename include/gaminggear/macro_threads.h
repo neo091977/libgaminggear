@@ -48,7 +48,7 @@ void gaminggear_macro_threads_free(GaminggearMacroThreads *macro_threads);
  *
  *  \since 1.0
  */
-void gaminggear_play_macro_threaded(GaminggearMacroThreads *threads, guint index, int kbd_file, int mouse_file, GaminggearMacro const *macro);
+void gaminggear_play_macro_threaded(GaminggearMacroThreads *threads, guint index, GaminggearMacro const *macro);
 
 G_END_DECLS
 

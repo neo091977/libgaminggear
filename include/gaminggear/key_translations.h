@@ -65,6 +65,8 @@ guint gaminggear_hid_to_btn_keycode(guint8 usage_id);
  */
 guint gaminggear_hid_to_kbd_keycode(guint8 usage_id);
 
+guint gaminggear_consumer_page_to_kbd_keycode(guint8 usage_id);
+
 /*! \brief Converts xkeycode to HID usage id.
  *  \param xkeycode Hardware keycode.
  *  \retval usage_id HID usage id.

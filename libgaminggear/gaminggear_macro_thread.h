@@ -36,7 +36,7 @@ struct _GaminggearMacroThread {
 };
 
 GType gaminggear_macro_thread_get_type(void);
-GaminggearMacroThread *gaminggear_macro_thread_new(int kbd_file, int mouse_file, GaminggearMacro const *macro);
+GaminggearMacroThread *gaminggear_macro_thread_new(GaminggearMacro const *macro);
 
 gboolean gaminggear_macro_thread_get_running(GaminggearMacroThread *gaminggear_macro_thread);
 

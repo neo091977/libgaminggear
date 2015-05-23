@@ -17,6 +17,7 @@
 
 #include "gaminggear/key_translations.h"
 #include "gaminggear/macro.h"
+#include "gaminggear/hid_uid.h"
 #include "i18n-lib.h"
 #include <linux/input.h>
 
@@ -50,6 +51,28 @@ static guchar const table_hid_usage_to_kbd_keycode[256] = {
 
 gboolean gaminggear_hid_is_mouse_button(guint8 usage_id) {
 	return (usage_id >= GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT) ? TRUE : FALSE;
+}
+
+static struct {
+	guint8 usage_id;
+	guint keycode;
+} consumer_page_to_keycode[7] = {
+	{HID_UID_CP_NEXTSONG, KEY_NEXTSONG},
+	{HID_UID_CP_PREVIOUSSONG, KEY_PREVIOUSSONG},
+	{HID_UID_CP_STOP, KEY_STOPCD},
+	{HID_UID_CP_PLAYPAUSE, KEY_PLAYPAUSE},
+	{HID_UID_CP_MUTE, KEY_MUTE},
+	{HID_UID_CP_VOLUMEUP, KEY_VOLUMEUP},
+	{HID_UID_CP_VOLUMEDOWN, KEY_VOLUMEDOWN},
+};
+
+guint gaminggear_consumer_page_to_kbd_keycode(guint8 usage_id) {
+	guint i;
+
+	for (i = 0; i < 7; ++i)
+		if (consumer_page_to_keycode[i].usage_id == usage_id)
+			return consumer_page_to_keycode[i].keycode;
+	return 0;
 }
 
 guint gaminggear_hid_to_kbd_keycode(guint8 usage_id) {

@@ -57,7 +57,7 @@ void gaminggear_macro_threads_free(GaminggearMacroThreads *macro_threads) {
 	g_free(macro_threads);
 }
 
-void gaminggear_play_macro_threaded(GaminggearMacroThreads *macro_threads, guint index, int kbd_file, int mouse_file, GaminggearMacro const *macro) {
+void gaminggear_play_macro_threaded(GaminggearMacroThreads *macro_threads, guint index, GaminggearMacro const *macro) {
 	g_assert(index < macro_threads->size);
 
 	/* if there is a macro still playing, just stop it */
@@ -72,7 +72,7 @@ void gaminggear_play_macro_threaded(GaminggearMacroThreads *macro_threads, guint
 	if (macro_threads->threads[index])
 		gaminggear_macro_threads_unref_thread(macro_threads, index);
 	
-	macro_threads->threads[index] = gaminggear_macro_thread_new(kbd_file, mouse_file, macro);
+	macro_threads->threads[index] = gaminggear_macro_thread_new(macro);
 
 	/* IDEA invent uncancellable, multiexec macro option
 	 * call gaminggear_macro_threads_unref_thread immediatly
