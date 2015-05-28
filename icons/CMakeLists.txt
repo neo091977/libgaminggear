@@ -4,5 +4,5 @@ FOREACH(size 16)
       DESTINATION share/gaminggear/icons/hicolor/${size}x${size}/actions
       RENAME gaminggear-${name}.png
     )
-  ENDFOREACH(name)
-ENDFOREACH(size)
+  ENDFOREACH()
+ENDFOREACH()
