@@ -143,6 +143,13 @@ void gaminggear_input_event_write_keyboard(int hid, int value) {
 	gaminggear_input_event_write_keycode(gaminggear_hid_to_kbd_keycode(hid), value);
 }
 
+void gaminggear_input_event_write_keyboard_multi(int *hids, gsize length, int value) {
+	gsize i;
+
+	for (i = 0; i < length; ++i)
+		gaminggear_input_event_write_keyboard(hids[i], value);
+}
+
 void gaminggear_input_event_write_button(int hid, int value) {
 	gaminggear_input_event_write_keycode(gaminggear_hid_to_btn_keycode(hid), value);
 }

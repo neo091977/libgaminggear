@@ -52,6 +52,14 @@ gboolean gaminggear_input_event_deinit(GError **error);
  */
 void gaminggear_input_event_write_keyboard(int hid, int value);
 
+/*! \brief Write multiple keyboard events.
+ *  \param hids of hid usage ids of keyboard page.
+ *  \param length of array.
+ *  \param value GaminggearInputEventValue.
+ *  \since 1.0
+ */
+void gaminggear_input_event_write_keyboard_multi(int *hids, gsize length, int value);
+
 /*! \brief Write a mouse button event.
  *  \param hid mouse button encoded in hid usage id (see GaminggearMacroKeystrokeKey).
  *  \param value GaminggearInputEventValue.
