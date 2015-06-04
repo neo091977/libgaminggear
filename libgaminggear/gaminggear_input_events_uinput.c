@@ -129,6 +129,16 @@ static void gaminggear_input_event_write_keycode(int code, int value) {
 	written = write(uinput, (const void*) &event, sizeof(event));
 	if (written != sizeof(event))
 		g_warning(_("Could not write key event %1$i/%2$i to uinput %3$i: %4$i"), code, value, uinput, written);
+}
+
+static void gaminggear_input_event_write_sync(void) {
+	struct input_event event;
+	int written;
+
+	if (uinput < 0) {
+		g_warning(_("Uinput is not initialized"));
+		return;
+	}
 
 	event.type = EV_SYN;
 	event.code = SYN_REPORT;
@@ -141,24 +151,31 @@ static void gaminggear_input_event_write_keycode(int code, int value) {
 
 void gaminggear_input_event_write_keyboard(int hid, int value) {
 	gaminggear_input_event_write_keycode(gaminggear_hid_to_kbd_keycode(hid), value);
+	gaminggear_input_event_write_sync();
 }
 
 void gaminggear_input_event_write_keyboard_multi(int *hids, gsize length, int value) {
 	gsize i;
 
 	for (i = 0; i < length; ++i)
-		gaminggear_input_event_write_keyboard(hids[i], value);
+		gaminggear_input_event_write_keycode(gaminggear_hid_to_kbd_keycode(hids[i]), value);
+
+	gaminggear_input_event_write_sync();
 }
 
 void gaminggear_input_event_write_button(int hid, int value) {
 	gaminggear_input_event_write_keycode(gaminggear_hid_to_btn_keycode(hid), value);
+	gaminggear_input_event_write_sync();
 }
 
 void gaminggear_input_event_write_multimedia(int hid, int value) {
 	gaminggear_input_event_write_keycode(gaminggear_consumer_page_to_kbd_keycode(hid), value);
+	gaminggear_input_event_write_sync();
 }
 
 void gaminggear_input_event_write_multimedia_single(int hid) {
 	gaminggear_input_event_write_multimedia(hid, GAMINGGEAR_INPUT_EVENT_VALUE_PRESS);
+	gaminggear_input_event_write_sync();
 	gaminggear_input_event_write_multimedia(hid, GAMINGGEAR_INPUT_EVENT_VALUE_RELEASE);
+	gaminggear_input_event_write_sync();
 }
