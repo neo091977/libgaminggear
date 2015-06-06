@@ -17,7 +17,7 @@ IF(WITH_DOC)
   
   INSTALL(
     DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
-    DESTINATION share/gaminggear
+    DESTINATION share/doc/libgaminggear
   )
 ENDIF()
 

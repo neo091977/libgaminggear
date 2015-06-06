@@ -70,7 +70,7 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 %defattr(-,root,root)
 %doc INSTALL README COPYING Changelog
 %{_libdir}/libgaminggear*
-%{_datadir}/gaminggear/icons
+%{_datadir}/libgaminggear/icons
 %{_bindir}/gaminggearfxinfo
 %{_bindir}/gaminggearfxcontrol
 %{_datadir}/locale/*/LC_MESSAGES/libgaminggear.mo
@@ -78,7 +78,7 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 %files devel
 %defattr(-,root,root)
 %{_includedir}/gaminggear-%{vmajor}
-%{_datadir}/gaminggear/html
+%{_datadir}/doc/libgaminggear/html
 %{_datadir}/pkgconfig/gaminggear-%{vmajor}.pc
 %{_datadir}/cmake/Modules/FindGAMINGGEAR%{vmajor}.cmake
 

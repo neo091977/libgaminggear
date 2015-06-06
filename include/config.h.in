@@ -18,7 +18,7 @@
  * along with libgaminggear. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define GAMINGGEAR_ICON_PATH "${CMAKE_INSTALL_PREFIX}/share/gaminggear/icons"
+#define GAMINGGEAR_ICON_PATH "${CMAKE_INSTALL_PREFIX}/share/libgaminggear/icons"
 #define UINPUT_DIR "${UINPUTDIR}"
 #define GAMINGGEAR_FX_PLUGIN_DIR "${GFX_PLUGIN_DIR}"
 #cmakedefine SQLITE3_FOUND
