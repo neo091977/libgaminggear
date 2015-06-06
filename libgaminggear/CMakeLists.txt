@@ -13,7 +13,6 @@ SET(SOURCES
   gaminggear_configuration.c
   gaminggear_device.c
   gaminggear_helper.c
-  gaminggear_input_events_uinput.c
   gaminggear_key_file.c
   gaminggear_key_translations.c
   gaminggear_macro_keystrokes.c
@@ -40,6 +39,11 @@ IF(SQLITE3_FOUND)
   LIST(APPEND LIBRARIES ${SQLITE3_LIBRARIES})
 ENDIF()
 
+IF(WITH_UHID)
+  LIST(APPEND SOURCES gaminggear_input_events_uhid.c)
+ELSE()
+  LIST(APPEND SOURCES gaminggear_input_events_uinput.c)
+ENDIF()
 
 ADD_LIBRARY (libgaminggear SHARED ${SOURCES})
 

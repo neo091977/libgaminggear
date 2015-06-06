@@ -27,7 +27,7 @@
 #include <linux/uinput.h>
 
 static int uinput = -1;
-static gchar const * const identifier = "ROCCAT Dummy";
+static gchar const * const identifier = "GaminggearUinput";
 
 gboolean gaminggear_input_event_init(GError **error) {
 	guint i;
@@ -75,8 +75,8 @@ gboolean gaminggear_input_event_init(GError **error) {
 	// FIXME vendor product identifier
 	snprintf(uidev.name, UINPUT_MAX_NAME_SIZE, "%s", identifier);
 	uidev.id.bustype = BUS_USB;
-	uidev.id.vendor = 0x1e7d; /* USB_VENDOR_ID_ROCCAT */
-	uidev.id.product = 0xffff;
+	uidev.id.vendor = USB_VENDOR_ID_LIBGAMINGGEAR;
+	uidev.id.product = USB_DEVICE_ID_LIBGAMINGGEAR_KEYBOARD;
 	uidev.id.version = 1;
 
 	if (write(uinput, &uidev, sizeof(uidev)) < 0) {

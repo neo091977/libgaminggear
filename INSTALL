@@ -30,8 +30,15 @@
       uinput device, you can set it manually. Autodetection needs module uinput
       loaded. Normally it's in /dev or /dev/input.
       
+    * UHIDDIR                  If WITH_UHID is set and cmake doesn't find the
+      right location of the uhid device, you can set it manually. Autodetection
+      needs module uhid loaded. Normally it's in /dev or /dev/input.
+      
     * WITH_DOC                 Set this to TRUE if you want to build the API
       documentation.
+
+    * WITH_UHID                Set this to TRUE if you want to use uhid instead
+      of uinput.
 
     * GFX_PLUGIN_DIR
 
@@ -40,6 +47,27 @@
 
 * Finishing steps
 
+  * For input events to work for users (needed for software macros and such) they
+    need access rights for uinput or uhid. To use them as normal user you should
+    create an extra group like
+
+    $ sudo groupadd --system uinput-users
+
+    and add all needed users to this group.
+
+    $ sudo usermod -a -G uinput-users $USER
+	
+    Create a file like /etc/udev/rules.d/90-uinput.rules containing the lines
+
+    KERNEL=="uinput", GROUP="uinput-users", MODE="0660"
+    KERNEL=="uhid", GROUP="uinput-users", MODE="0660"
+
+	Also you need to make sure the modules are loaded automatically. For this
+    create a file /etc/modules-load.d/uinput.conf with either uinput or uhid as
+    it's content.
+
+	Unload/reload the module or reboot.
+
   * Refresh the icon cache
 
     Call the command
@@ -47,3 +75,13 @@
     $ sudo touch --no-create /usr/share/icons/hicolor
 
     where /usr has to be substituted with your install prefix.
+
+* Building an rpm
+
+  The package contains the file libgaminggear.spec that fits at least fedora which
+  you can use.
+  The easiest way is to write
+  
+  $ rpmbuild -ta --clean libgaminggear-X.X.X.tar.bz2
+  
+  which creates all rpms on the fly

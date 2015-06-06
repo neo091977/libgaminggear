@@ -1,3 +1,4 @@
+ * Added uhid support for input event handling
  * Fixed install paths for icons and api documentation
 
 0.9.0 2015-05-23
