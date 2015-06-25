@@ -161,7 +161,7 @@ static uhid_device keyboard  = {
 	sizeof(keyboard_descriptor),
 	(guint8 const *)&keyboard_event,
 	sizeof(keyboard_event),
-	USB_DEVICE_ID_LIBGAMINGGEAR_KEYBOARD,
+	USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE,
 };
 
 static uhid_device mouse = {
@@ -171,7 +171,7 @@ static uhid_device mouse = {
 	sizeof(mouse_descriptor),
 	(guint8 const *)&mouse_event,
 	sizeof(mouse_event),
-	USB_DEVICE_ID_LIBGAMINGGEAR_MOUSE,
+	USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE,
 };
 
 static uhid_device multimedia = {
@@ -181,7 +181,7 @@ static uhid_device multimedia = {
 	sizeof(multimedia_descriptor),
 	(guint8 const *)&multimedia_event,
 	sizeof(multimedia_event),
-	USB_DEVICE_ID_LIBGAMINGGEAR_MULTIMEDIA,
+	USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE,
 };
 
 static gboolean uhid_write(uhid_device const *device, struct uhid_event const *event, GError **error) {

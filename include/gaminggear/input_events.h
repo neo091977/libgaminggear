@@ -26,11 +26,9 @@
 
 G_BEGIN_DECLS
 
-/* USB_VENDOR_ID_ROCCAT */
+/* Vendor_id owner is Roccat, they confirmed they wouldn't use 0xffff as product_id */
 #define USB_VENDOR_ID_LIBGAMINGGEAR 0x1e7d
-#define USB_DEVICE_ID_LIBGAMINGGEAR_MULTIMEDIA 0xfffd
-#define USB_DEVICE_ID_LIBGAMINGGEAR_MOUSE 0xfffe
-#define USB_DEVICE_ID_LIBGAMINGGEAR_KEYBOARD 0xffff
+#define USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE 0xffff
 
 typedef enum {
 	GAMINGGEAR_INPUT_EVENT_VALUE_PRESS = 1,
