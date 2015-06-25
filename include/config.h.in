@@ -19,8 +19,8 @@
  */
 
 #define GAMINGGEAR_ICON_PATH "${CMAKE_INSTALL_PREFIX}/share/libgaminggear/icons"
-#define UINPUT_DIR "${UINPUTDIR}"
-#define UHID_DIR "${UHIDDIR}"
+#define UINPUT_DIR "${UINPUT_DIR}"
+#define UHID_DIR "${UHID_DIR}"
 #define GAMINGGEAR_FX_PLUGIN_DIR "${GFX_PLUGIN_DIR}"
 #cmakedefine SQLITE3_FOUND
 #cmakedefine HAVE_NOTIFY_0_7
