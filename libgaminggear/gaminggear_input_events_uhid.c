@@ -133,18 +133,18 @@ static struct {
 	guint8 special;
 	guint8 pad;
 	guint8 keys[KEYBOARD_KEY_NUM];
-} keyboard_event;
+} __attribute__ ((packed)) keyboard_event;
 
 static struct {
 	guint8 report_id;
 	guint8 buttons;
 	guint8 unused[6];
-} mouse_event;
+} __attribute__ ((packed)) mouse_event;
 
 static struct {
 	guint8 report_id;
 	guint16 value;
-} multimedia_event;
+} __attribute__ ((packed)) multimedia_event;
 
 /* It's intentional to have one device per report descriptor */
 typedef struct {
