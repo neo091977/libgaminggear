@@ -28,6 +28,13 @@
 #include <linux/version.h>
 #include <linux/uhid.h>
 
+enum {
+	KEYBOARD_KEY_NUM = 30,
+	MOUSE_BUTTON_NUM = 5,
+	MOUSE_REPORT_ID = 1,
+	MULTIMEDIA_REPORT_ID = 2,
+};
+
 /*
  * QUOTE decoding of report descriptors was done with
  * http://eleccelerator.com/usbdescreqparser/
@@ -35,101 +42,97 @@
  */
 
 /* without led output report defined, shift does not work */
-static guint8 const keyboard_descriptor[] = { /* Modified from Ryos MK Pro */
-	0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
-	0x09, 0x06,        // Usage (Keyboard)
-	0xA1, 0x01,        // Collection (Application)
-	0x05, 0x08,        //   Usage Page (LEDs)
-	0x19, 0x01,        //   Usage Minimum (Num Lock)
-	0x29, 0x03,        //   Usage Maximum (Scroll Lock)
-	0x15, 0x00,        //   Logical Minimum (0)
-	0x25, 0x01,        //   Logical Maximum (1)
-	0x75, 0x01,        //   Report Size (1)
-	0x95, 0x03,        //   Report Count (3)
-	0x91, 0x02,        //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
-	0x95, 0x05,        //   Report Count (5)
-	0x75, 0x01,        //   Report Size (1)
-	0x91, 0x01,        //   Output (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
-	0x05, 0x07,        //   Usage Page (Kbrd/Keypad)
-	0x19, 0xE0,        //   Usage Minimum (0xE0)
-	0x29, 0xE7,        //   Usage Maximum (0xE7)
-	0x95, 0x08,        //   Report Count (8)
-	0x81, 0x02,        //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
-	0x75, 0x08,        //   Report Size (8)
-	0x95, 0x01,        //   Report Count (1)
-	0x81, 0x01,        //   Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
-	0x19, 0x00,        //   Usage Minimum (0x00)
-	0x29, 0x91,        //   Usage Maximum (0x91)
-	0x15, 0x00,        //   Logical Minimum (0)
-	0x26, 0xFF, 0x00,  //   Logical Maximum (255)
-	0x75, 0x08,        //   Report Size (8)
-	0x95, 0x1E,        //   Report Count (30)
-	0x81, 0x00,        //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
-	0xC0,              // End Collection
+static guint8 const keyboard_descriptor[] = { /* Taken from Ryos MK Pro */
+	0x05, 0x01,                    // Usage Page (Generic Desktop Ctrls)
+	0x09, 0x06,                    // Usage (Keyboard)
+	0xA1, 0x01,                    // Collection (Application)
+	0x05, 0x08,                    //   Usage Page (LEDs)
+	0x19, 0x01,                    //   Usage Minimum (Num Lock)
+	0x29, 0x03,                    //   Usage Maximum (Scroll Lock)
+	0x15, 0x00,                    //   Logical Minimum (0)
+	0x25, 0x01,                    //   Logical Maximum (1)
+	0x75, 0x01,                    //   Report Size (1)
+	0x95, 0x03,                    //   Report Count (3)
+	0x91, 0x02,                    //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+	0x95, 0x05,                    //   Report Count (5)
+	0x75, 0x01,                    //   Report Size (1)
+	0x91, 0x01,                    //   Output (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+	0x05, 0x07,                    //   Usage Page (Kbrd/Keypad)
+	0x19, HID_UID_KB_LEFT_CONTROL, //   Usage Minimum (0xE0)
+	0x29, HID_UID_KB_RIGHT_GUI,    //   Usage Maximum (0xE7)
+	0x95, 0x08,                    //   Report Count (8)
+	0x81, 0x02,                    //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+	0x75, 0x08,                    //   Report Size (8)
+	0x95, 0x01,                    //   Report Count (1)
+	0x81, 0x01,                    //   Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+	0x19, 0x00,                    //   Usage Minimum (0x00)
+	0x29, 0x91,                    //   Usage Maximum (0x91)
+	0x15, 0x00,                    //   Logical Minimum (0)
+	0x26, 0xFF, 0x00,              //   Logical Maximum (255)
+	0x75, 0x08,                    //   Report Size (8)
+	0x95, KEYBOARD_KEY_NUM,        //   Report Count (30)
+	0x81, 0x00,                    //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+	0xC0,                          // End Collection
 };
 
 static guint8 const mouse_descriptor[] = { /* Taken from Tyon */
-	0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
-	0x09, 0x02,        // Usage (Mouse)
-	0xA1, 0x01,        // Collection (Application)
-	0x85, 0x01,        //   Report ID (1)
-	0x09, 0x01,        //   Usage (Pointer)
-	0xA1, 0x00,        //   Collection (Physical)
-	0x05, 0x09,        //     Usage Page (Button)
-	0x19, 0x01,        //     Usage Minimum (0x01)
-	0x29, 0x05,        //     Usage Maximum (0x05)
-	0x15, 0x00,        //     Logical Minimum (0)
-	0x25, 0x01,        //     Logical Maximum (1)
-	0x95, 0x05,        //     Report Count (5)
-	0x75, 0x01,        //     Report Size (1)
-	0x81, 0x02,        //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
-	0x95, 0x01,        //     Report Count (1)
-	0x75, 0x03,        //     Report Size (3)
-	0x81, 0x01,        //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
-	0x05, 0x01,        //     Usage Page (Generic Desktop Ctrls)
-	0x09, 0x30,        //     Usage (X)
-	0x09, 0x31,        //     Usage (Y)
-	0x16, 0x00, 0x80,  //     Logical Minimum (32768)
-	0x26, 0xFF, 0x7F,  //     Logical Maximum (32767)
-	0x95, 0x02,        //     Report Count (2)
-	0x75, 0x10,        //     Report Size (16)
-	0x81, 0x06,        //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
-	0x09, 0x38,        //     Usage (Wheel)
-	0x15, 0x81,        //     Logical Minimum (129)
-	0x25, 0x7F,        //     Logical Maximum (127)
-	0x95, 0x01,        //     Report Count (1)
-	0x75, 0x08,        //     Report Size (8)
-	0x81, 0x06,        //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
-	0x05, 0x0C,        //     Usage Page (Consumer)
-	0x0A, 0x38, 0x02,  //     Usage (AC Pan)
-	0x81, 0x06,        //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
-	0xC0,              //   End Collection
-	0xC0,              // End Collection
+	0x05, 0x01,                    // Usage Page (Generic Desktop Ctrls)
+	0x09, 0x02,                    // Usage (Mouse)
+	0xA1, 0x01,                    // Collection (Application)
+	0x85, MOUSE_REPORT_ID,         //   Report ID (1)
+	0x09, 0x01,                    //   Usage (Pointer)
+	0xA1, 0x00,                    //   Collection (Physical)
+	0x05, 0x09,                    //     Usage Page (Button)
+	0x19, 0x01,                    //     Usage Minimum (0x01)
+	0x29, MOUSE_BUTTON_NUM,        //     Usage Maximum (0x05)
+	0x15, 0x00,                    //     Logical Minimum (0)
+	0x25, 0x01,                    //     Logical Maximum (1)
+	0x95, MOUSE_BUTTON_NUM,        //     Report Count (5)
+	0x75, 0x01,                    //     Report Size (1)
+	0x81, 0x02,                    //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+	0x95, 0x01,                    //     Report Count (1)
+	0x75, 8 - MOUSE_BUTTON_NUM,    //     Report Size (3)
+	0x81, 0x01,                    //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+	0x05, 0x01,                    //     Usage Page (Generic Desktop Ctrls)
+	0x09, 0x30,                    //     Usage (X)
+	0x09, 0x31,                    //     Usage (Y)
+	0x16, 0x00, 0x80,              //     Logical Minimum (32768)
+	0x26, 0xFF, 0x7F,              //     Logical Maximum (32767)
+	0x95, 0x02,                    //     Report Count (2)
+	0x75, 0x10,                    //     Report Size (16)
+	0x81, 0x06,                    //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
+	0x09, 0x38,                    //     Usage (Wheel)
+	0x15, 0x81,                    //     Logical Minimum (129)
+	0x25, 0x7F,                    //     Logical Maximum (127)
+	0x95, 0x01,                    //     Report Count (1)
+	0x75, 0x08,                    //     Report Size (8)
+	0x81, 0x06,                    //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
+	0x05, 0x0C,                    //     Usage Page (Consumer)
+	0x0A, 0x38, 0x02,              //     Usage (AC Pan)
+	0x81, 0x06,                    //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
+	0xC0,                          //   End Collection
+	0xC0,                          // End Collection
 };
 
 static guint8 const multimedia_descriptor[] =  { /* Taken from Ryos MK */
-	0x05, 0x0C,        // Usage Page (Consumer)
-	0x09, 0x01,        // Usage (Consumer Control)
-	0xA1, 0x01,        // Collection (Application)
-	0x85, 0x02,        //   Report ID (2)
-	0x19, 0x00,        //   Usage Minimum (Unassigned)
-	0x2A, 0x3C, 0x02,  //   Usage Maximum (AC Format)
-	0x15, 0x00,        //   Logical Minimum (0)
-	0x26, 0x3C, 0x02,  //   Logical Maximum (572)
-	0x95, 0x01,        //   Report Count (1)
-	0x75, 0x10,        //   Report Size (16)
-	0x81, 0x00,        //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
-	0xC0,              // End Collection
-};
-
-enum {
-	KEYBOARD_EVENT_KEY_NUM = 30
+	0x05, 0x0C,                    // Usage Page (Consumer)
+	0x09, 0x01,                    // Usage (Consumer Control)
+	0xA1, 0x01,                    // Collection (Application)
+	0x85, MULTIMEDIA_REPORT_ID,    //   Report ID (2)
+	0x19, 0x00,                    //   Usage Minimum (Unassigned)
+	0x2A, 0x3C, 0x02,              //   Usage Maximum (AC Format)
+	0x15, 0x00,                    //   Logical Minimum (0)
+	0x26, 0x3C, 0x02,              //   Logical Maximum (572)
+	0x95, 0x01,                    //   Report Count (1)
+	0x75, 0x10,                    //   Report Size (16)
+	0x81, 0x00,                    //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+	0xC0,                          // End Collection
 };
 
 static struct {
 	guint8 special;
 	guint8 pad;
-	guint8 keys[KEYBOARD_EVENT_KEY_NUM];
+	guint8 keys[KEYBOARD_KEY_NUM];
 } keyboard_event;
 
 static struct {
@@ -322,12 +325,12 @@ gboolean gaminggear_input_event_init(GError **error) {
 		return FALSE;
 
 	memset(&mouse_event, 0, sizeof(mouse_event));
-	mouse_event.report_id = 1;
+	mouse_event.report_id = MOUSE_REPORT_ID;
 	if (!init(&mouse, error))
 		return FALSE;
 
 	memset(&multimedia_event, 0, sizeof(multimedia_event));
-	multimedia_event.report_id = 2;
+	multimedia_event.report_id = MULTIMEDIA_REPORT_ID;
 	if (!init(&multimedia, error))
 		return FALSE;
 
@@ -356,7 +359,7 @@ static gboolean set_bit(guint8 *byte, guint bit, gboolean new_value) {
 static gboolean keyboard_add_key(int hid) {
 	guint i;
 
-	for (i = 0; i < KEYBOARD_EVENT_KEY_NUM; ++i) {
+	for (i = 0; i < KEYBOARD_KEY_NUM; ++i) {
 		if (keyboard_event.keys[i] == hid) { /* already same key pressed */
 			g_warning(_("Uhid keyboard: Hid code %i was already pressed"), hid);
 			/* Not inserting anything */
@@ -375,10 +378,10 @@ static gboolean keyboard_remove_key(int hid) {
 	guint i, j;
 	gboolean retval = TRUE;
 
-	for (i = 0; i < KEYBOARD_EVENT_KEY_NUM; ++i) {
+	for (i = 0; i < KEYBOARD_KEY_NUM; ++i) {
 		if (keyboard_event.keys[i] == hid) { /* found element to delete */
 			/* shifting positions to left */
-			for (j = i; i < KEYBOARD_EVENT_KEY_NUM - 1; ++i) {
+			for (j = i; i < KEYBOARD_KEY_NUM - 1; ++i) {
 				keyboard_event.keys[j] = keyboard_event.keys[j + 1];
 				if (keyboard_event.keys[j] == hid) { /* found same key multiple times */
 					/* not deleting duplicates */
@@ -388,7 +391,7 @@ static gboolean keyboard_remove_key(int hid) {
 					return retval;
 			}
 			/* inserting 0 on last position */
-			keyboard_event.keys[KEYBOARD_EVENT_KEY_NUM - 1] = 0;
+			keyboard_event.keys[KEYBOARD_KEY_NUM - 1] = 0;
 			return retval;
 		}
 	}
@@ -429,7 +432,7 @@ void gaminggear_input_event_write_keyboard_multi(int *hids, gsize length, int va
 void gaminggear_input_event_write_button(int hid, int value) {
 	guint bit = hid - GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT;
 
-	if (bit >= 5)
+	if (bit >= MOUSE_BUTTON_NUM)
 		g_warning(_("Uhid mouse: button %i not supported"), bit + 1);
 
 	if (set_bit(&mouse_event.buttons, bit, value == GAMINGGEAR_INPUT_EVENT_VALUE_PRESS))
