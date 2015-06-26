@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgaminggear 0.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-30 16:04+0200\n"
+"POT-Creation-Date: 2015-06-23 16:18+0200\n"
 "PO-Revision-Date: 2015-04-09 16:36+0200\n"
 "Last-Translator: Stefan <erazor_de@users.sourceforge.net>\n"
 "Language-Team: German\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: libgaminggear/macros_converter_roccat_kone.c:283
-#: libgaminggear/macros_converter_roccat_valo.c:283
 #: libgaminggear/macros_converter_roccat_arvo.c:217
+#: libgaminggear/macros_converter_roccat_valo.c:283
 #: libgaminggear/macros_converter_roccat.c:291
 #, c-format
 msgid "%1$s is no %2$s macro file"
@@ -61,8 +61,7 @@ msgstr "Erweitert"
 msgid ""
 "Advanced view does not support final waits. Please switch to another view to "
 "add it again if needed."
-msgstr ""
-"Erweiterte Ansicht unterstützt keine finalen Wartezeiten. Bitte wechsle zu "
+msgstr "Erweiterte Ansicht unterstützt keine finalen Wartezeiten. Bitte wechsle zu "
 "einer anderen Ansicht um diese wieder hinzuzufügen."
 
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:202
@@ -141,8 +140,7 @@ msgstr "Konnte Tonnachricht nicht abbrechen: %s"
 #: libgaminggear/gaminggear_device.c:86
 #, c-format
 msgid "Could not close file descriptor %1$i for device key %2$s: %3$s"
-msgstr ""
-"Konnte Dateideskriptor %1$i für Geräteschlüssel %2$s nicht schließen: %3$s"
+msgstr "Konnte Dateideskriptor %1$i für Geräteschlüssel %2$s nicht schließen: %3$s"
 
 #: libgaminggear/gaminggear_device.c:154
 #, c-format
@@ -169,7 +167,7 @@ msgstr "Konnte Verzeichnis nicht erstellen: %s"
 msgid "Could not create macro thread: %s"
 msgstr "Konnte Makrothread nicht erzeugen: %s"
 
-#: libgaminggear/gaminggear_input_events_uinput.c:87
+#: libgaminggear/gaminggear_input_events_uinput.c:88
 #, c-format
 msgid "Could not create uinput %i: %s"
 msgstr "Konnte uinput %i nicht erstellen: %s"
@@ -179,7 +177,7 @@ msgstr "Konnte uinput %i nicht erstellen: %s"
 msgid "Could not destroy canberra context: %s"
 msgstr "Konnte Canberrakontext nicht zerstören: %s"
 
-#: libgaminggear/gaminggear_input_events_uinput.c:106
+#: libgaminggear/gaminggear_input_events_uinput.c:107
 #, c-format
 msgid "Could not destroy uinput %i: %s"
 msgstr "Konnte uinput %i nicht zerstören: %s"
@@ -194,16 +192,16 @@ msgid "Could not find device %s"
 msgstr "Konnte Gerät %s nicht finden"
 
 #: libgaminggear/macros_converter_roccat_kone.c:189
-#: libgaminggear/macros_converter_roccat_valo.c:189
 #: libgaminggear/macros_converter_roccat_arvo.c:104
+#: libgaminggear/macros_converter_roccat_valo.c:189
 #: libgaminggear/macros_converter_roccat.c:196
 #, c-format
 msgid "Could not find group %s: %s"
 msgstr "Konnte Gruppe %s nicht finden: %s"
 
 #: libgaminggear/macros_converter_roccat_kone.c:194
-#: libgaminggear/macros_converter_roccat_valo.c:194
 #: libgaminggear/macros_converter_roccat_arvo.c:109
+#: libgaminggear/macros_converter_roccat_valo.c:194
 #: libgaminggear/macros_converter_roccat.c:201
 #, c-format
 msgid "Could not find key %s/%s: %s"
@@ -262,7 +260,7 @@ msgstr "Konnte fx System nicht initialisieren"
 msgid "Could not initialize notify"
 msgstr "Konnte notify nicht initialisieren"
 
-#: libgaminggear/gaminggear_input_events_uinput.c:82
+#: libgaminggear/gaminggear_input_events_uinput.c:83
 #, c-format
 msgid "Could not initialize uinput %i: %s"
 msgstr "Konnte uinput %i nicht initialisieren: %s"
@@ -285,6 +283,11 @@ msgstr "Konnte Datei %1$s für Geräteschlüssel %2$s nicht öffnen: %3$s"
 #, c-format
 msgid "Could not open file for device key %s: %s"
 msgstr "Konnte Datei für Geräteschlüssel %s nicht öffnen: %s"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:265
+#, c-format
+msgid "Could not open uhid: %s"
+msgstr "Konnte uhid nicht öffnen: %s"
 
 #: libgaminggear/gaminggear_input_events_uinput.c:41
 #, c-format
@@ -351,15 +354,29 @@ msgstr "Konnte Tonnachricht nicht aktualisieren: %s"
 msgid "Could not update lights"
 msgstr "Konnte Lichter nicht aktualisieren"
 
-#: libgaminggear/gaminggear_input_events_uinput.c:130
+#: libgaminggear/gaminggear_input_events_uhid.c:254
+#, c-format
+msgid "Could not write event to uhid %i: %s"
+msgstr "Konnte Ereignis nicht in uhid %i schreiben: %s"
+
+#: libgaminggear/gaminggear_input_events_uinput.c:131
 #, c-format
 msgid "Could not write key event %1$i/%2$i to uinput %3$i: %4$i"
 msgstr "Konnte Tastenereignis %1$i/%2$i nicht in uinput %3$i schreiben: %4$i"
 
-#: libgaminggear/gaminggear_input_events_uinput.c:138
+#: libgaminggear/gaminggear_input_events_uinput.c:149
 #, c-format
 msgid "Could not write sync event to uinput %i: %i"
 msgstr "Konnte Syncereignis nicht in uinput %i schreiben: %i"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:192
+#, c-format
+msgid "Could not write to uhid %i: %s"
+msgstr "Konnte nicht in uhid %i schreiben: %s"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:195
+msgid "Could not write to uhid %i: partial write (%ld instead of %lu)"
+msgstr "Konnte nicht in uhid %i schreiben: unvollständig geschrieben (%ld statt %lu)"
 
 #: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:97
 msgid "Delay"
@@ -428,7 +445,7 @@ msgstr "Gaminggear Makroeditor"
 msgid "Gaminggear macros"
 msgstr "Gaminggear Makros"
 
-#: libgaminggear/gaminggear_key_translations.c:124
+#: libgaminggear/gaminggear_key_translations.c:123
 #, c-format
 msgid "HID usage id 0x%02x has no corresponding xkeycode"
 msgstr "HID usage id 0x%02x hat keinen zugehörigen xkeycode"
@@ -504,8 +521,8 @@ msgid "Macro"
 msgstr "Makro"
 
 #: libgaminggear/macros_converter_roccat_kone.c:99
-#: libgaminggear/macros_converter_roccat_valo.c:99
 #: libgaminggear/macros_converter_roccat_arvo.c:189
+#: libgaminggear/macros_converter_roccat_valo.c:99
 #: libgaminggear/macros_converter_roccat.c:106
 #, c-format
 msgid "Macro %s/%s is too long to convert"
@@ -642,12 +659,63 @@ msgstr "Es gibt ungespeicherte Daten."
 msgid "This macro contains a final wait of %u ms"
 msgstr "Dieses Makro enthält eine finale Wartezeit von %u ms"
 
+#: libgaminggear/gaminggear_input_events_uhid.c:268
+#, c-format
+msgid "Uhid %1$s has file descriptor %2$i"
+msgstr "Uhid %1$s hat Dateideskriptor %2$i"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:406
+#, c-format
+msgid "Uhid keyboard: Hid code %i had same state"
+msgstr "Uhid Tastatur: Hid Code %i hatte selben Status"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:361
+#, c-format
+msgid "Uhid keyboard: Hid code %i was already pressed"
+msgstr "Uhid Tastatur: Hid Code %i war bereits gedrückt"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:396
+#, c-format
+msgid "Uhid keyboard: Hid code %i was not pressed before"
+msgstr "Uhid Tastatur: Hid Code %i war nicht gedrückt"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:385
+#, c-format
+msgid "Uhid keyboard: Hid code %i was pressed multiple times"
+msgstr "Uhid Tastatur: Hid code %i wurde mehrfach gedrückt"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:370
+#, c-format
+msgid ""
+"Uhid keyboard: Too many keys pressed at the same time. Could not press %i"
+msgstr "Uhid Tastatur: Zu viele Tasten gleichzeitig gedrückt. Konnte %i nicht drücken"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:436
+#, c-format
+msgid "Uhid mouse: button %i had same state"
+msgstr "Uhid Maus: Tast %i hatte selben Status"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:433
+#, c-format
+msgid "Uhid mouse: button %i not supported"
+msgstr "Uhid Maus: Taste %i nicht unterstützt"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:444
+#: libgaminggear/gaminggear_input_events_uhid.c:450
+msgid "Uhid multimedia: already other event %i active"
+msgstr "Uhid Multimedia: Bereits anderes Ereignis %i aktiv"
+
+#: libgaminggear/gaminggear_input_events_uhid.c:448
+msgid "Uhid multimedia: no event active"
+msgstr "Uhid Multimedia: Kein Ereignis aktiv"
+
 #: libgaminggear/gaminggear_input_events_uinput.c:44
 #, c-format
 msgid "Uinput %1$s has file descriptor %2$i"
 msgstr "Uinput %1$s hat Dateideskriptor %2$i"
 
-#: libgaminggear/gaminggear_input_events_uinput.c:120
+#: libgaminggear/gaminggear_input_events_uinput.c:121
+#: libgaminggear/gaminggear_input_events_uinput.c:139
 msgid "Uinput is not initialized"
 msgstr "Uinput ist nicht initialisiert"
 
@@ -668,7 +736,7 @@ msgstr "Warnung"
 msgid "Would you like to store actual modifications?"
 msgstr "Möchten sie aktuelle Modifikationen speichern?"
 
-#: libgaminggear/gaminggear_key_translations.c:116
+#: libgaminggear/gaminggear_key_translations.c:115
 #, c-format
 msgid "Xkeycode 0x%04x has no corresponding HID usage id"
 msgstr "Xkeycode 0x%04x hat keine zugehörige HID usage id"
@@ -713,3 +781,4 @@ msgstr "benutze Gerät ZEICHENKETTE"
 #: gaminggearfxcontrol/gaminggearfxcontrol.c:38
 msgid "use light index INDEX"
 msgstr "benutze Lichtindex INDEX"
+

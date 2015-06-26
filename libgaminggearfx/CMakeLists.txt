@@ -2,9 +2,6 @@ ADD_LIBRARY(libgaminggearfx SHARED
   gaminggear_fx.c
 )
 
-#ADD_DEPENDENCIES(libgaminggearfx
-#)
-
 TARGET_LINK_LIBRARIES(libgaminggearfx
   ${GMODULE2_LIBRARIES}
   ${GLIB2_LIBRARIES}

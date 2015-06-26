@@ -26,6 +26,10 @@
 
 G_BEGIN_DECLS
 
+/* Vendor_id owner is Roccat, they confirmed they wouldn't use 0xffff as product_id */
+#define USB_VENDOR_ID_LIBGAMINGGEAR 0x1e7d
+#define USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE 0xffff
+
 typedef enum {
 	GAMINGGEAR_INPUT_EVENT_VALUE_PRESS = 1,
 	GAMINGGEAR_INPUT_EVENT_VALUE_RELEASE = 0,
@@ -51,6 +55,14 @@ gboolean gaminggear_input_event_deinit(GError **error);
  *  \since 1.0
  */
 void gaminggear_input_event_write_keyboard(int hid, int value);
+
+/*! \brief Write multiple keyboard events.
+ *  \param hids of hid usage ids of keyboard page.
+ *  \param length of array.
+ *  \param value GaminggearInputEventValue.
+ *  \since 1.0
+ */
+void gaminggear_input_event_write_keyboard_multi(int *hids, gsize length, int value);
 
 /*! \brief Write a mouse button event.
  *  \param hid mouse button encoded in hid usage id (see GaminggearMacroKeystrokeKey).

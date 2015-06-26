@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: libgaminggear 0.8.\n"
+"Project-Id-Version: libgaminggear 0.9.\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-30 16:04+0200\n"
+"POT-Creation-Date: 2015-06-23 16:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgaminggear/macros_converter_roccat_kone.c:283
-#: libgaminggear/macros_converter_roccat_valo.c:283
 #: libgaminggear/macros_converter_roccat_arvo.c:217
+#: libgaminggear/macros_converter_roccat_valo.c:283
 #: libgaminggear/macros_converter_roccat.c:291
 #, c-format
 msgid "%1$s is no %2$s macro file"
@@ -166,7 +166,7 @@ msgstr ""
 msgid "Could not create macro thread: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:87
+#: libgaminggear/gaminggear_input_events_uinput.c:88
 #, c-format
 msgid "Could not create uinput %i: %s"
 msgstr ""
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Could not destroy canberra context: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:106
+#: libgaminggear/gaminggear_input_events_uinput.c:107
 #, c-format
 msgid "Could not destroy uinput %i: %s"
 msgstr ""
@@ -191,16 +191,16 @@ msgid "Could not find device %s"
 msgstr ""
 
 #: libgaminggear/macros_converter_roccat_kone.c:189
-#: libgaminggear/macros_converter_roccat_valo.c:189
 #: libgaminggear/macros_converter_roccat_arvo.c:104
+#: libgaminggear/macros_converter_roccat_valo.c:189
 #: libgaminggear/macros_converter_roccat.c:196
 #, c-format
 msgid "Could not find group %s: %s"
 msgstr ""
 
 #: libgaminggear/macros_converter_roccat_kone.c:194
-#: libgaminggear/macros_converter_roccat_valo.c:194
 #: libgaminggear/macros_converter_roccat_arvo.c:109
+#: libgaminggear/macros_converter_roccat_valo.c:194
 #: libgaminggear/macros_converter_roccat.c:201
 #, c-format
 msgid "Could not find key %s/%s: %s"
@@ -259,7 +259,7 @@ msgstr ""
 msgid "Could not initialize notify"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:82
+#: libgaminggear/gaminggear_input_events_uinput.c:83
 #, c-format
 msgid "Could not initialize uinput %i: %s"
 msgstr ""
@@ -281,6 +281,11 @@ msgstr ""
 #: libgaminggear/gaminggear_device.c:60
 #, c-format
 msgid "Could not open file for device key %s: %s"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:265
+#, c-format
+msgid "Could not open uhid: %s"
 msgstr ""
 
 #: libgaminggear/gaminggear_input_events_uinput.c:41
@@ -348,14 +353,29 @@ msgstr ""
 msgid "Could not update lights"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:130
+#: libgaminggear/gaminggear_input_events_uhid.c:254
+#, c-format
+msgid "Could not write event to uhid %i: %s"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uinput.c:131
 #, c-format
 msgid "Could not write key event %1$i/%2$i to uinput %3$i: %4$i"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:138
+#: libgaminggear/gaminggear_input_events_uinput.c:149
 #, c-format
 msgid "Could not write sync event to uinput %i: %i"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:192
+#, c-format
+msgid "Could not write to uhid %i: %s"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:195
+#, c-format
+msgid "Could not write to uhid %i: partial write (%ld instead of %lu)"
 msgstr ""
 
 #: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:97
@@ -425,7 +445,7 @@ msgstr ""
 msgid "Gaminggear macros"
 msgstr ""
 
-#: libgaminggear/gaminggear_key_translations.c:124
+#: libgaminggear/gaminggear_key_translations.c:123
 #, c-format
 msgid "HID usage id 0x%02x has no corresponding xkeycode"
 msgstr ""
@@ -501,8 +521,8 @@ msgid "Macro"
 msgstr ""
 
 #: libgaminggear/macros_converter_roccat_kone.c:99
-#: libgaminggear/macros_converter_roccat_valo.c:99
 #: libgaminggear/macros_converter_roccat_arvo.c:189
+#: libgaminggear/macros_converter_roccat_valo.c:99
 #: libgaminggear/macros_converter_roccat.c:106
 #, c-format
 msgid "Macro %s/%s is too long to convert"
@@ -639,12 +659,64 @@ msgstr ""
 msgid "This macro contains a final wait of %u ms"
 msgstr ""
 
+#: libgaminggear/gaminggear_input_events_uhid.c:268
+#, c-format
+msgid "Uhid %1$s has file descriptor %2$i"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:406
+#, c-format
+msgid "Uhid keyboard: Hid code %i had same state"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:361
+#, c-format
+msgid "Uhid keyboard: Hid code %i was already pressed"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:396
+#, c-format
+msgid "Uhid keyboard: Hid code %i was not pressed before"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:385
+#, c-format
+msgid "Uhid keyboard: Hid code %i was pressed multiple times"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:370
+#, c-format
+msgid ""
+"Uhid keyboard: Too many keys pressed at the same time. Could not press %i"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:436
+#, c-format
+msgid "Uhid mouse: button %i had same state"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:433
+#, c-format
+msgid "Uhid mouse: button %i not supported"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:444
+#: libgaminggear/gaminggear_input_events_uhid.c:450
+#, c-format
+msgid "Uhid multimedia: already other event %i active"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:448
+msgid "Uhid multimedia: no event active"
+msgstr ""
+
 #: libgaminggear/gaminggear_input_events_uinput.c:44
 #, c-format
 msgid "Uinput %1$s has file descriptor %2$i"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:120
+#: libgaminggear/gaminggear_input_events_uinput.c:121
+#: libgaminggear/gaminggear_input_events_uinput.c:139
 msgid "Uinput is not initialized"
 msgstr ""
 
@@ -665,7 +737,7 @@ msgstr ""
 msgid "Would you like to store actual modifications?"
 msgstr ""
 
-#: libgaminggear/gaminggear_key_translations.c:116
+#: libgaminggear/gaminggear_key_translations.c:115
 #, c-format
 msgid "Xkeycode 0x%04x has no corresponding HID usage id"
 msgstr ""

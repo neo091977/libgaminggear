@@ -2,11 +2,6 @@ ADD_EXECUTABLE(gaminggearfxinfo
   gaminggearfxinfo.c
 )
 
-ADD_DEPENDENCIES(gaminggearfxinfo
-  libgaminggearfx
-  ${GLIB2_LIBRARIES}
-)
-
 SET_TARGET_PROPERTIES(gaminggearfxinfo
   PROPERTIES
     COMPILE_FLAGS "-fvisibility=hidden"
