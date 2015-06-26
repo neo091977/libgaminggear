@@ -1,5 +1,5 @@
 %define vmajor 0
-%define vminor 9
+%define vminor 10
 %define vmicro 0
 
 Name: libgaminggear
