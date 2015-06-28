@@ -1,3 +1,5 @@
+ * Fixed uinput/uhid inclusion problem
+
 0.10.0 2015-06-26
 
  * Added uhid support for input event handling
