@@ -303,6 +303,6 @@ static GaminggearMacrosConverter converter = {
 	.name = N_("Roccat Kone macro files"),
 };
 
-GaminggearMacrosConverter const * const macros_converter_roccat_kone(void) {
+GaminggearMacrosConverter const *macros_converter_roccat_kone(void) {
 	return &converter;
 }

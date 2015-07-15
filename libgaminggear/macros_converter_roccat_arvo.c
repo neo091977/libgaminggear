@@ -301,6 +301,6 @@ static GaminggearMacrosConverter converter = {
 	.name = N_("Roccat Arvo macro files"),
 };
 
-GaminggearMacrosConverter const * const macros_converter_roccat_arvo(void) {
+GaminggearMacrosConverter const *macros_converter_roccat_arvo(void) {
 	return &converter;
 }
