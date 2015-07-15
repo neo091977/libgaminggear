@@ -41,7 +41,7 @@ static GOptionEntry entries[] = {
 	{ "reset", 'r', 0, G_OPTION_ARG_NONE, &parameter_reset, N_("reset colors"), NULL },
 	{ "color", 'c', 0, G_OPTION_ARG_NONE, &parameter_color, N_("set plain color"), NULL },
 	{ "color1", '1', 0, G_OPTION_ARG_INT64, &parameter_color1, N_("COLOR1"), N_("COLOR1") },
-	{ NULL, 0, 0, G_OPTION_ARG_NONE, NULL, NULL, NULL }
+	{ NULL }
 };
 
 static gboolean post_parse_func(GOptionContext *context, GOptionGroup *group, gpointer data, GError **error) {

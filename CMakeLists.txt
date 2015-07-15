@@ -13,7 +13,7 @@ IF(CMAKE_COMPILER_IS_GNUCC)
   # * Force gcc to generate single line error messages (used for eclipse cdt)
   # * Play it save with lots of warning messages
   # * Define GNU source for some extras
-  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fmessage-length=0 -Wall -Wextra -Wno-unused-parameter -D_GNU_SOURCE")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fmessage-length=0 -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wno-type-limits -D_GNU_SOURCE")
   SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
   SET(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} -Wl,--as-needed")
 ENDIF()
