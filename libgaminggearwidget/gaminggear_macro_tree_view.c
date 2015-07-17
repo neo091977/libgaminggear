@@ -18,6 +18,7 @@
 #include "gaminggear_macro_tree_view.h"
 #include "gaminggear_macro_tree_store.h"
 #include "gaminggear/gaminggear_text_dialog.h"
+#include "gaminggear_helper.h"
 #include "gaminggearwidget_helper.h"
 #include "i18n-lib.h"
 #include <string.h>
@@ -364,8 +365,7 @@ static void popup_rename_cb(GtkMenuItem *item, gpointer user_data) {
 	}
 
 	g_list_free(cells);
-	g_list_foreach(rows, (GFunc)gtk_tree_path_free, NULL);
-	g_list_free(rows);
+	g_gaminggear_list_free_full(rows, (GDestroyNotify)gtk_tree_path_free);
 }
 
 static gboolean should_remove(gchar const *title, gchar const *text) {

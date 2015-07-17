@@ -45,6 +45,10 @@ gboolean gaminggear_create_dir_if_needed(gchar const *dir, GError **error);
 
 gchar *gaminggear_create_filename_with_extension(gchar const *filename, gchar const *extension);
 
+void g_gaminggear_slist_free_full(GSList *list, GDestroyNotify freefunc);
+
+void g_gaminggear_list_free_full(GList *list, GDestroyNotify freefunc);
+
 G_END_DECLS
 
 #endif
