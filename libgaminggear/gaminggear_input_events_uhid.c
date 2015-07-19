@@ -285,7 +285,7 @@ static gboolean init(uhid_device *device, GError **error) {
 #else
 	event.type = UHID_CREATE;
 	snprintf((gchar *)event.u.create.name, 128, "%s", device->identifier);
-	event.u.create.rd_data = device->report_descriptor);
+	event.u.create.rd_data = device->report_descriptor;
 	event.u.create.rd_size = device->report_descriptor_size;
 	event.u.create.bus = BUS_USB;
 	event.u.create.vendor = USB_VENDOR_ID_LIBGAMINGGEAR;
