@@ -72,7 +72,6 @@ gboolean gaminggear_input_event_init(GError **error) {
 
 	memset(&uidev, 0, sizeof(uidev));
 
-	// FIXME vendor product identifier
 	snprintf(uidev.name, UINPUT_MAX_NAME_SIZE, "%s", identifier);
 	uidev.id.bustype = BUS_USB;
 	uidev.id.vendor = USB_VENDOR_ID_LIBGAMINGGEAR;
