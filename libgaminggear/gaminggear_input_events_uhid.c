@@ -134,6 +134,7 @@ static struct {
 	guint8 pad;
 	guint8 keys[KEYBOARD_KEY_NUM];
 } __attribute__ ((packed)) keyboard_event;
+static guint keyboard_event_next_key_index;
 
 static struct {
 	guint8 report_id;
@@ -328,6 +329,7 @@ gboolean gaminggear_input_event_init(GError **error) {
 	memset(&keyboard_event, 0, sizeof(keyboard_event));
 	if (!init(&keyboard, error))
 		return FALSE;
+	keyboard_event_next_key_index = 0;
 
 	memset(&mouse_event, 0, sizeof(mouse_event));
 	mouse_event.report_id = MOUSE_REPORT_ID;
@@ -363,66 +365,65 @@ static gboolean set_bit(guint8 *byte, guint bit, gboolean new_value) {
 
 /* returns TRUE if event is modified and should be sent */
 static gboolean keyboard_add_key(int hid) {
-	guint i;
-	guint bit;
-
 	if (hid >= HID_UID_KB_LEFT_CONTROL && hid <= HID_UID_KB_RIGHT_GUI) {
-		bit = hid - HID_UID_KB_LEFT_CONTROL;
-		if (set_bit(&keyboard_event.special, bit, TRUE)) {
+		if (set_bit(&keyboard_event.special, hid - HID_UID_KB_LEFT_CONTROL, TRUE)) {
 			g_warning(_("Uhid keyboard: Hid code %i had same state"), hid);
 			return FALSE;
 		}
 		return TRUE;
 	}
 
-	for (i = 0; i < KEYBOARD_KEY_NUM; ++i) {
-		if (keyboard_event.keys[i] == hid) { /* already same key pressed */
-			g_warning(_("Uhid keyboard: Hid code %i had same state"), hid);
-			/* Not inserting anything */
-			return FALSE;
-		} else if (keyboard_event.keys[i] == 0) { /* found position to append */
-			keyboard_event.keys[i] = hid;
-			return TRUE;
-		}
+	if (keyboard_event_next_key_index == KEYBOARD_KEY_NUM) {
+		g_warning(_("Uhid keyboard: Too many keys pressed at the same time. Could not press %i"), hid);
+		return FALSE;
 	}
 
-	g_warning(_("Uhid keyboard: Too many keys pressed at the same time. Could not press %i"), hid);
-	return FALSE;
+	keyboard_event.keys[keyboard_event_next_key_index] = hid;
+	++keyboard_event_next_key_index;
+	return TRUE;
 }
 
 /* returns TRUE if event is modified and should be sent */
 static gboolean keyboard_remove_key(int hid) {
-	guint i, j;
-	guint bit;
+	guint i;
+	gint found;
 
 	if (hid >= HID_UID_KB_LEFT_CONTROL && hid <= HID_UID_KB_RIGHT_GUI) {
-		bit = hid - HID_UID_KB_LEFT_CONTROL;
-		if (set_bit(&keyboard_event.special, bit, FALSE)) {
+		if (set_bit(&keyboard_event.special, hid - HID_UID_KB_LEFT_CONTROL, FALSE)) {
 			g_warning(_("Uhid keyboard: Hid code %i had same state"), hid);
 			return FALSE;
 		}
 		return TRUE;
 	}
 
-	for (i = 0; i < KEYBOARD_KEY_NUM; ++i) {
+	if (keyboard_event_next_key_index == 0) {
+		g_warning(_("Uhid keyboard: No key to remove"));
+		return FALSE;
+	}
+
+	found = -1;
+	for (i = 0; i < keyboard_event_next_key_index; ++i) {
 		if (keyboard_event.keys[i] == hid) { /* found element to delete */
-			/* shifting positions to left */
-			for (j = i; i < KEYBOARD_KEY_NUM - 1; ++i) {
-				keyboard_event.keys[j] = keyboard_event.keys[j + 1];
-				if (keyboard_event.keys[j] == hid) { /* found same key multiple times */
-					/* not deleting duplicates */
-					g_warning(_("Uhid keyboard: Hid code %i was pressed multiple times"), hid);
-				} else if (keyboard_event.keys[j] == 0) /* shortcut */
-					return TRUE;
-			}
-			/* inserting 0 on last position */
-			keyboard_event.keys[KEYBOARD_KEY_NUM - 1] = 0;
-			return TRUE;
+			found = i;
+			break;
 		}
 	}
 
-	g_warning(_("Uhid keyboard: Hid code %i was not pressed before"), hid);
-	return FALSE;
+	if (found == -1) {
+		g_warning(_("Uhid keyboard: Hid code %i was not pressed before"), hid);
+		return FALSE;
+	}
+
+	/* shifting positions to left */
+	for (i = found; i < keyboard_event_next_key_index; ++i) {
+		if (i == keyboard_event_next_key_index - 1)
+			keyboard_event.keys[i] = 0;
+		else
+			keyboard_event.keys[i] = keyboard_event.keys[i + 1];
+	}
+
+	--keyboard_event_next_key_index;
+	return TRUE;
 }
 
 /* returns TRUE if event is modified and should be sent */
