@@ -26,21 +26,19 @@
 
 G_BEGIN_DECLS
 
-/* Vendor_id owner is Roccat, they confirmed they wouldn't use 0xffff as product_id */
-#define USB_VENDOR_ID_LIBGAMINGGEAR 0x1e7d
-#define USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE 0xffff
-
 typedef enum {
 	GAMINGGEAR_INPUT_EVENT_VALUE_PRESS = 1,
 	GAMINGGEAR_INPUT_EVENT_VALUE_RELEASE = 0,
 } GaminggearInputEventValue;
 
 /*! \brief Initialize input event support of libgaminggear.
+ *  \param vendor_id The vendor id the device should have.
+ *  \param product_id The product id the device should have.
  *  \param error Return location for error or \c NULL.
  *  \retval condition \c TRUE on success, \c FALSE else.
  *  \since 1.0
  */
-gboolean gaminggear_input_event_init(GError **error);
+gboolean gaminggear_input_event_init(guint vendor_id, guint product_id, GError **error);
 
 /*! \brief Deinitialize input event support of libgaminggear.
  *  \param error Return location for error or \c NULL.

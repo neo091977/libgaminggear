@@ -30,7 +30,7 @@ static int uinput = -1;
 static gchar const * const identifier = "GaminggearUinput";
 static guint8 active_hids[256];
 
-gboolean gaminggear_input_event_init(GError **error) {
+gboolean gaminggear_input_event_init(guint vendor_id, guint product_id, GError **error) {
 	guint i;
 	struct uinput_user_dev uidev;
 
@@ -76,8 +76,8 @@ gboolean gaminggear_input_event_init(GError **error) {
 
 	snprintf(uidev.name, UINPUT_MAX_NAME_SIZE, "%s", identifier);
 	uidev.id.bustype = BUS_USB;
-	uidev.id.vendor = USB_VENDOR_ID_LIBGAMINGGEAR;
-	uidev.id.product = USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE;
+	uidev.id.vendor = vendor_id;
+	uidev.id.product = product_id;
 	uidev.id.version = 1;
 
 	if (write(uinput, &uidev, sizeof(uidev)) < 0) {

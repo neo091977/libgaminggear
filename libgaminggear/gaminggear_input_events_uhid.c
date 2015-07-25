@@ -155,7 +155,6 @@ typedef struct {
 	size_t const report_descriptor_size;
 	guint8 const * const event;
 	size_t const event_size;
-	guint product_id;
 } uhid_device;
 
 static uhid_device keyboard  = {
@@ -165,7 +164,6 @@ static uhid_device keyboard  = {
 	sizeof(keyboard_descriptor),
 	(guint8 const *)&keyboard_event,
 	sizeof(keyboard_event),
-	USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE,
 };
 
 static uhid_device mouse = {
@@ -175,7 +173,6 @@ static uhid_device mouse = {
 	sizeof(mouse_descriptor),
 	(guint8 const *)&mouse_event,
 	sizeof(mouse_event),
-	USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE,
 };
 
 static uhid_device multimedia = {
@@ -185,7 +182,6 @@ static uhid_device multimedia = {
 	sizeof(multimedia_descriptor),
 	(guint8 const *)&multimedia_event,
 	sizeof(multimedia_event),
-	USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE,
 };
 
 static guint8 active_keyboard_hids[256];
@@ -264,7 +260,7 @@ static gboolean send_event(uhid_device const *device) {
 	return retval;
 }
 
-static gboolean init(uhid_device *device, GError **error) {
+static gboolean init(uhid_device *device, guint vendor_id, guint product_id, GError **error) {
 	struct uhid_event event;
 	
 	device->fd = open(UHID_DIR "/uhid", O_RDWR | O_CLOEXEC);
@@ -284,8 +280,8 @@ static gboolean init(uhid_device *device, GError **error) {
 	memcpy(event.u.create2.rd_data, device->report_descriptor, MIN(HID_MAX_DESCRIPTOR_SIZE, device->report_descriptor_size));
 	event.u.create2.rd_size = device->report_descriptor_size;
 	event.u.create2.bus = BUS_USB;
-	event.u.create2.vendor = USB_VENDOR_ID_LIBGAMINGGEAR;
-	event.u.create2.product = device->product_id;
+	event.u.create2.vendor = vendor_id;
+	event.u.create2.product = product_id;
 	event.u.create2.version = 1;
 	event.u.create2.country = 0;
 #else
@@ -294,8 +290,8 @@ static gboolean init(uhid_device *device, GError **error) {
 	event.u.create.rd_data = device->report_descriptor;
 	event.u.create.rd_size = device->report_descriptor_size;
 	event.u.create.bus = BUS_USB;
-	event.u.create.vendor = USB_VENDOR_ID_LIBGAMINGGEAR;
-	event.u.create.product = device->product_id;
+	event.u.create.vendor = vendor_id;
+	event.u.create.product = product_id;
 	event.u.create.version = 1;
 	event.u.create.country = 0;
 #endif
@@ -325,20 +321,20 @@ static gboolean deinit(uhid_device *device, GError **error) {
 	return retval;
 }
 
-gboolean gaminggear_input_event_init(GError **error) {
+gboolean gaminggear_input_event_init(guint vendor_id, guint product_id, GError **error) {
 	memset(&keyboard_event, 0, sizeof(keyboard_event));
-	if (!init(&keyboard, error))
+	if (!init(&keyboard, vendor_id, product_id, error))
 		return FALSE;
 	keyboard_event_next_key_index = 0;
 
 	memset(&mouse_event, 0, sizeof(mouse_event));
 	mouse_event.report_id = MOUSE_REPORT_ID;
-	if (!init(&mouse, error))
+	if (!init(&mouse, vendor_id, product_id, error))
 		return FALSE;
 
 	memset(&multimedia_event, 0, sizeof(multimedia_event));
 	multimedia_event.report_id = MULTIMEDIA_REPORT_ID;
-	if (!init(&multimedia, error))
+	if (!init(&multimedia, vendor_id, product_id, error))
 		return FALSE;
 
 	return TRUE;
