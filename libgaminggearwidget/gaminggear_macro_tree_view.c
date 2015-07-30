@@ -365,7 +365,7 @@ static void popup_rename_cb(GtkMenuItem *item, gpointer user_data) {
 	}
 
 	g_list_free(cells);
-	g_gaminggear_list_free_full(rows, (GDestroyNotify)gtk_tree_path_free);
+	g_list_free_full(rows, (GDestroyNotify)gtk_tree_path_free);
 }
 
 static gboolean should_remove(gchar const *title, gchar const *text) {

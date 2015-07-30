@@ -91,8 +91,7 @@ static void unset(GaminggearMacroEditor *macro_editor) {
 	GaminggearMacroEditorPrivate *priv = macro_editor->priv;
 	gaminggear_macro_editor_key_sequence_frame_clear(priv->key_sequence_frame);
 
-	gtk_tree_row_reference_free(priv->reference);
-	priv->reference = NULL;
+	g_clear_pointer(&priv->reference, gtk_tree_row_reference_free);
 
 	priv->edited_modified = FALSE;
 	buttons_set_sensitive(macro_editor);

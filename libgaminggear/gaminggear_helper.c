@@ -115,20 +115,16 @@ static void G_GNUC_UNUSED g_gaminggear_call_destroy_notify(gpointer data, gpoint
 	((GDestroyNotify)user_data)(data);
 }
 
-void g_gaminggear_slist_free_full(GSList *list, GDestroyNotify freefunc) {
-#if (GLIB_CHECK_VERSION(2, 28, 0))
-	g_slist_free_full(list, freefunc);
-#else
+#if !(GLIB_CHECK_VERSION(2, 28, 0))
+
+void g_slist_free_full(GSList *list, GDestroyNotify freefunc) {
 	g_slist_foreach(list, g_gaminggear_call_destroy_notify, freefunc);
 	g_slist_free(list);
-#endif
 }
 
-void g_gaminggear_list_free_full(GList *list, GDestroyNotify freefunc) {
-#if (GLIB_CHECK_VERSION(2, 28, 0))
-	g_list_free_full(list, freefunc);
-#else
+void g_list_free_full(GList *list, GDestroyNotify freefunc) {
 	g_list_foreach(list, g_gaminggear_call_destroy_notify, freefunc);
 	g_list_free(list);
-#endif
 }
+
+#endif

@@ -45,9 +45,26 @@ gboolean gaminggear_create_dir_if_needed(gchar const *dir, GError **error);
 
 gchar *gaminggear_create_filename_with_extension(gchar const *filename, gchar const *extension);
 
-void g_gaminggear_slist_free_full(GSList *list, GDestroyNotify freefunc);
+#if !(GLIB_CHECK_VERSION(2, 28, 0))
 
-void g_gaminggear_list_free_full(GList *list, GDestroyNotify freefunc);
+void g_slist_free_full(GSList *list, GDestroyNotify freefunc);
+void g_list_free_full(GList *list, GDestroyNotify freefunc);
+#define g_clear_object(object_ptr) g_clear_pointer(object_ptr, g_object_unref);
+
+#endif
+
+#if !(GLIB_CHECK_VERSION(2, 34, 0))
+
+#define g_clear_pointer(pp, destroy)				\
+	G_STMT_START {						\
+		gpointer *_pp = (gpointer *)(pp);		\
+		GDestroyNotify _d = (GDestroyNotify)(destroy);	\
+		*_pp = NULL;					\
+		if (*_pp)					\
+			_d(*_pp);				\
+	} G_STMT_END
+
+#endif
 
 G_END_DECLS
 
