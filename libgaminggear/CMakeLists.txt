@@ -23,6 +23,7 @@ SET(SOURCES
   gaminggear_screen_notificator_notify.c
   macros_converter_roccat_arvo.c
   macros_converter_roccat_kone.c
+  macros_converter_roccat_swarm.c
   macros_converter_roccat_valo.c
   macros_converter_roccat.c
   ${CMAKE_CURRENT_BINARY_DIR}/g_cclosure_gaminggear_marshaller.c

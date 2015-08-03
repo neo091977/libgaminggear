@@ -1,3 +1,4 @@
+ * Added: Import for Roccat Swarm macro files
  * Fixed: Macroeditor clipboard pasting now handles \t,\n,\r
  * Software implementation of shortcuts/macros now handle multiple events like
    Roccats hardware implementation

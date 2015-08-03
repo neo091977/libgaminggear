@@ -24,6 +24,7 @@
 #include "gaminggear_helper.h"
 #include "macros_converter_roccat_arvo.h"
 #include "macros_converter_roccat_kone.h"
+#include "macros_converter_roccat_swarm.h"
 #include "macros_converter_roccat_valo.h"
 #include "macros_converter_roccat.h"
 #ifdef SQLITE3_FOUND
@@ -54,6 +55,7 @@ static void add_file_filter(GtkFileChooser *chooser, gboolean import) {
 	add_file_filter_from_converter(chooser, macros_converter_roccat(), import);
 	add_file_filter_from_converter(chooser, macros_converter_roccat_arvo(), import);
 	add_file_filter_from_converter(chooser, macros_converter_roccat_kone(), import);
+	add_file_filter_from_converter(chooser, macros_converter_roccat_swarm(), import);
 	add_file_filter_from_converter(chooser, macros_converter_roccat_valo(), import);
 #ifdef SQLITE3_FOUND
 	add_file_filter_from_converter(chooser, macros_converter_steelseries_engine3(), import);
