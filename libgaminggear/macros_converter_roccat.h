@@ -22,7 +22,7 @@
 
 G_BEGIN_DECLS
 
-GaminggearMacrosConverter const * const macros_converter_roccat(void);
+GaminggearMacrosConverter const *macros_converter_roccat(void);
 
 G_END_DECLS
 

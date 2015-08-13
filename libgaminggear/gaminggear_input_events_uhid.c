@@ -134,6 +134,7 @@ static struct {
 	guint8 pad;
 	guint8 keys[KEYBOARD_KEY_NUM];
 } __attribute__ ((packed)) keyboard_event;
+static guint keyboard_event_next_key_index;
 
 static struct {
 	guint8 report_id;
@@ -154,7 +155,6 @@ typedef struct {
 	size_t const report_descriptor_size;
 	guint8 const * const event;
 	size_t const event_size;
-	guint product_id;
 } uhid_device;
 
 static uhid_device keyboard  = {
@@ -164,7 +164,6 @@ static uhid_device keyboard  = {
 	sizeof(keyboard_descriptor),
 	(guint8 const *)&keyboard_event,
 	sizeof(keyboard_event),
-	USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE,
 };
 
 static uhid_device mouse = {
@@ -174,7 +173,6 @@ static uhid_device mouse = {
 	sizeof(mouse_descriptor),
 	(guint8 const *)&mouse_event,
 	sizeof(mouse_event),
-	USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE,
 };
 
 static uhid_device multimedia = {
@@ -184,8 +182,10 @@ static uhid_device multimedia = {
 	sizeof(multimedia_descriptor),
 	(guint8 const *)&multimedia_event,
 	sizeof(multimedia_event),
-	USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE,
 };
+
+static guint8 active_keyboard_hids[256];
+static guint8 active_mouse_buttons[MOUSE_BUTTON_NUM];
 
 static gboolean uhid_write(uhid_device const *device, struct uhid_event const *event, GError **error) {
 	ssize_t ret;
@@ -260,7 +260,7 @@ static gboolean send_event(uhid_device const *device) {
 	return retval;
 }
 
-static gboolean init(uhid_device *device, GError **error) {
+static gboolean init(uhid_device *device, guint vendor_id, guint product_id, GError **error) {
 	struct uhid_event event;
 	
 	device->fd = open(UHID_DIR "/uhid", O_RDWR | O_CLOEXEC);
@@ -271,6 +271,8 @@ static gboolean init(uhid_device *device, GError **error) {
 	g_debug(_("Uhid %1$s has file descriptor %2$i"), device->identifier, device->fd);
 	
 	memset(&event, 0, sizeof(event));
+	memset(&active_keyboard_hids, 0, sizeof(active_keyboard_hids));
+	memset(&active_mouse_buttons, 0, sizeof(active_mouse_buttons));
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,15,0)
 	event.type = UHID_CREATE2;
@@ -278,18 +280,18 @@ static gboolean init(uhid_device *device, GError **error) {
 	memcpy(event.u.create2.rd_data, device->report_descriptor, MIN(HID_MAX_DESCRIPTOR_SIZE, device->report_descriptor_size));
 	event.u.create2.rd_size = device->report_descriptor_size;
 	event.u.create2.bus = BUS_USB;
-	event.u.create2.vendor = USB_VENDOR_ID_LIBGAMINGGEAR;
-	event.u.create2.product = device->product_id;
+	event.u.create2.vendor = vendor_id;
+	event.u.create2.product = product_id;
 	event.u.create2.version = 1;
 	event.u.create2.country = 0;
 #else
 	event.type = UHID_CREATE;
 	snprintf((gchar *)event.u.create.name, 128, "%s", device->identifier);
-	event.u.create.rd_data = device->report_descriptor);
+	event.u.create.rd_data = device->report_descriptor;
 	event.u.create.rd_size = device->report_descriptor_size;
 	event.u.create.bus = BUS_USB;
-	event.u.create.vendor = USB_VENDOR_ID_LIBGAMINGGEAR;
-	event.u.create.product = device->product_id;
+	event.u.create.vendor = vendor_id;
+	event.u.create.product = product_id;
 	event.u.create.version = 1;
 	event.u.create.country = 0;
 #endif
@@ -319,19 +321,20 @@ static gboolean deinit(uhid_device *device, GError **error) {
 	return retval;
 }
 
-gboolean gaminggear_input_event_init(GError **error) {
+gboolean gaminggear_input_event_init(guint vendor_id, guint product_id, GError **error) {
 	memset(&keyboard_event, 0, sizeof(keyboard_event));
-	if (!init(&keyboard, error))
+	if (!init(&keyboard, vendor_id, product_id, error))
 		return FALSE;
+	keyboard_event_next_key_index = 0;
 
 	memset(&mouse_event, 0, sizeof(mouse_event));
 	mouse_event.report_id = MOUSE_REPORT_ID;
-	if (!init(&mouse, error))
+	if (!init(&mouse, vendor_id, product_id, error))
 		return FALSE;
 
 	memset(&multimedia_event, 0, sizeof(multimedia_event));
 	multimedia_event.report_id = MULTIMEDIA_REPORT_ID;
-	if (!init(&multimedia, error))
+	if (!init(&multimedia, vendor_id, product_id, error))
 		return FALSE;
 
 	return TRUE;
@@ -356,89 +359,157 @@ static gboolean set_bit(guint8 *byte, guint bit, gboolean new_value) {
 	return old_value == new_value;
 }
 
+/* returns TRUE if event is modified and should be sent */
 static gboolean keyboard_add_key(int hid) {
-	guint i;
-
-	for (i = 0; i < KEYBOARD_KEY_NUM; ++i) {
-		if (keyboard_event.keys[i] == hid) { /* already same key pressed */
-			g_warning(_("Uhid keyboard: Hid code %i was already pressed"), hid);
-			/* Not inserting anything */
+	if (hid >= HID_UID_KB_LEFT_CONTROL && hid <= HID_UID_KB_RIGHT_GUI) {
+		if (set_bit(&keyboard_event.special, hid - HID_UID_KB_LEFT_CONTROL, TRUE)) {
+			g_warning(_("Uhid keyboard: Hid code %i had same state"), hid);
 			return FALSE;
-		} else if (keyboard_event.keys[i] == 0) { /* found position to append */
-			keyboard_event.keys[i] = hid;
-			return TRUE;
 		}
+		return TRUE;
 	}
 
-	g_warning(_("Uhid keyboard: Too many keys pressed at the same time. Could not press %i"), hid);
-	return FALSE;
+	if (keyboard_event_next_key_index == KEYBOARD_KEY_NUM) {
+		g_warning(_("Uhid keyboard: Too many keys pressed at the same time. Could not press %i"), hid);
+		return FALSE;
+	}
+
+	keyboard_event.keys[keyboard_event_next_key_index] = hid;
+	++keyboard_event_next_key_index;
+	return TRUE;
 }
 
+/* returns TRUE if event is modified and should be sent */
 static gboolean keyboard_remove_key(int hid) {
-	guint i, j;
-	gboolean retval = TRUE;
-
-	for (i = 0; i < KEYBOARD_KEY_NUM; ++i) {
-		if (keyboard_event.keys[i] == hid) { /* found element to delete */
-			/* shifting positions to left */
-			for (j = i; i < KEYBOARD_KEY_NUM - 1; ++i) {
-				keyboard_event.keys[j] = keyboard_event.keys[j + 1];
-				if (keyboard_event.keys[j] == hid) { /* found same key multiple times */
-					/* not deleting duplicates */
-					g_warning(_("Uhid keyboard: Hid code %i was pressed multiple times"), hid);
-					retval = FALSE;
-				} else if (keyboard_event.keys[j] == 0) /* */
-					return retval;
-			}
-			/* inserting 0 on last position */
-			keyboard_event.keys[KEYBOARD_KEY_NUM - 1] = 0;
-			return retval;
-		}
-	}
-
-	g_warning(_("Uhid keyboard: Hid code %i was not pressed before"), hid);
-	return FALSE;
-}
-
-static void keyboard_handle_event(int hid, int value) {
-	guint bit;
+	guint i;
+	gint found;
 
 	if (hid >= HID_UID_KB_LEFT_CONTROL && hid <= HID_UID_KB_RIGHT_GUI) {
-		bit = hid - HID_UID_KB_LEFT_CONTROL;
-		if (set_bit(&keyboard_event.special, bit, value == GAMINGGEAR_INPUT_EVENT_VALUE_PRESS))
+		if (set_bit(&keyboard_event.special, hid - HID_UID_KB_LEFT_CONTROL, FALSE)) {
 			g_warning(_("Uhid keyboard: Hid code %i had same state"), hid);
-	} else {
-		if (value == GAMINGGEAR_INPUT_EVENT_VALUE_PRESS)
-			keyboard_add_key(hid);
-		else
-			keyboard_remove_key(hid);
+			return FALSE;
+		}
+		return TRUE;
 	}
+
+	if (keyboard_event_next_key_index == 0) {
+		g_warning(_("Uhid keyboard: No key to remove"));
+		return FALSE;
+	}
+
+	found = -1;
+	for (i = 0; i < keyboard_event_next_key_index; ++i) {
+		if (keyboard_event.keys[i] == hid) { /* found element to delete */
+			found = i;
+			break;
+		}
+	}
+
+	if (found == -1) {
+		g_warning(_("Uhid keyboard: Hid code %i was not pressed before"), hid);
+		return FALSE;
+	}
+
+	/* shifting positions to left */
+	for (i = found; i < keyboard_event_next_key_index; ++i) {
+		if (i == keyboard_event_next_key_index - 1)
+			keyboard_event.keys[i] = 0;
+		else
+			keyboard_event.keys[i] = keyboard_event.keys[i + 1];
+	}
+
+	--keyboard_event_next_key_index;
+	return TRUE;
+}
+
+/* returns TRUE if event is modified and should be sent */
+static gboolean keyboard_handle_event(int hid, int value) {
+	gboolean retval = FALSE;
+
+	if (value == GAMINGGEAR_INPUT_EVENT_VALUE_PRESS) {
+		if (active_keyboard_hids[hid] == G_MAXUINT8) {
+			g_warning(_("Uhid keyboard: Hid code %i was pressed too many times"), hid);
+			return FALSE;
+		}
+
+		if (active_keyboard_hids[hid] == 0)
+			retval = keyboard_add_key(hid);
+
+		++active_keyboard_hids[hid];
+	} else {
+		if (active_keyboard_hids[hid] == 0) {
+			g_warning(_("Uhid keyboard: Hid code %i was not pressed before"), hid);
+			return FALSE;
+		}
+
+		--active_keyboard_hids[hid];
+
+		if (active_keyboard_hids[hid] == 0)
+			retval = keyboard_remove_key(hid);
+	}
+
+	return retval;
 }
 
 void gaminggear_input_event_write_keyboard(int hid, int value) {
-	keyboard_handle_event(hid, value);
-	send_event(&keyboard);
+	if (keyboard_handle_event(hid, value))
+		send_event(&keyboard);
 }
 
 void gaminggear_input_event_write_keyboard_multi(int *hids, gsize length, int value) {
 	gsize i;
+	gboolean changed = FALSE;
 
-	for (i = 0; i < length; ++i)
-		keyboard_handle_event(hids[i], value);
+	for (i = 0; i < length; ++i) {
+		if (keyboard_handle_event(hids[i], value))
+			changed = TRUE;
+	}
 
-	send_event(&keyboard);
+	if (changed)
+		send_event(&keyboard);
 }
 
 void gaminggear_input_event_write_button(int hid, int value) {
 	guint bit = hid - GAMINGGEAR_MACRO_KEYSTROKE_KEY_BUTTON_LEFT;
+	gboolean changed = FALSE;
 
-	if (bit >= MOUSE_BUTTON_NUM)
+	if (bit >= MOUSE_BUTTON_NUM) {
 		g_warning(_("Uhid mouse: button %i not supported"), bit + 1);
+		return;
+	}
 
-	if (set_bit(&mouse_event.buttons, bit, value == GAMINGGEAR_INPUT_EVENT_VALUE_PRESS))
-		g_warning(_("Uhid mouse: button %i had same state"), bit + 1);
+	if (value == GAMINGGEAR_INPUT_EVENT_VALUE_PRESS) {
+		if (active_mouse_buttons[bit] == G_MAXUINT8) {
+			g_warning(_("Uhid mouse: button %i was pressed too many times"), bit + 1);
+			return;
+		}
 
-	send_event(&mouse);
+		if (active_mouse_buttons[bit] == 0) {
+			if (set_bit(&mouse_event.buttons, bit, TRUE))
+				g_warning(_("Uhid mouse: button %i had same state"), bit + 1);
+			else
+				changed = TRUE;
+		}
+
+		++active_mouse_buttons[bit];
+	} else {
+		if (active_mouse_buttons[bit] == 0) {
+			g_warning(_("Uhid mouse: button %i was not pressed before"), bit + 1);
+			return;
+		}
+
+		--active_mouse_buttons[bit];
+
+		if (active_mouse_buttons[bit] == 0) {
+			if (set_bit(&mouse_event.buttons, bit, FALSE))
+				g_warning(_("Uhid mouse: button %i had same state"), bit + 1);
+			else
+				changed = TRUE;
+		}
+	}
+
+	if (changed)
+		send_event(&mouse);
 }
 
 void gaminggear_input_event_write_multimedia(int hid, int value) {

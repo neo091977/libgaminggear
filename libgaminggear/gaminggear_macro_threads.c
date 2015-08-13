@@ -17,6 +17,7 @@
 
 #include "gaminggear/macro_threads.h"
 #include "gaminggear_macro_thread.h"
+#include "gaminggear_helper.h"
 #include <unistd.h>
 
 struct _GaminggearMacroThreads {
@@ -27,8 +28,7 @@ struct _GaminggearMacroThreads {
 static void gaminggear_macro_threads_unref_thread(GaminggearMacroThreads *macro_threads, guint index) {
 	g_assert(index < macro_threads->size);
 	
-	g_object_unref(macro_threads->threads[index]);
-	macro_threads->threads[index] = NULL;
+	g_clear_object(&macro_threads->threads[index]);
 }
 
 GaminggearMacroThreads *gaminggear_macro_threads_new(guint size) {

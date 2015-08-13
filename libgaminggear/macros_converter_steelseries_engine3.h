@@ -22,7 +22,7 @@
 
 G_BEGIN_DECLS
 
-GaminggearMacrosConverter const * const macros_converter_steelseries_engine3(void);
+GaminggearMacrosConverter const *macros_converter_steelseries_engine3(void);
 
 G_END_DECLS
 

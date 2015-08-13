@@ -110,3 +110,21 @@ gchar *gaminggear_create_filename_with_extension(gchar const *filename, gchar co
 
 	return result;
 }
+
+static void G_GNUC_UNUSED g_gaminggear_call_destroy_notify(gpointer data, gpointer user_data) {
+	((GDestroyNotify)user_data)(data);
+}
+
+#if !(GLIB_CHECK_VERSION(2, 28, 0))
+
+void g_slist_free_full(GSList *list, GDestroyNotify freefunc) {
+	g_slist_foreach(list, g_gaminggear_call_destroy_notify, freefunc);
+	g_slist_free(list);
+}
+
+void g_list_free_full(GList *list, GDestroyNotify freefunc) {
+	g_list_foreach(list, g_gaminggear_call_destroy_notify, freefunc);
+	g_list_free(list);
+}
+
+#endif

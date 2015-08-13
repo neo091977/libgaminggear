@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: libgaminggear 0.9.\n"
+"Project-Id-Version: libgaminggear 0.10.\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-23 16:18+0200\n"
+"POT-Creation-Date: 2015-07-23 13:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgaminggear/macros_converter_roccat_kone.c:283
-#: libgaminggear/macros_converter_roccat_arvo.c:217
 #: libgaminggear/macros_converter_roccat_valo.c:283
+#: libgaminggear/macros_converter_roccat_arvo.c:217
 #: libgaminggear/macros_converter_roccat.c:291
 #, c-format
 msgid "%1$s is no %2$s macro file"
@@ -166,7 +166,7 @@ msgstr ""
 msgid "Could not create macro thread: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:88
+#: libgaminggear/gaminggear_input_events_uinput.c:89
 #, c-format
 msgid "Could not create uinput %i: %s"
 msgstr ""
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Could not destroy canberra context: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:107
+#: libgaminggear/gaminggear_input_events_uinput.c:108
 #, c-format
 msgid "Could not destroy uinput %i: %s"
 msgstr ""
@@ -191,16 +191,16 @@ msgid "Could not find device %s"
 msgstr ""
 
 #: libgaminggear/macros_converter_roccat_kone.c:189
-#: libgaminggear/macros_converter_roccat_arvo.c:104
 #: libgaminggear/macros_converter_roccat_valo.c:189
+#: libgaminggear/macros_converter_roccat_arvo.c:104
 #: libgaminggear/macros_converter_roccat.c:196
 #, c-format
 msgid "Could not find group %s: %s"
 msgstr ""
 
 #: libgaminggear/macros_converter_roccat_kone.c:194
-#: libgaminggear/macros_converter_roccat_arvo.c:109
 #: libgaminggear/macros_converter_roccat_valo.c:194
+#: libgaminggear/macros_converter_roccat_arvo.c:109
 #: libgaminggear/macros_converter_roccat.c:201
 #, c-format
 msgid "Could not find key %s/%s: %s"
@@ -259,7 +259,7 @@ msgstr ""
 msgid "Could not initialize notify"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:83
+#: libgaminggear/gaminggear_input_events_uinput.c:84
 #, c-format
 msgid "Could not initialize uinput %i: %s"
 msgstr ""
@@ -283,12 +283,12 @@ msgstr ""
 msgid "Could not open file for device key %s: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:265
+#: libgaminggear/gaminggear_input_events_uhid.c:272
 #, c-format
 msgid "Could not open uhid: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:41
+#: libgaminggear/gaminggear_input_events_uinput.c:42
 #, c-format
 msgid "Could not open uinput: %s"
 msgstr ""
@@ -326,20 +326,20 @@ msgstr ""
 msgid "Could not set properties for canberra context: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:52
+#: libgaminggear/gaminggear_input_events_uinput.c:53
 #, c-format
 msgid "Could not set uinput event bit %u: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:48
-#: libgaminggear/gaminggear_input_events_uinput.c:54
-#: libgaminggear/gaminggear_input_events_uinput.c:56
-#: libgaminggear/gaminggear_input_events_uinput.c:58
-#: libgaminggear/gaminggear_input_events_uinput.c:60
-#: libgaminggear/gaminggear_input_events_uinput.c:62
-#: libgaminggear/gaminggear_input_events_uinput.c:64
-#: libgaminggear/gaminggear_input_events_uinput.c:66
-#: libgaminggear/gaminggear_input_events_uinput.c:70
+#: libgaminggear/gaminggear_input_events_uinput.c:49
+#: libgaminggear/gaminggear_input_events_uinput.c:55
+#: libgaminggear/gaminggear_input_events_uinput.c:57
+#: libgaminggear/gaminggear_input_events_uinput.c:59
+#: libgaminggear/gaminggear_input_events_uinput.c:61
+#: libgaminggear/gaminggear_input_events_uinput.c:63
+#: libgaminggear/gaminggear_input_events_uinput.c:65
+#: libgaminggear/gaminggear_input_events_uinput.c:67
+#: libgaminggear/gaminggear_input_events_uinput.c:71
 #, c-format
 msgid "Could not set uinput key bit %u: %s"
 msgstr ""
@@ -353,27 +353,27 @@ msgstr ""
 msgid "Could not update lights"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:254
+#: libgaminggear/gaminggear_input_events_uhid.c:261
 #, c-format
 msgid "Could not write event to uhid %i: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:131
+#: libgaminggear/gaminggear_input_events_uinput.c:132
 #, c-format
 msgid "Could not write key event %1$i/%2$i to uinput %3$i: %4$i"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:149
+#: libgaminggear/gaminggear_input_events_uinput.c:150
 #, c-format
 msgid "Could not write sync event to uinput %i: %i"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:192
+#: libgaminggear/gaminggear_input_events_uhid.c:199
 #, c-format
 msgid "Could not write to uhid %i: %s"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:195
+#: libgaminggear/gaminggear_input_events_uhid.c:202
 #, c-format
 msgid "Could not write to uhid %i: partial write (%ld instead of %lu)"
 msgstr ""
@@ -521,8 +521,8 @@ msgid "Macro"
 msgstr ""
 
 #: libgaminggear/macros_converter_roccat_kone.c:99
-#: libgaminggear/macros_converter_roccat_arvo.c:189
 #: libgaminggear/macros_converter_roccat_valo.c:99
+#: libgaminggear/macros_converter_roccat_arvo.c:189
 #: libgaminggear/macros_converter_roccat.c:106
 #, c-format
 msgid "Macro %s/%s is too long to convert"
@@ -536,11 +536,11 @@ msgstr ""
 msgid "Macros"
 msgstr ""
 
-#: libgaminggearwidget/gaminggear_macro_tree_view.c:309
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:310
 msgid "New macro"
 msgstr ""
 
-#: libgaminggearwidget/gaminggear_macro_tree_view.c:87
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:88
 msgid "New macroset"
 msgstr ""
 
@@ -563,11 +563,11 @@ msgstr ""
 msgid "Playing macro %s/%s"
 msgstr ""
 
-#: libgaminggearwidget/gaminggear_macro_tree_view.c:309
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:310
 msgid "Please enter name of macro"
 msgstr ""
 
-#: libgaminggearwidget/gaminggear_macro_tree_view.c:87
+#: libgaminggearwidget/gaminggear_macro_tree_view.c:88
 msgid "Please enter name of macroset"
 msgstr ""
 
@@ -659,65 +659,87 @@ msgstr ""
 msgid "This macro contains a final wait of %u ms"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:268
+#: libgaminggear/gaminggear_input_events_uhid.c:275
 #, c-format
 msgid "Uhid %1$s has file descriptor %2$i"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:406
+#: libgaminggear/gaminggear_input_events_uhid.c:370
+#: libgaminggear/gaminggear_input_events_uhid.c:393
 #, c-format
 msgid "Uhid keyboard: Hid code %i had same state"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:361
-#, c-format
-msgid "Uhid keyboard: Hid code %i was already pressed"
-msgstr ""
-
-#: libgaminggear/gaminggear_input_events_uhid.c:396
+#: libgaminggear/gaminggear_input_events_uhid.c:413
+#: libgaminggear/gaminggear_input_events_uhid.c:445
 #, c-format
 msgid "Uhid keyboard: Hid code %i was not pressed before"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:385
+#: libgaminggear/gaminggear_input_events_uhid.c:435
 #, c-format
-msgid "Uhid keyboard: Hid code %i was pressed multiple times"
+msgid "Uhid keyboard: Hid code %i was pressed too many times"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:370
+#: libgaminggear/gaminggear_input_events_uhid.c:400
+msgid "Uhid keyboard: No key to remove"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:377
 #, c-format
 msgid ""
 "Uhid keyboard: Too many keys pressed at the same time. Could not press %i"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:436
+#: libgaminggear/gaminggear_input_events_uhid.c:493
+#: libgaminggear/gaminggear_input_events_uhid.c:509
 #, c-format
 msgid "Uhid mouse: button %i had same state"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:433
+#: libgaminggear/gaminggear_input_events_uhid.c:481
 #, c-format
 msgid "Uhid mouse: button %i not supported"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:444
-#: libgaminggear/gaminggear_input_events_uhid.c:450
+#: libgaminggear/gaminggear_input_events_uhid.c:501
+#, c-format
+msgid "Uhid mouse: button %i was not pressed before"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:487
+#, c-format
+msgid "Uhid mouse: button %i was pressed too many times"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uhid.c:522
+#: libgaminggear/gaminggear_input_events_uhid.c:528
 #, c-format
 msgid "Uhid multimedia: already other event %i active"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uhid.c:448
+#: libgaminggear/gaminggear_input_events_uhid.c:526
 msgid "Uhid multimedia: no event active"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:44
+#: libgaminggear/gaminggear_input_events_uinput.c:45
 #, c-format
 msgid "Uinput %1$s has file descriptor %2$i"
 msgstr ""
 
-#: libgaminggear/gaminggear_input_events_uinput.c:121
-#: libgaminggear/gaminggear_input_events_uinput.c:139
+#: libgaminggear/gaminggear_input_events_uinput.c:122
+#: libgaminggear/gaminggear_input_events_uinput.c:140
 msgid "Uinput is not initialized"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uinput.c:169
+#, c-format
+msgid "Uinput: Hid code %i was not pressed before"
+msgstr ""
+
+#: libgaminggear/gaminggear_input_events_uinput.c:159
+#, c-format
+msgid "Uinput: Hid code %i was pressed too many times"
 msgstr ""
 
 #: libgaminggearwidget/gaminggear_macro_editor_basic_tree_view.c:166

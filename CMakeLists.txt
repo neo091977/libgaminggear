@@ -11,9 +11,9 @@ ENDIF()
 
 IF(CMAKE_COMPILER_IS_GNUCC)
   # * Force gcc to generate single line error messages (used for eclipse cdt)
-  # * Play it save with all warning messages
+  # * Play it save with lots of warning messages
   # * Define GNU source for some extras
-  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fmessage-length=0 -Wall -D_GNU_SOURCE")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fmessage-length=0 -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wno-type-limits -D_GNU_SOURCE")
   SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
   SET(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} -Wl,--as-needed")
 ENDIF()
@@ -64,8 +64,8 @@ ADD_CUSTOM_TARGET(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 SET(V_MAJOR 0)
-SET(V_MINOR 10)
-SET(V_MICRO 1)
+SET(V_MINOR 11)
+SET(V_MICRO 0)
 SET(TRANSLATION_LANGUAGES de en)
 
 INCLUDE_DIRECTORIES(

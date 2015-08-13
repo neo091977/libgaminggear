@@ -1,5 +1,5 @@
-#ifndef __MACROS_CONVERTER_ROCCAT_VALO_H__
-#define __MACROS_CONVERTER_ROCCAT_VALO_H__
+#ifndef __MACROS_CONVERTER_ROCCAT_SWARM_H__
+#define __MACROS_CONVERTER_ROCCAT_SWARM_H__
 
 /*
  * This file is part of libgaminggear.
@@ -22,7 +22,7 @@
 
 G_BEGIN_DECLS
 
-GaminggearMacrosConverter const *macros_converter_roccat_valo(void);
+GaminggearMacrosConverter const *macros_converter_roccat_swarm(void);
 
 G_END_DECLS
 

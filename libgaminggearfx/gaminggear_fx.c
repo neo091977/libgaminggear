@@ -234,7 +234,7 @@ GfxResult gfx_initialize(void) {
 	return GFX_SUCCESS;
 }
 
-static void plugin_list_data_free(gpointer data) {
+static void plugin_list_data_free(gpointer data, gpointer user_data) {
 	PluginListData *list_data = (PluginListData *)data;
 	list_data->plugin->finalize(list_data->plugin);
 	g_module_close(list_data->module);
@@ -254,12 +254,9 @@ GfxResult gfx_release(void) {
 		return GFX_ERROR_NOINIT;
 	}
 
-#if (GLIB_CHECK_VERSION(2, 28, 0))
-	g_slist_free_full(plugins, plugin_list_data_free);
-#else
-	g_slist_foreach(plugins, (GFunc)plugin_list_data_free, NULL);
+	g_slist_foreach(plugins, plugin_list_data_free, NULL);
 	g_slist_free(plugins);
-#endif
+
 	plugins = NULL;
 	initialized = FALSE;
 

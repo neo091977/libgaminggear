@@ -28,6 +28,7 @@
 #include "gaminggear/gdk_key_translations.h"
 #include "gaminggear/hid_uid.h"
 #include "i18n-lib.h"
+#include <gdk/gdkkeysyms.h>
 #include <time.h>
 
 #define GAMINGGEAR_MACRO_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_TYPE, GaminggearMacroEditorClass))
@@ -91,8 +92,7 @@ static void unset(GaminggearMacroEditor *macro_editor) {
 	GaminggearMacroEditorPrivate *priv = macro_editor->priv;
 	gaminggear_macro_editor_key_sequence_frame_clear(priv->key_sequence_frame);
 
-	gtk_tree_row_reference_free(priv->reference);
-	priv->reference = NULL;
+	g_clear_pointer(&priv->reference, gtk_tree_row_reference_free);
 
 	priv->edited_modified = FALSE;
 	buttons_set_sensitive(macro_editor);
@@ -231,10 +231,24 @@ static void paste_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *fra
 
 		while(TRUE) {
 			character = g_utf8_get_char_validated(iter, -1);
-			if (character == 0)
+			if (character <= 0)
 				break;
 
+			iter = g_utf8_find_next_char(iter, NULL);
+
 			keyval = gdk_unicode_to_keyval(character);
+			/* Some unicode characters have to be converted manually.
+			 * Also linefeed does not exist in HID usage table. Since we are on Linux,
+			 * linefeed gets converted to return and return is ignored.
+			 */
+			if (keyval == (character | 0x01000000)) {
+				if (character == 0x09) /* Horizontal tab */
+					keyval = GDK_Tab;
+				else if (character == 0x0a) /* Linefeed */
+					keyval = GDK_Return;
+				else if (character == 0x0d) /* Return */
+					continue;
+			}
 
 			if (!gdk_keymap_get_entries_for_keyval(keymap, keyval, &keys, &n_keys)) {
 				g_warning(_("Keyval 0x%04x has no corresponding keys in keymap"), keyval);
@@ -275,8 +289,6 @@ static void paste_button_clicked_cb(GaminggearMacroEditorRecordOptionsFrame *fra
 					gaminggear_xkeycode_to_hid(key->keycode), GAMINGGEAR_MACRO_KEYSTROKE_ACTION_RELEASE, rel_time);
 
 			g_free(keys);
-
-			iter = g_utf8_find_next_char(iter, NULL);
 		}
 
 		if (shift) {

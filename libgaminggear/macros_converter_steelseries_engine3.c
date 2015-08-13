@@ -174,6 +174,6 @@ static GaminggearMacrosConverter converter = {
 	.name = N_("SteelSeries Engine 3 database"),
 };
 
-GaminggearMacrosConverter const * const macros_converter_steelseries_engine3(void) {
+GaminggearMacrosConverter const *macros_converter_steelseries_engine3(void) {
 	return &converter;
 }

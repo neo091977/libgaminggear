@@ -28,8 +28,9 @@
 
 static int uinput = -1;
 static gchar const * const identifier = "GaminggearUinput";
+static guint8 active_hids[256];
 
-gboolean gaminggear_input_event_init(GError **error) {
+gboolean gaminggear_input_event_init(guint vendor_id, guint product_id, GError **error) {
 	guint i;
 	struct uinput_user_dev uidev;
 
@@ -71,12 +72,12 @@ gboolean gaminggear_input_event_init(GError **error) {
 	}
 
 	memset(&uidev, 0, sizeof(uidev));
+	memset(&active_hids, 0, sizeof(active_hids));
 
-	// FIXME vendor product identifier
 	snprintf(uidev.name, UINPUT_MAX_NAME_SIZE, "%s", identifier);
 	uidev.id.bustype = BUS_USB;
-	uidev.id.vendor = USB_VENDOR_ID_LIBGAMINGGEAR;
-	uidev.id.product = USB_DEVICE_ID_LIBGAMINGGEAR_SOFTWARE;
+	uidev.id.vendor = vendor_id;
+	uidev.id.product = product_id;
 	uidev.id.version = 1;
 
 	if (write(uinput, &uidev, sizeof(uidev)) < 0) {
@@ -149,23 +150,62 @@ static void gaminggear_input_event_write_sync(void) {
 		g_warning(_("Could not write sync event to uinput %i: %i"), uinput, written);
 }
 
+/* returns true if state changed */
+static gboolean test_hid(int hid, int value) {
+	gboolean retval = FALSE;
+
+	if (value == GAMINGGEAR_INPUT_EVENT_VALUE_PRESS) {
+		if (active_hids[hid] == G_MAXUINT8) {
+			g_warning(_("Uinput: Hid code %i was pressed too many times"), hid);
+			return FALSE;
+		}
+
+		if (active_hids[hid] == 0)
+			retval = TRUE;
+
+		++active_hids[hid];
+	} else {
+		if (active_hids[hid] == 0) {
+			g_warning(_("Uinput: Hid code %i was not pressed before"), hid);
+			return FALSE;
+		}
+
+		--active_hids[hid];
+
+		if (active_hids[hid] == 0)
+			retval = TRUE;
+	}
+
+	return retval;
+}
+
 void gaminggear_input_event_write_keyboard(int hid, int value) {
-	gaminggear_input_event_write_keycode(gaminggear_hid_to_kbd_keycode(hid), value);
-	gaminggear_input_event_write_sync();
+	if (test_hid(hid, value)) {
+		gaminggear_input_event_write_keycode(gaminggear_hid_to_kbd_keycode(hid), value);
+		gaminggear_input_event_write_sync();
+	}
 }
 
 void gaminggear_input_event_write_keyboard_multi(int *hids, gsize length, int value) {
 	gsize i;
+	gboolean any = FALSE;
 
-	for (i = 0; i < length; ++i)
-		gaminggear_input_event_write_keycode(gaminggear_hid_to_kbd_keycode(hids[i]), value);
+	for (i = 0; i < length; ++i) {
+		if (test_hid(hids[i], value)) {
+			gaminggear_input_event_write_keycode(gaminggear_hid_to_kbd_keycode(hids[i]), value);
+			any = TRUE;
+		}
+	}
 
-	gaminggear_input_event_write_sync();
+	if (any)
+		gaminggear_input_event_write_sync();
 }
 
 void gaminggear_input_event_write_button(int hid, int value) {
-	gaminggear_input_event_write_keycode(gaminggear_hid_to_btn_keycode(hid), value);
-	gaminggear_input_event_write_sync();
+	if (test_hid(hid, value)) {
+		gaminggear_input_event_write_keycode(gaminggear_hid_to_btn_keycode(hid), value);
+		gaminggear_input_event_write_sync();
+	}
 }
 
 void gaminggear_input_event_write_multimedia(int hid, int value) {
