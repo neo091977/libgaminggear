@@ -1,5 +1,6 @@
  * Fixed compiler warnings
  * Fixed translations
+ * Fixed pkg-config problem with missing sqlite3
 
 0.11.1 2015-08-23
 
