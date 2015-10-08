@@ -9,7 +9,7 @@ Description: The GamingGear library
 URL: http://sourceforge.net/projects/libgaminggear
 Version: @V_MAJOR@.@V_MINOR@.@V_MICRO@
 Requires: glib-2.0
-Requires.private: gdk-2.0 gtk+-2.0 gobject-2.0 libcanberra libnotify sqlite3
+Requires.private: gdk-2.0 gtk+-2.0 gobject-2.0 libcanberra libnotify @ADDITIONAL_REQUIREMENTS@
 Cflags: -I${includedir}
 Libs: -L${libdir} -lgaminggear -lgaminggearwidget
 Libs.private: -lm

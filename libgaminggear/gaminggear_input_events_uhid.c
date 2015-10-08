@@ -195,7 +195,7 @@ static gboolean uhid_write(uhid_device const *device, struct uhid_event const *e
 		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not write to uhid %i: %s"), device->fd, g_strerror(errno));
 		return FALSE;
 	} else if (ret != sizeof(*event)) {
-		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Could not write to uhid %i: partial write (%ld instead of %lu)"), device->fd, ret, sizeof(*event));
+		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Could not write to uhid %i: partial write (%zi instead of %zu)"), device->fd, ret, sizeof(*event));
 		return FALSE;
 	}
 	

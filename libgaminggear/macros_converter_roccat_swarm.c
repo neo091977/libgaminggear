@@ -266,7 +266,7 @@ GaminggearMacros *macros_conversions_roccat_swarm_import(gchar const *filename, 
 		for (macro_index = 0; macro_index < macro_count; ++macro_index) {
 			if (!read32be(fd, &size, error)) goto exit;
 			if (size != sizeof(SwarmMacro)) {
-				g_warning("%u != %lu", size, sizeof(SwarmMacro));
+				g_warning("%u != %zu", size, sizeof(SwarmMacro));
 				// FIXME consequence
 			}
 			if (!myread(fd, &swarm_macro, size, error)) goto exit;
