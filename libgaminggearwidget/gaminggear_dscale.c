@@ -473,16 +473,16 @@ static captured is_in_capture_position(GtkWidget *widget, glong x) {
 	dist_lower = x - lower;
 	dist_upper = x - upper;
 
-	if (ABS(dist_upper) <= priv->gripping_width && ABS(dist_upper) < ABS(dist_lower))
+	if (ABS(dist_upper) <= (glong)priv->gripping_width && ABS(dist_upper) < ABS(dist_lower))
 		return CAPTURED_UPPER;
 
-	if (ABS(dist_lower) <= priv->gripping_width && ABS(dist_lower) < ABS(dist_upper))
+	if (ABS(dist_lower) <= (glong)priv->gripping_width && ABS(dist_lower) < ABS(dist_upper))
 		return CAPTURED_LOWER;
 
-	if (ABS(dist_upper) <= priv->gripping_width && dist_upper >= 0)
+	if (ABS(dist_upper) <= (glong)priv->gripping_width && dist_upper >= 0)
 		return CAPTURED_UPPER;
 
-	if (ABS(dist_lower) <= priv->gripping_width && dist_lower < 0)
+	if (ABS(dist_lower) <= (glong)priv->gripping_width && dist_lower < 0)
 		return CAPTURED_LOWER;
 
 	return CAPTURED_NONE;
