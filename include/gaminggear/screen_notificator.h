@@ -59,7 +59,7 @@ void gaminggear_screen_notification_free(GaminggearScreenNotification *notificat
 
 /*! \brief Show notification.
  *
- *  If this notification is already visible it's content is updated.
+ *  If this notification is already visible its content is updated.
  *
  *  \param notification The notification to be updated.
  *  \param format A \c printf() compatible format string.
@@ -71,7 +71,7 @@ gboolean gaminggear_screen_notification_update(GaminggearScreenNotification *not
 
 /*! \brief Show notification.
  *
- *  If this notification is already visible it's content is updated.
+ *  If this notification is already visible its content is updated.
  *
  *  \param notification The notification to be updated.
  *  \param format A \c printf() compatible format string.

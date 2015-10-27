@@ -21,7 +21,7 @@
 /*! \file gaminggear/threads.h
  *  \brief Wrappers around glib thread synchronization primitives.
  *
- *  Glib changed it's api with version 2.32.0. These wrappers provide a
+ *  Glib changed its api with version 2.32.0. These wrappers provide a
  *  consistent api for all glib-2 versions.
  *  
  *  For details please consult the appropriate glib documentation.
