@@ -64,10 +64,10 @@ int gaminggear_device_open(GaminggearDevice *gaminggear_device, gchar const *key
 	fd = open(path, flags, 0);
 	if (fd < 0)
 		g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno), _("Could not open file %1$s for device key %2$s: %3$s"), path, key, g_strerror(errno));
-	else
+	else {
 		g_debug("File %s for device key %s has file descriptor %i", path, key, fd);
-		
-	g_hash_table_insert(gaminggear_device->priv->fds, g_strdup(key), GINT_TO_POINTER(fd));
+		g_hash_table_insert(gaminggear_device->priv->fds, g_strdup(key), GINT_TO_POINTER(fd));
+	}
 	
 	return fd;
 }
