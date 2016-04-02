@@ -530,7 +530,7 @@ static __attribute__((constructor)) void constructor(void) {
 	plugins = NULL;
 	initialized = FALSE;
 	cancelled = FALSE;
-	thread = gaminggear_thread_try_new("worker", worker, NULL, NULL);
+	thread = gaminggear_thread_try_new(worker, NULL, NULL);
 }
 
 static __attribute__((destructor)) void destructor(void) {
