@@ -21,7 +21,7 @@
 /*! \file gaminggear/threads.h
  *  \brief Wrappers around glib thread synchronization primitives.
  *
- *  Glib changed it's api with version 2.32.0. These wrappers provide a
+ *  Glib changed its api with version 2.32.0. These wrappers provide a
  *  consistent api for all glib-2 versions.
  *  
  *  For details please consult the appropriate glib documentation.
@@ -64,9 +64,9 @@ G_BEGIN_DECLS
 /*! \brief Create new thread.
  *  \since 1.0
  */
-static inline GThread *gaminggear_thread_try_new(G_GNUC_UNUSED gchar const *name, GThreadFunc func, gpointer data, GError **error) {
+static inline GThread *gaminggear_thread_try_new(GThreadFunc func, gpointer data, GError **error) {
 #if (GLIB_CHECK_VERSION(2, 32, 0))
-	return g_thread_try_new(name, func, data, error);
+	return g_thread_try_new(NULL, func, data, error);
 #else
 	return g_thread_create(func, data, TRUE, error);
 #endif
@@ -146,6 +146,43 @@ static inline void gaminggear_cond_wait(GaminggearCond *cond, GaminggearMutex *m
 	g_cond_wait(cond, mutex);
 #else
 	g_cond_wait(*cond, *mutex);
+#endif
+}
+
+/*! \brief Condition handler.
+ *  \since 1.0
+ *  Should return TRUE if condition is met */
+typedef gboolean (*gaminggear_cond_handler)(gpointer user_data);
+
+/*! \brief Waits for a signal until condition is met.
+ *  \since 1.0
+ */
+static inline void gaminggear_cond_wait_for(GaminggearCond *cond, GaminggearMutex *mutex, gaminggear_cond_handler handler, gpointer user_data) {
+	while (!handler(user_data))
+		gaminggear_cond_wait(cond, mutex);
+}
+
+/*! \brief Waits for a signal until condition is met or time expired.
+ *  \retval FALSE on timeout, TRUE if condition was met.
+ *  \since 1.0
+ */
+static inline gboolean gaminggear_cond_wait_for_timed(GaminggearCond *cond, GaminggearMutex *mutex, glong microseconds, gaminggear_cond_handler handler, gpointer user_data) {
+#if (GLIB_CHECK_VERSION(2, 32, 0))
+	gint64 end_time = g_get_monotonic_time() + microseconds;
+	while(!handler(user_data)) {
+		if (!g_cond_wait_until(cond, mutex, end_time))
+			return FALSE;
+	}
+	return TRUE;
+#else
+	GTimeVal end_time;
+	g_get_current_time(&end_time);
+	g_time_val_add(&end_time, microseconds);
+	while (!handler(user_data)) {
+		if (!g_cond_timed_wait(*cond, *mutex, &end_time))
+			return FALSE;
+	}
+	return TRUE;
 #endif
 }
 

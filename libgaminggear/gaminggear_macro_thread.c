@@ -173,7 +173,7 @@ GaminggearMacroThread *gaminggear_macro_thread_new(GaminggearMacro const *macro)
 	priv->paused = FALSE;
 	gaminggear_macro_thread_set_running(macro_thread, TRUE);
 
-	priv->thread = gaminggear_thread_try_new("GaminggearMacro", thread, macro_thread, &error);
+	priv->thread = gaminggear_thread_try_new(thread, macro_thread, &error);
 
 	if (error) {
 		g_warning(_("Could not create macro thread: %s"), error->message);

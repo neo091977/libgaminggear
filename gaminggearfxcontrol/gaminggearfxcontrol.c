@@ -66,7 +66,7 @@ static gboolean post_parse_func(GOptionContext *context, GOptionGroup *group, gp
 		return FALSE;
 	}
 
-	if (parameter_single && !parameter_device && parameter_light_index == -1) {
+	if (parameter_single && (!parameter_device || parameter_light_index == -1)) {
 		g_set_error(error, G_OPTION_ERROR, G_OPTION_ERROR_FAILED, _("--single needs --device and --light"));
 		return FALSE;
 	}
