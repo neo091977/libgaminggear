@@ -8,6 +8,7 @@ ADD_LIBRARY (libgaminggearwidget SHARED
   gaminggear_dialogs.c
   gaminggear_dscale.c
   gaminggear_gdk_key_translations.c
+  gaminggear_hid_combo_box.c
   gaminggear_hscale.c
   gaminggear_macro_combo_box.c
   gaminggear_macro_dialog.c
@@ -34,6 +35,7 @@ ADD_LIBRARY (libgaminggearwidget SHARED
   gaminggear_xy_scales.c
   gaminggearwidget.c
   gaminggearwidget_helper.c
+  gtk_gaminggear_helper.c
 )
 
 ADD_DEPENDENCIES(libgaminggearwidget
