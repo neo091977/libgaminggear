@@ -27,6 +27,7 @@ INSTALL(
     input_events.h
     gaminggear_device.h
     gaminggear_fx_plugin.h
+    gaminggear_hid_combo_box.h
     gaminggear_hscale.h
     gaminggear_macro_dialog.h
     gaminggear_macro_editor_dialog.h
