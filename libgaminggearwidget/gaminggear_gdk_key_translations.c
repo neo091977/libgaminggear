@@ -72,100 +72,102 @@ gchar *gaminggear_hid_to_keyname(guint8 usage_id) {
 }
 
 gchar *gaminggear_hid_to_name(guint8 usage_id) {
-	gchar *text;
+	gchar *text = NULL;
 
 	switch(usage_id) {
 	case HID_UID_KB_SPACE:
-		text = g_strdup("Space");
+		text = "Space";
 		break;
 	case HID_UID_KB_CAPS_LOCK:
-		text = g_strdup("Caps lock");
+		text = "Caps lock";
 		break;
 	case HID_UID_KB_SCROLL_LOCK:
-		text = g_strdup("Scroll lock");
+		text = "Scroll lock";
 		break;
 	case HID_UID_KB_PAGE_UP:
-		text = g_strdup("Page up");
+		text = "Page up";
 		break;
 	case HID_UID_KB_PAGE_DOWN:
-		text = g_strdup("Page down");
+		text = "Page down";
 		break;
 	case HID_UID_KP_NUM_LOCK:
-		text = g_strdup("Num lock");
+		text = "Num lock";
 		break;
 	case HID_UID_KP_DIV:
-		text = g_strdup("Keypad /");
+		text = "Keypad /";
 		break;
 	case HID_UID_KP_MUL:
-		text = g_strdup("Keypad *");
+		text = "Keypad *";
 		break;
 	case HID_UID_KP_MINUS:
-		text = g_strdup("Keypad -");
+		text = "Keypad -";
 		break;
 	case HID_UID_KP_PLUS:
-		text = g_strdup("Keypad +");
+		text = "Keypad +";
 		break;
 	case HID_UID_KP_ENTER:
-		text = g_strdup("Keypad Enter");
+		text = "Keypad Enter";
 		break;
 	case HID_UID_KP_1:
-		text = g_strdup("Keypad 1");
+		text = "Keypad 1";
 		break;
 	case HID_UID_KP_2:
-		text = g_strdup("Keypad 2");
+		text = "Keypad 2";
 		break;
 	case HID_UID_KP_3:
-		text = g_strdup("Keypad 3");
+		text = "Keypad 3";
 		break;
 	case HID_UID_KP_4:
-		text = g_strdup("Keypad 4");
+		text = "Keypad 4";
 		break;
 	case HID_UID_KP_5:
-		text = g_strdup("Keypad 5");
+		text = "Keypad 5";
 		break;
 	case HID_UID_KP_6:
-		text = g_strdup("Keypad 6");
+		text = "Keypad 6";
 		break;
 	case HID_UID_KP_7:
-		text = g_strdup("Keypad 7");
+		text = "Keypad 7";
 		break;
 	case HID_UID_KP_8:
-		text = g_strdup("Keypad 8");
+		text = "Keypad 8";
 		break;
 	case HID_UID_KP_9:
-		text = g_strdup("Keypad 9");
+		text = "Keypad 9";
 		break;
 	case HID_UID_KP_0:
-		text = g_strdup("Keypad 0");
+		text = "Keypad 0";
 		break;
 	case HID_UID_KB_LEFT_CONTROL:
-		text = g_strdup("Left control");
+		text = "Left control";
 		break;
 	case HID_UID_KB_LEFT_SHIFT:
-		text = g_strdup("Left shift");
+		text = "Left shift";
 		break;
 	case HID_UID_KB_LEFT_ALT:
-		text = g_strdup("Left alt");
+		text = "Left alt";
 		break;
 	case HID_UID_KB_LEFT_GUI:
-		text = g_strdup("Left gui");
+		text = "Left gui";
 		break;
 	case HID_UID_KB_RIGHT_CONTROL:
-		text = g_strdup("Right control");
+		text = "Right control";
 		break;
 	case HID_UID_KB_RIGHT_SHIFT:
-		text = g_strdup("Right shift");
+		text = "Right shift";
 		break;
 	case HID_UID_KB_RIGHT_ALT:
-		text = g_strdup("Right alt");
+		text = "Right alt";
 		break;
 	case HID_UID_KB_RIGHT_GUI:
-		text = g_strdup("Right gui");
+		text = "Right gui";
 		break;
 	default:
-		text = gaminggear_hid_to_keyname(usage_id);
 		break;
 	}
 
-	return text;
+	if (text)
+		return g_strdup(text);
+	else
+		return gaminggear_hid_to_keyname(usage_id);
 }
