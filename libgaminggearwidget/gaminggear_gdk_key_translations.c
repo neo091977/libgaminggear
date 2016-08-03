@@ -71,6 +71,131 @@ gchar *gaminggear_hid_to_keyname(guint8 usage_id) {
 	return string;
 }
 
+gchar *gaminggear_hid_to_button_name(guint8 usage_id) {
+	gchar *text = NULL;
+
+	switch(usage_id) {
+	case HID_UID_KB_ENTER:
+		text = "\xe2\x86\xb5";
+		break;
+	case HID_UID_KB_ESCAPE:
+		text = "ESC";
+		break;
+	case HID_UID_KB_BACKSPACE:
+		text = "\xe2\x9f\xb5";
+		break;
+	case HID_UID_KB_TAB:
+		text = "\xe2\x86\xb9";
+		break;
+	case HID_UID_KB_SPACE:
+		text = "Space";
+		break;
+	case HID_UID_KB_CAPS_LOCK:
+		text = "\xe2\x87\xa9";
+		break;
+	case HID_UID_KB_SCROLL_LOCK:
+		text = "Scroll\nLock";
+		break;
+	case HID_UID_KB_PAGE_UP:
+		text = "Pg\xe2\x86\x91";
+		break;
+	case HID_UID_KB_PAGE_DOWN:
+		text = "Pg\xe2\x86\x93";
+		break;
+	case HID_UID_KB_RIGHT_ARROW:
+		text = "\xe2\x86\x92";
+		break;
+	case HID_UID_KB_LEFT_ARROW:
+		text = "\xe2\x86\x90";
+		break;
+	case HID_UID_KB_DOWN_ARROW:
+		text = "\xe2\x86\x93";
+		break;
+	case HID_UID_KB_UP_ARROW:
+		text = "\xe2\x86\x91";
+		break;
+	case HID_UID_KP_NUM_LOCK:
+		text = "Num\nLock";
+		break;
+	case HID_UID_KP_DIV:
+		text = "/\nKP";
+		break;
+	case HID_UID_KP_MUL:
+		text = "*\nKP";
+		break;
+	case HID_UID_KP_MINUS:
+		text = "-\nKP";
+		break;
+	case HID_UID_KP_PLUS:
+		text = "+\nKP";
+		break;
+	case HID_UID_KP_ENTER:
+		text = "Enter";
+		break;
+	case HID_UID_KP_1:
+		text = "1\nKP";
+		break;
+	case HID_UID_KP_2:
+		text = "2\nKP";
+		break;
+	case HID_UID_KP_3:
+		text = "3\nKP";
+		break;
+	case HID_UID_KP_4:
+		text = "4\nKP";
+		break;
+	case HID_UID_KP_5:
+		text = "5\nKP";
+		break;
+	case HID_UID_KP_6:
+		text = "6\nKP";
+		break;
+	case HID_UID_KP_7:
+		text = "7\nKP";
+		break;
+	case HID_UID_KP_8:
+		text = "8\nKP";
+		break;
+	case HID_UID_KP_9:
+		text = "9\nKP";
+		break;
+	case HID_UID_KP_0:
+		text = "0\nKP";
+		break;
+	case HID_UID_KB_LEFT_CONTROL:
+		text = "Ctrl\nL";
+		break;
+	case HID_UID_KB_LEFT_SHIFT:
+		text = "\xe2\x87\xa7\nL";
+		break;
+	case HID_UID_KB_LEFT_ALT:
+		text = "Alt\nL";
+		break;
+	case HID_UID_KB_LEFT_GUI:
+		text = "GUI\nL";
+		break;
+	case HID_UID_KB_RIGHT_CONTROL:
+		text = "Ctrl\nR";
+		break;
+	case HID_UID_KB_RIGHT_SHIFT:
+		text = "\xe2\x87\xa7\nR";
+		break;
+	case HID_UID_KB_RIGHT_ALT:
+		text = "Alt\nR";
+		break;
+	case HID_UID_KB_RIGHT_GUI:
+		text = "GUI\nR";
+		break;
+	default:
+		break;
+	}
+
+	if (text)
+		return g_strdup(text);
+	else
+		return gaminggear_hid_to_keyname(usage_id);
+}
+
 gchar *gaminggear_hid_to_name(guint8 usage_id) {
 	gchar *text = NULL;
 
