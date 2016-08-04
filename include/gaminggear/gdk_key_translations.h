@@ -57,6 +57,18 @@ gchar *gaminggear_hid_to_keyname(guint8 usage_id);
  */
 gchar *gaminggear_hid_to_name(guint8 usage_id);
 
+/*! \brief Converts HID usage id to short HID name.
+ *
+ *  Needs GDK to be initialized.
+ *
+ *  Returns a shorter, two line HID name that is suitable for Keyboard buttons.
+ *
+ *  \param usage_id HID usage id.
+ *  \retval name that has to be freed with \c g_free().
+ *  \since 1.0
+ */
+gchar *gaminggear_hid_to_button_name(guint8 usage_id);
+
 G_END_DECLS
 
 #endif
