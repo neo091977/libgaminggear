@@ -1,3 +1,8 @@
+0.14.0 2016-08-05
+
+ * Added: gaminggear_hid_to_button_name()
+ * Improved: List of HID usage ids
+
 0.13.0 2016-05-22
 
  * Added: GaminggearHidComboBox
