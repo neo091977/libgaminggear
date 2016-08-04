@@ -162,6 +162,9 @@ gchar *gaminggear_hid_to_button_name(guint8 usage_id) {
 	case HID_UID_KP_0:
 		text = "0\nKP";
 		break;
+	case HID_UID_KP_DELETE:
+		text = "Delete\nKP";
+		break;
 	case HID_UID_KB_LEFT_CONTROL:
 		text = "Ctrl\nL";
 		break;
