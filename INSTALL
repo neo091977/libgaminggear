@@ -1,3 +1,9 @@
+* First make sure the dependencies are met
+
+  * You will need some development tools and header packages. For ease of use,
+    there are some install_deps_* scripts for various distributions in the scripts
+    folder of this package, which you can execute or take as a guideline.
+
 * Compilation and Installation
 
   In any shell type the following:
