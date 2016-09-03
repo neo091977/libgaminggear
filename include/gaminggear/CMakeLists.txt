@@ -31,6 +31,7 @@ INSTALL(
     gaminggear_hscale.h
     gaminggear_macro_dialog.h
     gaminggear_macro_editor_dialog.h
+    gaminggear_profile_data.h
     gaminggear_text_dialog.h
     gaminggear_timeout_bar.h
     gaminggear_timeout_dialog.h
