@@ -43,11 +43,12 @@ GType gaminggear_profile_table_get_type(void);
 
 /*! \brief Create new profile table.
  *  \param type Type of profile_data to handle.
+ *  \param path Path to load files from.
  *  \param profile_num Maximum count of profiles the device can handle.
  *  \retval new profile table.
  *  \since 1.0
  */
-GtkWidget *gaminggear_profile_table_new(GType type, guint profile_num);
+GtkWidget *gaminggear_profile_table_new(GType type, gchar const *path, guint profile_num);
 
 /*! \brief Add profile.
  *
@@ -64,12 +65,27 @@ void gaminggear_profile_table_add_profile(GaminggearProfileTable *table);
  *  hardware profile index.
  *
  *  \param table Instance.
- *  \param dir Directory to import.
  *  \param error Location to return an error.
  *  \retval bool \c TRUE if successful, else \c FALSE.
  *  \since 1.0
  */
-gboolean gaminggear_profile_table_load(GaminggearProfileTable *table, gchar const *dir, GError **error);
+gboolean gaminggear_profile_table_load(GaminggearProfileTable *table, GError **error);
+
+/*! \brief Fill profile data list with missing hardware profiles.
+ *
+ *  Filesystem data has to be read before hardware data since it contains the
+ *  hardware profile index.
+ *
+ *  Only reads the missing profiles from hardware.
+ *
+ *  \param table Instance.
+ *  \param device Device to read from or \c NULL.
+ *  \param count Number of profiles to fill.
+ *  \param error Location to return an error.
+ *  \retval bool \c TRUE if successful, else \c FALSE.
+ *  \since 1.0
+ */
+gboolean gaminggear_profile_table_fill(GaminggearProfileTable *table, GaminggearDevice *device, guint count, GError **error);
 
 /*! \brief Read hardware profile_data.
  *
@@ -78,12 +94,11 @@ gboolean gaminggear_profile_table_load(GaminggearProfileTable *table, gchar cons
  *
  *  \param table Instance.
  *  \param device Device to read from or \c NULL.
- *  \param count
  *  \param error Location to return an error.
  *  \retval bool \c TRUE if successful, else \c FALSE.
  *  \since 1.0
  */
-gboolean gaminggear_profile_table_read(GaminggearProfileTable *table, GaminggearDevice *device, guint count, GError **error);
+gboolean gaminggear_profile_table_read(GaminggearProfileTable *table, GaminggearDevice *device, GError **error);
 
 /*! \brief Saves and writes all profile datas.
  *  \param table Instance.

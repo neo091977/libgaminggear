@@ -31,6 +31,7 @@ struct _GaminggearProfileTableClass {
 };
 
 struct _GaminggearProfileTablePrivate {
+	gchar *path;
 	GtkMenu *menu;
 	GType profile_type;
 	guint num_profiles;
@@ -45,6 +46,7 @@ enum {
 	PROP_0,
 	PROP_NUM_PROFILES,
 	PROP_PROFILE_TYPE,
+	PROP_PATH,
 };
 
 enum {
@@ -115,40 +117,42 @@ void gaminggear_profile_table_add_profile(GaminggearProfileTable *table) {
 			NULL, profile_data_new(table));
 }
 
-gboolean gaminggear_profile_table_load(GaminggearProfileTable *table, gchar const *dir, GError **error) {
+gboolean gaminggear_profile_table_load(GaminggearProfileTable *table, GError **error) {
 	GaminggearProfileData *profile_data;
 	GDir *directory;
 	gchar const *name;
 	gchar *abs_path;
 	gboolean retval;
 
-	directory = g_dir_open(dir, 0, error);
+	directory = g_dir_open(table->priv->path, 0, error);
 	if (directory == NULL)
 		return FALSE;
 
 	while ((name = g_dir_read_name(directory))) {
 		/* TODO maybe g_pattern_match_string for file ending */
 		profile_data = profile_data_new(table);
-		abs_path = g_build_filename(dir, name, NULL);
+		abs_path = g_build_filename(table->priv->path, name, NULL);
 		retval = gaminggear_profile_data_load(profile_data, abs_path, error);
 		g_free(abs_path);
 
 		if (!retval) {
 			g_object_unref(G_OBJECT(profile_data));
+			g_dir_close(directory);
 			// TODO warning dialog and continue
 			return FALSE;
 		}
 
 		gaminggear_profile_list_store_add_profile(GAMINGGEAR_PROFILE_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(table))), NULL, profile_data);
+		g_object_unref(G_OBJECT(profile_data));
 	}
 
+	g_dir_close(directory);
 	return TRUE;
 }
 
-gboolean gaminggear_profile_table_read(GaminggearProfileTable *table, GaminggearDevice *device, guint count, GError **error) {
+gboolean gaminggear_profile_table_fill(GaminggearProfileTable *table, GaminggearDevice *device, guint count, GError **error) {
 	GtkTreeModel *model;
 	GaminggearProfileData *profile_data;
-	gboolean retval;
 	guint i;
 
 	model = gtk_tree_view_get_model(GTK_TREE_VIEW(table));
@@ -159,12 +163,39 @@ gboolean gaminggear_profile_table_read(GaminggearProfileTable *table, Gaminggear
 			profile_data = profile_data_new(table);
 			gaminggear_profile_data_set_hardware_index(profile_data, i);
 			gaminggear_profile_list_store_add_profile(GAMINGGEAR_PROFILE_LIST_STORE(model), NULL, profile_data);
+			if (!gaminggear_profile_data_read(profile_data, device, error)) {
+				g_object_unref(profile_data);
+				return FALSE;
+			}
 		}
 
-		retval = gaminggear_profile_data_read(profile_data, device, error);
 		g_object_unref(profile_data);
-		if (!retval)
-			return FALSE;
+	}
+
+	return TRUE;
+}
+
+gboolean gaminggear_profile_table_read(GaminggearProfileTable *table, GaminggearDevice *device, GError **error) {
+	GtkTreeModel *model;
+	GaminggearProfileData *profile_data;
+	gboolean valid;
+	GtkTreeIter iter;
+
+	model = gtk_tree_view_get_model(GTK_TREE_VIEW(table));
+
+	valid = gtk_tree_model_get_iter_first(model, &iter);
+
+	while (valid) {
+		profile_data = gaminggear_profile_list_store_get_profile(GAMINGGEAR_PROFILE_LIST_STORE(model), &iter);
+		if (gaminggear_profile_data_get_hardware_index(profile_data) != GAMINGGEAR_PROFILE_DATA_GAMEFILE_PROFILE_INVALID) {
+			if (!gaminggear_profile_data_read(profile_data, device, error)) {
+				g_object_unref(profile_data);
+				return FALSE;
+			}
+		}
+
+		g_object_unref(profile_data);
+		valid = gtk_tree_model_iter_next(model, &iter);
 	}
 
 	return TRUE;
@@ -367,13 +398,14 @@ static GtkWidget *menu_new(GaminggearProfileTable *table) {
 	return menu;
 }
 
-GtkWidget *gaminggear_profile_table_new(GType type, guint profile_num) {
+GtkWidget *gaminggear_profile_table_new(GType type, gchar const *path, guint profile_num) {
 	GaminggearProfileTable *table;
 
 	table = GAMINGGEAR_PROFILE_TABLE(g_object_new(GAMINGGEAR_PROFILE_TABLE_TYPE,
 			"model", GTK_TREE_MODEL(gaminggear_profile_list_store_new()),
 			"num-profiles", profile_num,
 			"profile-type", type,
+			"path", path,
 			NULL));
 
 	return GTK_WIDGET(table);
@@ -508,6 +540,7 @@ static GObject *gaminggear_profile_table_constructor(GType gtype, guint n_proper
 static void gaminggear_profile_table_finalize(GObject *object) {
 	GaminggearProfileTablePrivate *priv = GAMINGGEAR_PROFILE_TABLE(object)->priv;
 	g_object_unref(priv->menu);
+	g_clear_pointer(&priv->path, g_free);
 	G_OBJECT_CLASS(gaminggear_profile_table_parent_class)->finalize(object);
 }
 
@@ -520,6 +553,9 @@ static void gaminggear_profile_table_set_property(GObject *object, guint prop_id
 		break;
 	case PROP_NUM_PROFILES:
 		priv->num_profiles = g_value_get_uint(value);
+		break;
+	case PROP_PATH:
+		priv->path = g_strdup(g_value_get_string(value));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -536,6 +572,9 @@ static void gaminggear_profile_table_get_property(GObject *object, guint prop_id
 		break;
 	case PROP_NUM_PROFILES:
 		g_value_set_uint(value, priv->num_profiles);
+		break;
+	case PROP_PATH:
+		g_value_set_string(value, priv->path);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -572,12 +611,19 @@ static void gaminggear_profile_table_class_init(GaminggearProfileTableClass *kla
 					"num-profiles",
 					"Number of profiles",
 					0, G_MAXUINT, 1,
-					G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+					G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
 	g_object_class_install_property(gobject_class, PROP_PROFILE_TYPE,
 			g_param_spec_gtype("profile-type",
 					"profile type",
 					"Profile type",
 					GAMINGGEAR_PROFILE_DATA_TYPE,
-					G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+					G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
+	g_object_class_install_property(gobject_class, PROP_PATH,
+			g_param_spec_string("path",
+					"path",
+					"Path",
+					"",
+					G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 }
