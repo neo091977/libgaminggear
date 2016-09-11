@@ -21,6 +21,7 @@ SET(SOURCES
   gaminggear_macro.c
   gaminggear_macros.c
   gaminggear_profile_data.c
+  gaminggear_profiles.c
   gaminggear_screen_notificator_notify.c
   macros_converter_roccat_arvo.c
   macros_converter_roccat_kone.c
