@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgaminggear 0.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 15:54+0200\n"
+"POT-Creation-Date: 2016-09-13 19:42+0200\n"
 "PO-Revision-Date: 2015-04-09 16:36+0200\n"
 "Last-Translator: Stefan <erazor_de@users.sourceforge.net>\n"
 "Language-Team: German\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: libgaminggear/macros_converter_roccat_kone.c:283
-#: libgaminggear/macros_converter_roccat_valo.c:283
 #: libgaminggear/macros_converter_roccat_arvo.c:217
+#: libgaminggear/macros_converter_roccat_valo.c:283
 #: libgaminggear/macros_converter_roccat.c:291
 #, c-format
 msgid "%1$s is no %2$s macro file"
@@ -85,20 +85,20 @@ msgstr "Einfach"
 msgid "Binary data has wrong length: %1$lu bytes instead of %2$lu"
 msgstr "Binärdaten haben falsche Länge: %1$lu Bytes statt %2$lu"
 
-#: libgaminggearwidget/gaminggear_gdk_key_translations.c:66
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:67
 #, c-format
 msgid "Button %u"
 msgstr "Maustaste %u"
 
-#: libgaminggearwidget/gaminggear_gdk_key_translations.c:56
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:57
 msgid "Button left"
 msgstr "Maustaste links"
 
-#: libgaminggearwidget/gaminggear_gdk_key_translations.c:62
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:63
 msgid "Button middle"
 msgstr "Maustaste mitte"
 
-#: libgaminggearwidget/gaminggear_gdk_key_translations.c:59
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:60
 msgid "Button right"
 msgstr "Maustaste rechts"
 
@@ -192,16 +192,16 @@ msgid "Could not find device %s"
 msgstr "Konnte Gerät %s nicht finden"
 
 #: libgaminggear/macros_converter_roccat_kone.c:189
-#: libgaminggear/macros_converter_roccat_valo.c:189
 #: libgaminggear/macros_converter_roccat_arvo.c:104
+#: libgaminggear/macros_converter_roccat_valo.c:189
 #: libgaminggear/macros_converter_roccat.c:196
 #, c-format
 msgid "Could not find group %s: %s"
 msgstr "Konnte Gruppe %s nicht finden: %s"
 
 #: libgaminggear/macros_converter_roccat_kone.c:194
-#: libgaminggear/macros_converter_roccat_valo.c:194
 #: libgaminggear/macros_converter_roccat_arvo.c:109
+#: libgaminggear/macros_converter_roccat_valo.c:194
 #: libgaminggear/macros_converter_roccat.c:201
 #, c-format
 msgid "Could not find key %s/%s: %s"
@@ -271,6 +271,7 @@ msgstr "Konnte Makros nicht laden"
 
 #: libgaminggear/macros_converter_roccat_swarm.c:180
 #: libgaminggear/macros_converter_roccat_swarm.c:250
+#, c-format
 msgid "Could not open %2$s macro file %1$s: %3$s"
 msgstr "Konnte %2$s Makrodatei %1$s nicht öffnen: %3$s"
 
@@ -300,6 +301,7 @@ msgid "Could not open uinput: %s"
 msgstr "Konnte uinput nicht öffnen: %s"
 
 #: libgaminggear/macros_converter_roccat_swarm.c:75
+#, c-format
 msgid "Could not read: %s"
 msgstr "Konnte nicht lesen: %s"
 
@@ -307,6 +309,11 @@ msgstr "Konnte nicht lesen: %s"
 #: gaminggearfxcontrol/gaminggearfxcontrol.c:190
 msgid "Could not release fx system"
 msgstr "Konnte fx System nicht freigeben"
+
+#: libgaminggearwidget/gaminggear_profile_table.c:387
+#, fuzzy
+msgid "Could not remove profile"
+msgstr "Konnte Makros nicht speichern"
 
 #: gaminggearfxcontrol/gaminggearfxcontrol.c:173
 msgid "Could not reset all lights"
@@ -384,12 +391,18 @@ msgid "Could not write to uhid %i: %s"
 msgstr "Konnte nicht in uhid %i schreiben: %s"
 
 #: libgaminggear/gaminggear_input_events_uhid.c:198
+#, c-format
 msgid "Could not write to uhid %i: partial write (%zi instead of %zu)"
 msgstr "Konnte nicht in uhid %i schreiben: unvollständig geschrieben (%zi statt %zu)"
 
 #: libgaminggear/macros_converter_roccat_swarm.c:96
+#, c-format
 msgid "Could not write: %s"
 msgstr "Konnte nicht schreiben: %s"
+
+#: libgaminggearwidget/gaminggear_profile_table.c:633
+msgid "DP"
+msgstr "DP"
 
 #: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:97
 msgid "Delay"
@@ -416,6 +429,11 @@ msgstr "Wollen sie dieses Makro wirklich entfernen?"
 msgid "Do you really want to remove this macroset?"
 msgstr "Wollen sie dieses Makroset wirklich entfernen?"
 
+#: libgaminggearwidget/gaminggear_profile_table.c:379
+#, fuzzy
+msgid "Do you really want to remove this profile?"
+msgstr "Wollen sie dieses Makro wirklich entfernen?"
+
 #: libgaminggearwidget/gaminggear_dialogs.c:36
 msgid "Do you want to save?"
 msgstr "Wollen sie speichern?"
@@ -424,10 +442,15 @@ msgstr "Wollen sie speichern?"
 msgid "Down"
 msgstr "Ab"
 
+#: libgaminggearwidget/gaminggear_profile_table.c:464
+msgid "Duplicate"
+msgstr "Duplizieren"
+
 #: libgaminggearwidget/gaminggear_macro_editor_dialog.c:112
 msgid "Edit macros"
 msgstr "Makros editieren"
 
+#: libgaminggearwidget/gaminggear_profile_page.c:65
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:325
 msgid "Export"
 msgstr "Export"
@@ -463,6 +486,14 @@ msgstr "Gaminggear Makros"
 msgid "HID usage id 0x%02x has no corresponding xkeycode"
 msgstr "HID usage id 0x%02x hat keinen zugehörigen xkeycode"
 
+#: libgaminggearwidget/gaminggear_profile_table.c:629
+msgid "HW"
+msgstr "HW"
+
+#: libgaminggearwidget/gaminggear_profile_table.c:476
+msgid "Hardware index"
+msgstr "Hardware index"
+
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:333
 msgid "Help"
 msgstr "Hilfe"
@@ -484,6 +515,7 @@ msgstr "Ignoriere unbekannter Ereignistyp %u"
 msgid "Ignoring wait as first event type"
 msgstr "Ignoriere Wartezeit als erstes Ereignis"
 
+#: libgaminggearwidget/gaminggear_profile_page.c:61
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:321
 msgid "Import"
 msgstr "Import"
@@ -534,8 +566,8 @@ msgid "Macro"
 msgstr "Makro"
 
 #: libgaminggear/macros_converter_roccat_kone.c:99
-#: libgaminggear/macros_converter_roccat_valo.c:99
 #: libgaminggear/macros_converter_roccat_arvo.c:189
+#: libgaminggear/macros_converter_roccat_valo.c:99
 #: libgaminggear/macros_converter_roccat.c:106
 #, c-format
 msgid "Macro %s/%s is too long to convert"
@@ -588,6 +620,10 @@ msgstr "Bitte Name des Makroset eingeben"
 msgid "Position: "
 msgstr "Position: "
 
+#: libgaminggearwidget/gaminggear_profile_table.c:623
+msgid "Profile"
+msgstr "Profil"
+
 #: libgaminggearwidget/gaminggear_macro_editor_record_options_frame.c:99
 msgid "Record"
 msgstr "Aufnahme"
@@ -604,9 +640,19 @@ msgstr "Makro entfernen"
 msgid "Remove macroset"
 msgstr "Makroset entfernen"
 
+#: libgaminggearwidget/gaminggear_profile_table.c:379
+#, fuzzy
+msgid "Remove profile"
+msgstr "Makro entfernen"
+
 #: libgaminggearwidget/gaminggear_macro_tree_view.c:438
+#: libgaminggearwidget/gaminggear_profile_table.c:460
 msgid "Rename"
 msgstr "Umbenennen"
+
+#: libgaminggearwidget/gaminggear_profile_page.c:69
+msgid "Reset"
+msgstr "Zurücksetzen"
 
 #: libgaminggear/macros_converter_roccat_arvo.c:301
 msgid "Roccat Arvo macro files"
@@ -658,6 +704,7 @@ msgstr "Sqlite3 konnte die Datenbank nicht öffnen: %s"
 msgid "SteelSeries Engine 3 database"
 msgstr "SteelSeries Engine 3 Datenbank"
 
+#: libgaminggearwidget/gaminggear_profile_page.c:157
 #: libgaminggearwidget/gaminggear_macro_editor.c:140
 msgid "Store modifications"
 msgstr "Modifikationen speichern"
@@ -675,6 +722,10 @@ msgstr "Es gibt ungespeicherte Daten."
 #, c-format
 msgid "This macro contains a final wait of %u ms"
 msgstr "Dieses Makro enthält eine finale Wartezeit von %u ms"
+
+#: libgaminggearwidget/gaminggear_profile_table.c:472
+msgid "Toggle desktop profile"
+msgstr "Desktop Profil umschalten"
 
 #: libgaminggear/macros_converter_roccat_swarm.c:72
 msgid "Trying to read behind file boundaries"
@@ -776,6 +827,7 @@ msgstr "Wartezeit ohne zugehöriges Tastenevent"
 msgid "Warning"
 msgstr "Warnung"
 
+#: libgaminggearwidget/gaminggear_profile_page.c:156
 #: libgaminggearwidget/gaminggear_macro_editor.c:139
 msgid "Would you like to store actual modifications?"
 msgstr "Möchten sie aktuelle Modifikationen speichern?"
@@ -785,7 +837,7 @@ msgstr "Möchten sie aktuelle Modifikationen speichern?"
 msgid "Xkeycode 0x%04x has no corresponding HID usage id"
 msgstr "Xkeycode 0x%04x hat keine zugehörige HID usage id"
 
-#: libgaminggearwidget/gaminggear_gdk_key_translations.c:32
+#: libgaminggearwidget/gaminggear_gdk_key_translations.c:33
 #, c-format
 msgid "Xkeycode 0x%04x has no corresponding keyval in keymap"
 msgstr "Xkeycode 0x%04x hat keinen zugehörigen keyval in keymap"

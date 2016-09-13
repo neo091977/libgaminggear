@@ -1,3 +1,7 @@
+0.15.0 2016-09-13
+
+ * Added: GaminggearProfileData, GaminggearProfileTable, GaminggearProfilePage, GaminggearProfiles
+
 0.14.0 2016-08-05
 
  * Added: gaminggear_hid_to_button_name()
