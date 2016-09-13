@@ -28,6 +28,9 @@ ADD_LIBRARY (libgaminggearwidget SHARED
   gaminggear_macro_editor.c
   gaminggear_macro_tree_store.c
   gaminggear_macro_tree_view.c
+  gaminggear_profile_list_store.c
+  gaminggear_profile_page.c
+  gaminggear_profile_table.c
   gaminggear_ruler.c
   gaminggear_text_dialog.c
   gaminggear_timeout_bar.c

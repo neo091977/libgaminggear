@@ -31,6 +31,9 @@ INSTALL(
     gaminggear_hscale.h
     gaminggear_macro_dialog.h
     gaminggear_macro_editor_dialog.h
+    gaminggear_profile_data.h
+    gaminggear_profile_page.h
+    gaminggear_profile_table.h
     gaminggear_text_dialog.h
     gaminggear_timeout_bar.h
     gaminggear_timeout_dialog.h
@@ -42,6 +45,7 @@ INSTALL(
     key_translations.h
     macro.h
     macro_threads.h
+    profiles.h
     screen_notificator.h
     threads.h
   DESTINATION include/gaminggear-${V_MAJOR}/gaminggear
