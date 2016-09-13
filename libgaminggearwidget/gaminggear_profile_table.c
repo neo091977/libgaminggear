@@ -19,6 +19,7 @@
 #include "gaminggear_profile_list_store.h"
 #include "gaminggear_dialogs.h"
 #include "i18n-lib.h"
+#include <string.h>
 
 #define GAMINGGEAR_PROFILE_TABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_PROFILE_TABLE_TYPE, GaminggearProfileTableClass))
 #define IS_GAMINGGEAR_PROFILE_TABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_PROFILE_TABLE_TYPE))
@@ -35,11 +36,13 @@ struct _GaminggearProfileTablePrivate {
 	GtkMenu *menu;
 	GType profile_type;
 	guint num_profiles;
+	GaminggearProfileData *default_profile;
 };
 
 enum {
 	GAMINGGEAR_PROFILE_TABLE_NAME_COLUMN = 0,
 	GAMINGGEAR_PROFILE_TABLE_HARDWARE_COLUMN,
+	GAMINGGEAR_PROFILE_TABLE_DESKTOP_PROFILE_COLUMN,
 };
 
 enum {
@@ -83,6 +86,29 @@ gboolean gaminggear_profile_table_get_modified(GaminggearProfileTable *table) {
 	}
 
 	return FALSE;
+}
+
+static GaminggearProfileData *gaminggear_profile_table_find_by_name(GtkTreeModel *model, gchar const *wanted_name) {
+	GaminggearProfileListStore *store = GAMINGGEAR_PROFILE_LIST_STORE(model);
+	GaminggearProfileData *profile_data;
+	GtkTreeIter iter;
+	gboolean valid;
+	gchar const *name;
+
+	valid = gtk_tree_model_get_iter_first(model, &iter);
+
+	while (valid) {
+		profile_data = gaminggear_profile_list_store_get_profile(store, &iter);
+		name = gaminggear_profile_data_get_name(profile_data);
+
+		if (strcmp(name, wanted_name) == 0)
+			return profile_data;
+
+		g_object_unref(profile_data);
+		valid = gtk_tree_model_iter_next(model, &iter);
+	}
+
+	return NULL;
 }
 
 static GaminggearProfileData *gaminggear_profile_table_find_by_hardware_index(GtkTreeModel *model, gint index) {
@@ -301,6 +327,42 @@ static gboolean should_remove(gchar const *title, gchar const *text) {
 	return result;
 }
 
+gchar const *gaminggear_profile_table_get_default_profile_name(GaminggearProfileTable *table) {
+	GaminggearProfileTablePrivate *priv = table->priv;
+
+	if (priv->default_profile)
+		return gaminggear_profile_data_get_name(priv->default_profile);
+	else
+		return NULL;
+}
+
+void gaminggear_profile_table_set_default_profile_name(GaminggearProfileTable *table, gchar const *name) {
+	GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(table));
+	GaminggearProfileData *profile_data = gaminggear_profile_table_find_by_name(model, name);
+	table->priv->default_profile = profile_data;
+}
+
+static void remove_default_profile_if(GaminggearProfileTable *table, GaminggearProfileData *profile_data) {
+	GaminggearProfileTablePrivate *priv = table->priv;
+
+	if (profile_data == priv->default_profile) {
+		g_object_unref(priv->default_profile);
+		priv->default_profile = NULL;
+	}
+}
+
+static void toggle_default_profile(GaminggearProfileTable *table, GaminggearProfileData *profile_data) {
+	GaminggearProfileTablePrivate *priv = table->priv;
+
+	if (profile_data == priv->default_profile) {
+		g_object_unref(priv->default_profile);
+		priv->default_profile = NULL;
+	} else {
+		g_object_ref(profile_data);
+		priv->default_profile = profile_data;
+	}
+}
+
 static void popup_remove_cb(GtkMenuItem *item, gpointer user_data) {
 	GaminggearProfileTable *table = GAMINGGEAR_PROFILE_TABLE(user_data);
 	GtkTreeModel *model;
@@ -317,6 +379,7 @@ static void popup_remove_cb(GtkMenuItem *item, gpointer user_data) {
 	if (should_remove(_("Remove profile"), _("Do you really want to remove this profile?"))) {
 		profile_data = gaminggear_profile_list_store_get_profile(GAMINGGEAR_PROFILE_LIST_STORE(model), &entry);
 		retval = gaminggear_profile_data_remove(profile_data, &local_error);
+		remove_default_profile_if(table, profile_data);
 		g_signal_emit((gpointer)table, signals[REMOVED], 0, profile_data);
 		g_object_unref(profile_data);
 		gaminggear_profile_list_store_remove(GAMINGGEAR_PROFILE_LIST_STORE(model), &entry);
@@ -326,6 +389,22 @@ static void popup_remove_cb(GtkMenuItem *item, gpointer user_data) {
 		}
 	}
 
+}
+
+static void popup_default_profile_cb(GtkMenuItem *item, gpointer user_data) {
+	GaminggearProfileTable *table = GAMINGGEAR_PROFILE_TABLE(user_data);
+	GtkTreeModel *model;
+	GtkTreeSelection *selection;
+	GtkTreeIter entry;
+	GaminggearProfileData *profile_data;
+
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(table));
+	if (!gtk_tree_selection_get_selected(selection, &model, &entry))
+		return;
+
+	profile_data = gaminggear_profile_list_store_get_profile(GAMINGGEAR_PROFILE_LIST_STORE(model), &entry);
+	toggle_default_profile(table, profile_data);
+	g_object_unref(profile_data);
 }
 
 static void popup_set_hardware_index_cb(GtkMenuItem *item, gpointer user_data) {
@@ -390,6 +469,10 @@ static GtkWidget *menu_new(GaminggearProfileTable *table) {
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_remove_cb), table);
 
+	item = gtk_menu_item_new_with_label(_("Toggle desktop profile"));
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(popup_default_profile_cb), table);
+
 	item = gtk_menu_item_new_with_label(_("Hardware index"));
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), submenu(table));
@@ -449,6 +532,18 @@ static void hardware_cell_data_func(GtkTreeViewColumn *column, GtkCellRenderer *
 		g_object_set(renderer, "text", string, NULL);
 		g_free(string);
 	}
+}
+
+static void dp_cell_data_func(GtkTreeViewColumn *column, GtkCellRenderer *renderer, GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
+	GaminggearProfileTable *table = GAMINGGEAR_PROFILE_TABLE(data);
+	GaminggearProfileData *profile;
+
+	profile = gaminggear_profile_list_store_get_profile(GAMINGGEAR_PROFILE_LIST_STORE(model), iter);
+	if (profile == table->priv->default_profile)
+		g_object_set(renderer, "text", "DP", NULL);
+	else
+		g_object_set(renderer, "text", "", NULL);
+	g_object_unref(profile);
 }
 
 // TODO code duplicate from gaminggear_macro_table
@@ -518,6 +613,8 @@ static GObject *gaminggear_profile_table_constructor(GType gtype, guint n_proper
 	table = GAMINGGEAR_PROFILE_TABLE(obj);
 	priv = table->priv;
 
+	priv->default_profile = NULL;
+
 	priv->menu = GTK_MENU(menu_new(table));
 	g_object_ref_sink(priv->menu);
 
@@ -530,6 +627,10 @@ static GObject *gaminggear_profile_table_constructor(GType gtype, guint n_proper
 	/* GAMINGGEAR_PROFILE_TABLE_HARDWARE_COLUMN */
 	renderer = gtk_cell_renderer_text_new();
 	gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(table), -1, _("HW"), renderer, hardware_cell_data_func, table, NULL);
+
+	/* GAMINGGEAR_PROFILE_TABLE_DESKTOP_PROFILE_COLUMN */
+	renderer = gtk_cell_renderer_text_new();
+	gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(table), -1, _("DP"), renderer, dp_cell_data_func, table, NULL);
 
 	g_signal_connect(G_OBJECT(table), "row-activated", G_CALLBACK(row_activated_cb), table);
 	g_signal_connect(G_OBJECT(table), "button-press-event", G_CALLBACK(popup_menu_on_right_mouse_button_cb), NULL);

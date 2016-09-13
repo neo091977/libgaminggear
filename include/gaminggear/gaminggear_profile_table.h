@@ -119,6 +119,24 @@ gboolean gaminggear_profile_table_store(GaminggearProfileTable *table, Gaminggea
  */
 gboolean gaminggear_profile_table_get_modified(GaminggearProfileTable *table);
 
+/*! \brief Get name of default profile.
+ *  \param table Instance.
+ *  \retval string which shouldn't be freed or \c NULL if no default profile is selected.
+ *  \since 1.0
+ */
+gchar const *gaminggear_profile_table_get_default_profile_name(GaminggearProfileTable *table);
+
+/*! \brief Set default profile.
+ *
+ *  If no profile with the given name exists, no profile is selected as default profile.
+ *  If more than one profile with the same name exists, one is randomly selected.
+ *
+ *  \param table Instance.
+ *  \param name of the profile to select.
+ *  \since 1.0
+ */
+void gaminggear_profile_table_set_default_profile_name(GaminggearProfileTable *table, gchar const *name);
+
 G_END_DECLS
 
 #endif
