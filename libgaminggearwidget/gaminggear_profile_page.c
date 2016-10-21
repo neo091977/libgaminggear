@@ -16,6 +16,7 @@
  */
 
 #include "gaminggear/gaminggear_profile_page.h"
+#include "gaminggear_helper.h"
 #include "i18n-lib.h"
 
 #define GAMINGGEAR_PROFILE_PAGE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_PROFILE_PAGE_TYPE, GaminggearProfilePagePrivate))

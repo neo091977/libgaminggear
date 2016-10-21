@@ -18,6 +18,7 @@
 #include "gaminggear/gaminggear_profile_table.h"
 #include "gaminggear_profile_list_store.h"
 #include "gaminggear_dialogs.h"
+#include "gaminggear_helper.h"
 #include "i18n-lib.h"
 #include <string.h>
 
