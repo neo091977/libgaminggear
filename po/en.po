@@ -311,9 +311,8 @@ msgid "Could not release fx system"
 msgstr "Could not release fx system"
 
 #: libgaminggearwidget/gaminggear_profile_table.c:387
-#, fuzzy
 msgid "Could not remove profile"
-msgstr "Could not save macros"
+msgstr "Could not remove profile"
 
 #: gaminggearfxcontrol/gaminggearfxcontrol.c:173
 msgid "Could not reset all lights"
@@ -430,9 +429,8 @@ msgid "Do you really want to remove this macroset?"
 msgstr "Do you really want to remove this macroset?"
 
 #: libgaminggearwidget/gaminggear_profile_table.c:379
-#, fuzzy
 msgid "Do you really want to remove this profile?"
-msgstr "Do you really want to remove this macro?"
+msgstr "Do you really want to remove this profile?"
 
 #: libgaminggearwidget/gaminggear_dialogs.c:36
 msgid "Do you want to save?"
@@ -641,9 +639,8 @@ msgid "Remove macroset"
 msgstr "Remove macroset"
 
 #: libgaminggearwidget/gaminggear_profile_table.c:379
-#, fuzzy
 msgid "Remove profile"
-msgstr "Remove macro"
+msgstr "Remove profile"
 
 #: libgaminggearwidget/gaminggear_macro_tree_view.c:438
 #: libgaminggearwidget/gaminggear_profile_table.c:460
