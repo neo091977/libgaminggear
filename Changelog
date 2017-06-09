@@ -1,3 +1,8 @@
+0.15.1 2017-06-09
+
+ * Fixed: Translations
+ * Fixed: File descriptor handling in GaminggearDevice
+
 0.15.0 2016-09-13
 
  * Added: GaminggearProfileData, GaminggearProfileTable, GaminggearProfilePage, GaminggearProfiles
