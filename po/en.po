@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgaminggear 0.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 19:42+0200\n"
+"POT-Creation-Date: 2017-06-09 19:09+0200\n"
 "PO-Revision-Date: 2015-04-09 16:36+0200\n"
 "Last-Translator: Stefan <erazor_de@users.sourceforge.net>\n"
 "Language-Team: English\n"
@@ -61,7 +61,8 @@ msgstr "Advanced"
 msgid ""
 "Advanced view does not support final waits. Please switch to another view to "
 "add it again if needed."
-msgstr "Advanced view does not support final waits. Please switch to another view to "
+msgstr ""
+"Advanced view does not support final waits. Please switch to another view to "
 "add it again if needed."
 
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:204
@@ -137,15 +138,10 @@ msgstr "Copy"
 msgid "Could not cancel audio notificator: %s"
 msgstr "Could not cancel audio notificator: %s"
 
-#: libgaminggear/gaminggear_device.c:86
+#: libgaminggear/gaminggear_device.c:86 libgaminggear/gaminggear_device.c:175
 #, c-format
 msgid "Could not close file descriptor %1$i for device key %2$s: %3$s"
 msgstr "Could not close file descriptor %1$i for device key %2$s: %3$s"
-
-#: libgaminggear/gaminggear_device.c:154
-#, c-format
-msgid "Could not close file descriptor %i: %s"
-msgstr "Could not close file descriptor %i: %s"
 
 #: libgaminggear/gaminggear_device.c:80
 #, c-format
@@ -310,7 +306,7 @@ msgstr "Could not read: %s"
 msgid "Could not release fx system"
 msgstr "Could not release fx system"
 
-#: libgaminggearwidget/gaminggear_profile_table.c:387
+#: libgaminggearwidget/gaminggear_profile_table.c:388
 msgid "Could not remove profile"
 msgstr "Could not remove profile"
 
@@ -399,7 +395,7 @@ msgstr "Could not write to uhid %i: partial write (%zi instead of %zu)"
 msgid "Could not write: %s"
 msgstr "Could not write: %s"
 
-#: libgaminggearwidget/gaminggear_profile_table.c:633
+#: libgaminggearwidget/gaminggear_profile_table.c:634
 msgid "DP"
 msgstr "DP"
 
@@ -428,7 +424,7 @@ msgstr "Do you really want to remove this macro?"
 msgid "Do you really want to remove this macroset?"
 msgstr "Do you really want to remove this macroset?"
 
-#: libgaminggearwidget/gaminggear_profile_table.c:379
+#: libgaminggearwidget/gaminggear_profile_table.c:380
 msgid "Do you really want to remove this profile?"
 msgstr "Do you really want to remove this profile?"
 
@@ -440,7 +436,7 @@ msgstr "Do you want to save?"
 msgid "Down"
 msgstr "Down"
 
-#: libgaminggearwidget/gaminggear_profile_table.c:464
+#: libgaminggearwidget/gaminggear_profile_table.c:465
 msgid "Duplicate"
 msgstr "Duplicate"
 
@@ -448,7 +444,7 @@ msgstr "Duplicate"
 msgid "Edit macros"
 msgstr "Edit macros"
 
-#: libgaminggearwidget/gaminggear_profile_page.c:65
+#: libgaminggearwidget/gaminggear_profile_page.c:66
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:325
 msgid "Export"
 msgstr "Export"
@@ -484,11 +480,11 @@ msgstr "Gaminggear macros"
 msgid "HID usage id 0x%02x has no corresponding xkeycode"
 msgstr "HID usage id 0x%02x has no corresponding xkeycode"
 
-#: libgaminggearwidget/gaminggear_profile_table.c:629
+#: libgaminggearwidget/gaminggear_profile_table.c:630
 msgid "HW"
 msgstr "HW"
 
-#: libgaminggearwidget/gaminggear_profile_table.c:476
+#: libgaminggearwidget/gaminggear_profile_table.c:477
 msgid "Hardware index"
 msgstr "Hardware index"
 
@@ -513,7 +509,7 @@ msgstr "Ignoring unknown event type %u"
 msgid "Ignoring wait as first event type"
 msgstr "Ignoring wait as first event type"
 
-#: libgaminggearwidget/gaminggear_profile_page.c:61
+#: libgaminggearwidget/gaminggear_profile_page.c:62
 #: libgaminggearwidget/gaminggear_macro_editor_dialog_menu_bar.c:321
 msgid "Import"
 msgstr "Import"
@@ -618,7 +614,7 @@ msgstr "Please enter name of macroset"
 msgid "Position: "
 msgstr "Position: "
 
-#: libgaminggearwidget/gaminggear_profile_table.c:623
+#: libgaminggearwidget/gaminggear_profile_table.c:624
 msgid "Profile"
 msgstr "Profile"
 
@@ -638,16 +634,16 @@ msgstr "Remove macro"
 msgid "Remove macroset"
 msgstr "Remove macroset"
 
-#: libgaminggearwidget/gaminggear_profile_table.c:379
+#: libgaminggearwidget/gaminggear_profile_table.c:380
 msgid "Remove profile"
 msgstr "Remove profile"
 
 #: libgaminggearwidget/gaminggear_macro_tree_view.c:438
-#: libgaminggearwidget/gaminggear_profile_table.c:460
+#: libgaminggearwidget/gaminggear_profile_table.c:461
 msgid "Rename"
 msgstr "Rename"
 
-#: libgaminggearwidget/gaminggear_profile_page.c:69
+#: libgaminggearwidget/gaminggear_profile_page.c:70
 msgid "Reset"
 msgstr "Reset"
 
@@ -701,7 +697,7 @@ msgstr "Sqlite3 could not open database: %s"
 msgid "SteelSeries Engine 3 database"
 msgstr "SteelSeries Engine 3 database"
 
-#: libgaminggearwidget/gaminggear_profile_page.c:157
+#: libgaminggearwidget/gaminggear_profile_page.c:158
 #: libgaminggearwidget/gaminggear_macro_editor.c:140
 msgid "Store modifications"
 msgstr "Store modifications"
@@ -720,7 +716,7 @@ msgstr "There is unsaved data."
 msgid "This macro contains a final wait of %u ms"
 msgstr "This macro contains a final wait of %u ms"
 
-#: libgaminggearwidget/gaminggear_profile_table.c:472
+#: libgaminggearwidget/gaminggear_profile_table.c:473
 msgid "Toggle desktop profile"
 msgstr "Toggle desktop profile"
 
@@ -758,7 +754,8 @@ msgstr "Uhid keyboard: No key to remove"
 #, c-format
 msgid ""
 "Uhid keyboard: Too many keys pressed at the same time. Could not press %i"
-msgstr "Uhid keyboard: Too many keys pressed at the same time. Could not press %i"
+msgstr ""
+"Uhid keyboard: Too many keys pressed at the same time. Could not press %i"
 
 #: libgaminggear/gaminggear_input_events_uhid.c:489
 #: libgaminggear/gaminggear_input_events_uhid.c:505
@@ -824,7 +821,7 @@ msgstr "Wait without corresponding key event"
 msgid "Warning"
 msgstr "Warning"
 
-#: libgaminggearwidget/gaminggear_profile_page.c:156
+#: libgaminggearwidget/gaminggear_profile_page.c:157
 #: libgaminggearwidget/gaminggear_macro_editor.c:139
 msgid "Would you like to store actual modifications?"
 msgstr "Would you like to store actual modifications?"
@@ -875,3 +872,5 @@ msgstr "use device STRING"
 msgid "use light index INDEX"
 msgstr "use light index INDEX"
 
+#~ msgid "Could not close file descriptor %i: %s"
+#~ msgstr "Could not close file descriptor %i: %s"

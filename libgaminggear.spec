@@ -1,6 +1,6 @@
 %define vmajor 0
 %define vminor 15
-%define vmicro 0
+%define vmicro 1
 
 Name: libgaminggear
 Version: %{vmajor}.%{vminor}.%{vmicro}
@@ -83,5 +83,5 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 %{_datadir}/cmake/Modules/FindGAMINGGEAR%{vmajor}.cmake
 
 %changelog
-* Tue Sep 13 2016 Stefan Achatz <erazor_de@users.sourceforge.net> 0.15.0-1
+* Fri Jun 09 2016 Stefan Achatz <erazor_de@users.sourceforge.net> 0.15.1-1
 - Initial version
