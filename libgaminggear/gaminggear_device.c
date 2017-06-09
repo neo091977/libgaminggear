@@ -55,7 +55,7 @@ int gaminggear_device_open(GaminggearDevice *gaminggear_device, gchar const *key
 	if (g_hash_table_lookup_extended(gaminggear_device->priv->fds, key, NULL, &value))
 		return GPOINTER_TO_INT(value);
 
-	path = gaminggear_device_get_path(gaminggear_device, key);
+	path = (gchar const *)g_hash_table_lookup(gaminggear_device->priv->paths, key);
 	if (!path) {
 		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_INVAL, _("Could not open file for device key %s: %s"), key, _("no path"));
 		return -1;
@@ -68,7 +68,7 @@ int gaminggear_device_open(GaminggearDevice *gaminggear_device, gchar const *key
 		g_debug("File %s for device key %s has file descriptor %i", path, key, fd);
 		g_hash_table_insert(gaminggear_device->priv->fds, g_strdup(key), GINT_TO_POINTER(fd));
 	}
-	
+
 	return fd;
 }
 
@@ -91,14 +91,7 @@ gboolean gaminggear_device_close(GaminggearDevice *gaminggear_device, gchar cons
 }
 
 void gaminggear_device_set_path(GaminggearDevice *gaminggear_device, gchar const *key, gchar const *path) {
-	gchar *old_path;
-
-	old_path = (gchar *)g_object_get_data(G_OBJECT(gaminggear_device), key);
-	if (old_path) {
-		gaminggear_device_close(gaminggear_device, key, NULL);
-		g_free(old_path);
-	}
-
+	gaminggear_device_close(gaminggear_device, key, NULL);
 	g_hash_table_insert(gaminggear_device->priv->paths, g_strdup(key), g_strdup(path));
 }
 
@@ -144,24 +137,14 @@ GaminggearDevice *gaminggear_device_new(gchar const *identifier, guint vendor_id
 			NULL));
 }
 
-static void destroy_str(gpointer data) {
-	g_free(data);
-}
-
-static void destroy_fd(gpointer data) {
-	int fd = GPOINTER_TO_INT(data);
-	if (close(fd) < 0)
-		g_warning(_("Could not close file descriptor %i: %s"), fd, g_strerror(errno));
-}
-
 static void gaminggear_device_init(GaminggearDevice *gaminggear_dev) {
 	GaminggearDevicePrivate *priv = GAMINGGEAR_DEVICE_GET_PRIVATE(gaminggear_dev);
 	gaminggear_dev->priv = priv;
 
 	gaminggear_rec_mutex_init(&priv->lock);
 
-	priv->paths = g_hash_table_new_full(g_str_hash, g_str_equal, destroy_str, destroy_str);
-	priv->fds = g_hash_table_new_full(g_str_hash, g_str_equal, destroy_str, destroy_fd);
+	priv->paths = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
+	priv->fds = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
 }
 
 static void set_property(GObject *object, guint prop_id, GValue const *value, GParamSpec *pspec) {
@@ -186,11 +169,18 @@ static void set_property(GObject *object, guint prop_id, GValue const *value, GP
 	}
 }
 
+static void close_fd_cb(gpointer key, gpointer value, gpointer user_data) {
+	int fd = GPOINTER_TO_INT(value);
+	if (close(fd) < 0)
+		g_warning(_("Could not close file descriptor %1$i for device key %2$s: %3$s"), fd, (gchar const *)key, g_strerror(errno));
+}
+
 static void gaminggear_device_finalize(GObject *object) {
 	GaminggearDevicePrivate *priv = GAMINGGEAR_DEVICE(object)->priv;
 
 	g_free(priv->identifier);
 	g_hash_table_unref(priv->paths);
+	g_hash_table_foreach(priv->fds, close_fd_cb, NULL);
 	g_hash_table_unref(priv->fds);
 	gaminggear_rec_mutex_clear(&priv->lock);
 
