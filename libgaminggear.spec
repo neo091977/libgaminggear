@@ -82,6 +82,4 @@ gtk-update-icon-cache %{prefix}/share/icons/hicolor &>dev/null || :
 %{_datadir}/pkgconfig/gaminggear-%{vmajor}.pc
 %{_datadir}/cmake/Modules/FindGAMINGGEAR%{vmajor}.cmake
 
-%changelog
-* Fri Jun 09 2016 Stefan Achatz <erazor_de@users.sourceforge.net> 0.15.1-1
-- Initial version
+
