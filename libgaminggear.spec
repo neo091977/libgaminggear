@@ -38,7 +38,7 @@ Here are the development headers needed to compile software that uses libgamingg
 %setup -q -n %{name}-%{version}
 %{__mkdir} build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX="%{_prefix}" -DCMAKE_BUILD_TYPE=Release -DINSTALL_LIBDIR="%{_libdir}" -DWITH_DOC=TRUE ..
+cmake -DCMAKE_INSTALL_PREFIX="%{_prefix}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="${RPM_OPT_FLAGS}" -DCMAKE_CXX_FLAGS="${RPM_OPT_FLAGS}" -DINSTALL_LIBDIR="%{_libdir}" -DWITH_DOC=TRUE ..
 
 %build
 cd build
