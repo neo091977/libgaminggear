@@ -33,7 +33,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_TYPE, GaminggearMacroEditorClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_TYPE, GaminggearMacroEditorPrivate))
 
 typedef struct _GaminggearMacroEditorClass GaminggearMacroEditorClass;
 
@@ -57,7 +56,7 @@ struct _GaminggearMacroEditorPrivate {
 	gboolean modified;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditor, gaminggear_macro_editor, GTK_TYPE_HPANED);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditor, gaminggear_macro_editor, GTK_TYPE_HPANED);
 
 /*
  * left - right
@@ -406,7 +405,7 @@ GtkWidget *gaminggear_macro_editor_new(void) {
 }
 
 static void gaminggear_macro_editor_init(GaminggearMacroEditor *macro_editor) {
-	GaminggearMacroEditorPrivate *priv = GAMINGGEAR_MACRO_EDITOR_GET_PRIVATE(macro_editor);
+	GaminggearMacroEditorPrivate *priv = gaminggear_macro_editor_get_instance_private(macro_editor);
 	GtkWidget *hbox;
 	GtkWidget *vbox;
 	GtkBox *action_area;
@@ -480,8 +479,6 @@ static void gaminggear_macro_editor_class_init(GaminggearMacroEditorClass *klass
 	gobject_class = (GObjectClass*)klass;
 
 	gobject_class->finalize = gaminggear_macro_editor_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorPrivate));
 }
 
 void gaminggear_macro_editor_clear(GaminggearMacroEditor *macro_editor) {

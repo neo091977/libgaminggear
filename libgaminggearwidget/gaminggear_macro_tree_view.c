@@ -25,7 +25,6 @@
 
 #define GAMINGGEAR_MACRO_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_TREE_VIEW_TYPE, GaminggearMacroTreeViewClass))
 #define IS_GAMINGGEAR_MACRO_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_TREE_VIEW_TYPE))
-#define GAMINGGEAR_MACRO_TREE_VIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_TREE_VIEW_TYPE, GaminggearMacroTreeViewPrivate))
 
 typedef struct _GaminggearMacroTreeViewClass GaminggearMacroTreeViewClass;
 
@@ -40,7 +39,7 @@ struct _GaminggearMacroTreeViewPrivate {
 	GtkMenu *macroset_menu;
 };
 
-G_DEFINE_TYPE(GaminggearMacroTreeView, gaminggear_macro_tree_view, GTK_TYPE_TREE_VIEW);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroTreeView, gaminggear_macro_tree_view, GTK_TYPE_TREE_VIEW);
 
 enum {
 	REMOVED,
@@ -483,7 +482,7 @@ GtkWidget *gaminggear_macro_tree_view_new(GaminggearMacroTreeStore *store) {
 }
 
 static void gaminggear_macro_tree_view_init(GaminggearMacroTreeView *macro_tree_view) {
-	GaminggearMacroTreeViewPrivate *priv = GAMINGGEAR_MACRO_TREE_VIEW_GET_PRIVATE(macro_tree_view);
+	GaminggearMacroTreeViewPrivate *priv = gaminggear_macro_tree_view_get_instance_private(macro_tree_view);
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
 
@@ -532,8 +531,6 @@ static void gaminggear_macro_tree_view_class_init(GaminggearMacroTreeViewClass *
 	gobject_class = (GObjectClass*)klass;
 
 	gobject_class->finalize = gaminggear_macro_tree_view_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroTreeViewPrivate));
 
 	signals[SELECTED] = g_signal_new("selected",
 			G_TYPE_FROM_CLASS(klass),

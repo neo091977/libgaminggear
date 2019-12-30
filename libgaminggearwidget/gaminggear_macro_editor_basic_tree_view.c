@@ -21,7 +21,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_TYPE, GaminggearMacroEditorBasicTreeViewClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_TYPE, GaminggearMacroEditorBasicTreeViewPrivate))
 
 typedef struct _GaminggearMacroEditorBasicTreeViewClass GaminggearMacroEditorBasicTreeViewClass;
 
@@ -33,7 +32,7 @@ struct _GaminggearMacroEditorBasicTreeViewPrivate {
 	GtkMenu *menu;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditorBasicTreeView, gaminggear_macro_editor_basic_tree_view, GTK_TYPE_TREE_VIEW);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditorBasicTreeView, gaminggear_macro_editor_basic_tree_view, GTK_TYPE_TREE_VIEW);
 
 static gchar const * const macro_list_key_key = "macro_list_key";
 
@@ -251,7 +250,8 @@ static gboolean popup_menu_on_right_mouse_button_cb(GtkTreeView *tree_view, GdkE
 }
 
 static void gaminggear_macro_editor_basic_tree_view_init(GaminggearMacroEditorBasicTreeView *tree_view) {
-	GaminggearMacroEditorBasicTreeViewPrivate *priv = GAMINGGEAR_MACRO_EDITOR_BASIC_TREE_VIEW_GET_PRIVATE(tree_view);
+	GaminggearMacroEditorBasicTreeViewPrivate *priv = gaminggear_macro_editor_basic_tree_view_get_instance_private(tree_view);
+
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
 
@@ -302,6 +302,4 @@ static void gaminggear_macro_editor_basic_tree_view_class_init(GaminggearMacroEd
 	gobject_class = G_OBJECT_CLASS(klass);
 
 	gobject_class->finalize = gaminggear_macro_editor_basic_tree_view_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorBasicTreeViewPrivate));
 }

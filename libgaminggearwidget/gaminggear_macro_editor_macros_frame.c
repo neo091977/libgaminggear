@@ -21,7 +21,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_TYPE, GaminggearMacroEditorMacrosFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_TYPE, GaminggearMacroEditorMacrosFramePrivate))
 
 typedef struct _GaminggearMacroEditorMacrosFrameClass GaminggearMacroEditorMacrosFrameClass;
 typedef struct _AbsoluteKeystroke AbsoluteKeystroke;
@@ -36,7 +35,7 @@ struct _GaminggearMacroEditorMacrosFramePrivate {
 	GaminggearMacroTreeView *tree_view;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditorMacrosFrame, gaminggear_macro_editor_macros_frame, GTK_TYPE_FRAME);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditorMacrosFrame, gaminggear_macro_editor_macros_frame, GTK_TYPE_FRAME);
 
 enum {
 	REMOVED,
@@ -80,7 +79,7 @@ static void add_macroset_clicked_cb(GtkButton *button, gpointer user_data) {
 }
 
 static void gaminggear_macro_editor_macros_frame_init(GaminggearMacroEditorMacrosFrame *macros_frame) {
-	GaminggearMacroEditorMacrosFramePrivate *priv = GAMINGGEAR_MACRO_EDITOR_MACROS_FRAME_GET_PRIVATE(macros_frame);
+	GaminggearMacroEditorMacrosFramePrivate *priv = gaminggear_macro_editor_macros_frame_get_instance_private(macros_frame);
 	GaminggearMacroTreeStore *store;
 	GtkWidget *vbox;
 	GtkWidget *scrolled_window;
@@ -130,8 +129,6 @@ static void gaminggear_macro_editor_macros_frame_class_init(GaminggearMacroEdito
 	gobject_class = G_OBJECT_CLASS(klass);
 
 	gobject_class->finalize = gaminggear_macro_editor_macros_frame_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorMacrosFramePrivate));
 
 	signals[SELECTED] = g_signal_new("selected",
 			G_TYPE_FROM_CLASS(klass),

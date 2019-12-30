@@ -21,7 +21,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_TYPE, GaminggearMacroEditorMacroOptionsFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_TYPE, GaminggearMacroEditorMacroOptionsFramePrivate))
 
 typedef struct _GaminggearMacroEditorMacroOptionsFrameClass GaminggearMacroEditorMacroOptionsFrameClass;
 typedef struct _AbsoluteKeystroke AbsoluteKeystroke;
@@ -35,7 +34,7 @@ struct _GaminggearMacroEditorMacroOptionsFramePrivate {
 	GtkSpinButton *loop_button;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditorMacroOptionsFrame, gaminggear_macro_editor_macro_options_frame, GTK_TYPE_FRAME);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditorMacroOptionsFrame, gaminggear_macro_editor_macro_options_frame, GTK_TYPE_FRAME);
 
 enum {
 	MODIFIED,
@@ -64,7 +63,7 @@ static void value_changed_cb(GtkSpinButton *spinbutton, gpointer user_data) {
 }
 
 static void gaminggear_macro_editor_macro_options_frame_init(GaminggearMacroEditorMacroOptionsFrame *macro_options_frame) {
-	GaminggearMacroEditorMacroOptionsFramePrivate *priv = GAMINGGEAR_MACRO_EDITOR_MACRO_OPTIONS_FRAME_GET_PRIVATE(macro_options_frame);
+	GaminggearMacroEditorMacroOptionsFramePrivate *priv = gaminggear_macro_editor_macro_options_frame_get_instance_private(macro_options_frame);
 	GtkWidget *vbox, *hbox, *loop_label;
 
 	macro_options_frame->priv = priv;
@@ -98,8 +97,6 @@ static void gaminggear_macro_editor_macro_options_frame_class_init(GaminggearMac
 	gobject_class = G_OBJECT_CLASS(klass);
 
 	gobject_class->finalize = gaminggear_macro_editor_macro_options_frame_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorMacroOptionsFramePrivate));
 
 	signals[MODIFIED] = g_signal_new("modified",
 			G_TYPE_FROM_CLASS(klass),

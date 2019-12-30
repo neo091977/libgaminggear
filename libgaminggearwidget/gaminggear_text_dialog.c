@@ -20,7 +20,6 @@
 
 #define GAMINGGEAR_TEXT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_TEXT_DIALOG_TYPE, GaminggearTextDialogClass))
 #define IS_GAMINGGEAR_TEXT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_TEXT_DIALOG_TYPE))
-#define GAMINGGEAR_TEXT_DIALOG_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_TEXT_DIALOG_TYPE, GaminggearTextDialogPrivate))
 
 typedef struct _GaminggearTextDialogClass GaminggearTextDialogClass;
 
@@ -33,7 +32,7 @@ struct _GaminggearTextDialogPrivate {
 	GtkLabel *caption;
 };
 
-G_DEFINE_TYPE(GaminggearTextDialog, gaminggear_text_dialog, GTK_TYPE_DIALOG);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearTextDialog, gaminggear_text_dialog, GTK_TYPE_DIALOG);
 
 gchar *gaminggear_text_dialog(GtkWindow *parent, gchar const *title, gchar const *caption, gchar const *text) {
 	GaminggearTextDialog *text_dialog;
@@ -99,7 +98,7 @@ static gboolean key_press_cb(GtkWidget *widget, GdkEventKey *event, gpointer use
 }
 
 static void gaminggear_text_dialog_init(GaminggearTextDialog *text_dialog) {
-	GaminggearTextDialogPrivate *priv = GAMINGGEAR_TEXT_DIALOG_GET_PRIVATE(text_dialog);
+	GaminggearTextDialogPrivate *priv = gaminggear_text_dialog_get_instance_private(text_dialog);
 	GtkVBox *content_area;
 
 	text_dialog->priv = priv;
@@ -119,5 +118,4 @@ static void gaminggear_text_dialog_init(GaminggearTextDialog *text_dialog) {
 }
 
 static void gaminggear_text_dialog_class_init(GaminggearTextDialogClass *klass) {
-	g_type_class_add_private(klass, sizeof(GaminggearTextDialogPrivate));
 }

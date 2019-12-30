@@ -20,7 +20,6 @@
 
 #define GAMINGGEAR_TIMEOUT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_TIMEOUT_DIALOG_TYPE, GaminggearTimeoutDialogClass))
 #define IS_GAMINGGEAR_TIMEOUT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_TIMEOUT_DIALOG_TYPE))
-#define GAMINGGEAR_TIMEOUT_DIALOG_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_TIMEOUT_DIALOG_TYPE, GaminggearTimeoutDialogPrivate))
 
 typedef struct _GaminggearTimeoutDialogClass GaminggearTimeoutDialogClass;
 
@@ -33,7 +32,7 @@ struct _GaminggearTimeoutDialogPrivate {
 	GaminggearTimeoutBar *timeout_bar;
 };
 
-G_DEFINE_TYPE(GaminggearTimeoutDialog, gaminggear_timeout_dialog, GTK_TYPE_DIALOG);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearTimeoutDialog, gaminggear_timeout_dialog, GTK_TYPE_DIALOG);
 
 static guint const interval = 200; /* msecs */
 
@@ -83,7 +82,7 @@ static void timeout_cb(GaminggearTimeoutBar *timeout_bar, gpointer user_data) {
 }
 
 static void gaminggear_timeout_dialog_init(GaminggearTimeoutDialog *timeout_dialog) {
-	GaminggearTimeoutDialogPrivate *priv = GAMINGGEAR_TIMEOUT_DIALOG_GET_PRIVATE(timeout_dialog);
+	GaminggearTimeoutDialogPrivate *priv = gaminggear_timeout_dialog_get_instance_private(timeout_dialog);
 	GtkVBox *content_area;
 
 	timeout_dialog->priv = priv;
@@ -101,5 +100,4 @@ static void gaminggear_timeout_dialog_init(GaminggearTimeoutDialog *timeout_dial
 }
 
 static void gaminggear_timeout_dialog_class_init(GaminggearTimeoutDialogClass *klass) {
-	g_type_class_add_private(klass, sizeof(GaminggearTimeoutDialogPrivate));
 }

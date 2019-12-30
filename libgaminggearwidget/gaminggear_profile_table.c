@@ -24,7 +24,6 @@
 
 #define GAMINGGEAR_PROFILE_TABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_PROFILE_TABLE_TYPE, GaminggearProfileTableClass))
 #define IS_GAMINGGEAR_PROFILE_TABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_PROFILE_TABLE_TYPE))
-#define GAMINGGEAR_PROFILE_TABLE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_PROFILE_TABLE_TYPE, GaminggearProfileTablePrivate))
 
 typedef struct _GaminggearProfileTableClass GaminggearProfileTableClass;
 
@@ -61,7 +60,7 @@ enum {
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE(GaminggearProfileTable, gaminggear_profile_table, GTK_TYPE_TREE_VIEW);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearProfileTable, gaminggear_profile_table, GTK_TYPE_TREE_VIEW);
 
 static gchar const * const hardware_index_key = "hardware_index_key";
 
@@ -601,7 +600,7 @@ static void row_activated_cb(GtkTreeView *table,
 }
 
 static void gaminggear_profile_table_init(GaminggearProfileTable *table) {
-	table->priv = GAMINGGEAR_PROFILE_TABLE_GET_PRIVATE(table);
+	table->priv = gaminggear_profile_table_get_instance_private(table);
 }
 
 static GObject *gaminggear_profile_table_constructor(GType gtype, guint n_properties, GObjectConstructParam *properties) {
@@ -693,8 +692,6 @@ static void gaminggear_profile_table_class_init(GaminggearProfileTableClass *kla
 	gobject_class->get_property = gaminggear_profile_table_get_property;
 	gobject_class->constructor = gaminggear_profile_table_constructor;
 	gobject_class->finalize = gaminggear_profile_table_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearProfileTablePrivate));
 
 	signals[SELECTED] = g_signal_new("selected",
 			G_TYPE_FROM_CLASS(klass),

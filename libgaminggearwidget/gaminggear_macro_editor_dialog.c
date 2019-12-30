@@ -23,7 +23,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_DIALOG_TYPE, GaminggearMacroEditorDialogClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_DIALOG_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_DIALOG_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_DIALOG_TYPE, GaminggearMacroEditorDialogPrivate))
 
 typedef struct _GaminggearMacroEditorDialogClass GaminggearMacroEditorDialogClass;
 
@@ -35,7 +34,7 @@ struct _GaminggearMacroEditorDialogPrivate {
 	GaminggearMacroEditor *macro_editor;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditorDialog, gaminggear_macro_editor_dialog, GTK_TYPE_DIALOG);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditorDialog, gaminggear_macro_editor_dialog, GTK_TYPE_DIALOG);
 
 void gaminggear_macro_editor_dialog_clear(GaminggearMacroEditorDialog *dialog) {
 	gaminggear_macro_editor_clear(dialog->priv->macro_editor);
@@ -120,7 +119,7 @@ GtkWidget *gaminggear_macro_editor_dialog_new(GtkWindow *parent) {
 }
 
 static void gaminggear_macro_editor_dialog_init(GaminggearMacroEditorDialog *macro_editor_dialog) {
-	GaminggearMacroEditorDialogPrivate *priv = GAMINGGEAR_MACRO_EDITOR_DIALOG_GET_PRIVATE(macro_editor_dialog);
+	GaminggearMacroEditorDialogPrivate *priv = gaminggear_macro_editor_dialog_get_instance_private(macro_editor_dialog);
 	GtkVBox *content_area;
 	GtkWidget *menu_bar;
 
@@ -139,5 +138,4 @@ static void gaminggear_macro_editor_dialog_init(GaminggearMacroEditorDialog *mac
 }
 
 static void gaminggear_macro_editor_dialog_class_init(GaminggearMacroEditorDialogClass *klass) {
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorDialogPrivate));
 }

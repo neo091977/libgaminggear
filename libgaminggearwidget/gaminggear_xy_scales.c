@@ -18,7 +18,6 @@
 #include "gaminggear/gaminggear_xy_scales.h"
 #include "gaminggear/gaminggear_hscale.h"
 
-#define GAMINGGEAR_XY_SCALES_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_XY_SCALES_TYPE, GaminggearXyScalesPrivate))
 
 struct _GaminggearXyScalesPrivate {
 	GtkToggleButton *linked;
@@ -38,7 +37,7 @@ enum {
 	PROP_STEP,
 };
 
-G_DEFINE_TYPE(GaminggearXyScales, gaminggear_xy_scales, GTK_TYPE_TABLE);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearXyScales, gaminggear_xy_scales, GTK_TYPE_TABLE);
 
 static void x_to_y(GaminggearXyScales *scales) {
 	GaminggearXyScalesPrivate *priv = scales->priv;
@@ -177,7 +176,7 @@ GtkWidget *gaminggear_xy_scales_new(gdouble min, gdouble max, gdouble step) {
 }
 
 static void gaminggear_xy_scales_init(GaminggearXyScales *scales) {
-	scales->priv = GAMINGGEAR_XY_SCALES_GET_PRIVATE(scales);
+	scales->priv = gaminggear_xy_scales_get_instance_private(scales);
 }
 
 static void gaminggear_xy_scales_set_property(GObject *object, guint prop_id, GValue const *value, GParamSpec *pspec) {
@@ -205,8 +204,6 @@ static void gaminggear_xy_scales_class_init(GaminggearXyScalesClass *klass) {
 
 	gobject_class->constructor = gaminggear_xy_scales_constructor;
 	gobject_class->set_property = gaminggear_xy_scales_set_property;
-
-	g_type_class_add_private(klass, sizeof(GaminggearXyScalesPrivate));
 
 	g_object_class_install_property(gobject_class, PROP_MIN,
 			g_param_spec_double("min",

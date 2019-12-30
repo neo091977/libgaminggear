@@ -19,7 +19,6 @@
 
 #define GAMINGGEAR_TIMEOUT_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_TIMEOUT_BAR_TYPE, GaminggearTimeoutBarClass))
 #define IS_GAMINGGEAR_TIMEOUT_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_TIMEOUT_BAR_TYPE))
-#define GAMINGGEAR_TIMEOUT_BAR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_TIMEOUT_BAR_TYPE, GaminggearTimeoutBarPrivate))
 
 typedef struct _GaminggearTimeoutBarClass GaminggearTimeoutBarClass;
 typedef struct _GaminggearTimeoutBarPrivate GaminggearTimeoutBarPrivate;
@@ -39,7 +38,7 @@ struct _GaminggearTimeoutBarPrivate {
 	guint source;
 };
 
-G_DEFINE_TYPE(GaminggearTimeoutBar, gaminggear_timeout_bar, GTK_TYPE_PROGRESS_BAR);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearTimeoutBar, gaminggear_timeout_bar, GTK_TYPE_PROGRESS_BAR);
 
 static gboolean update_timeout_bar(GaminggearTimeoutBar *timeout_bar) {
 	GaminggearTimeoutBarPrivate *priv = timeout_bar->priv;
@@ -82,14 +81,12 @@ void gaminggear_timeout_bar_stop(GaminggearTimeoutBar *timeout_bar) {
 }
 
 static void gaminggear_timeout_bar_init(GaminggearTimeoutBar *timeout_bar) {
-	GaminggearTimeoutBarPrivate *priv = GAMINGGEAR_TIMEOUT_BAR_GET_PRIVATE(timeout_bar);
+	GaminggearTimeoutBarPrivate *priv = gaminggear_timeout_bar_get_instance_private(timeout_bar);
 
 	timeout_bar->priv = priv;
 }
 
 static void gaminggear_timeout_bar_class_init(GaminggearTimeoutBarClass *klass) {
-	g_type_class_add_private(klass, sizeof(GaminggearTimeoutBarPrivate));
-
 	g_signal_new("timeout",
 			G_TYPE_FROM_CLASS(klass),
 			G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,

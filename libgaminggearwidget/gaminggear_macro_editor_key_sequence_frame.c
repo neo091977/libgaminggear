@@ -23,7 +23,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_TYPE, GaminggearMacroEditorKeySequenceFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_TYPE, GaminggearMacroEditorKeySequenceFramePrivate))
 
 typedef struct _GaminggearMacroEditorKeySequenceFrameClass GaminggearMacroEditorKeySequenceFrameClass;
 typedef struct _AbsoluteKeystroke AbsoluteKeystroke;
@@ -47,7 +46,7 @@ struct _GaminggearMacroEditorKeySequenceFramePrivate {
 	gboolean record;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditorKeySequenceFrame, gaminggear_macro_editor_key_sequence_frame, GTK_TYPE_FRAME);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditorKeySequenceFrame, gaminggear_macro_editor_key_sequence_frame, GTK_TYPE_FRAME);
 
 enum {
 	MODIFIED,
@@ -204,7 +203,7 @@ static gboolean button_event_cb(GtkWidget *widget, GdkEventButton *event, gpoint
 }
 
 static void gaminggear_macro_editor_key_sequence_frame_init(GaminggearMacroEditorKeySequenceFrame *key_sequence_frame) {
-	GaminggearMacroEditorKeySequenceFramePrivate *priv = GAMINGGEAR_MACRO_EDITOR_KEY_SEQUENCE_FRAME_GET_PRIVATE(key_sequence_frame);
+	GaminggearMacroEditorKeySequenceFramePrivate *priv = gaminggear_macro_editor_key_sequence_frame_get_instance_private(key_sequence_frame);
 	GtkWidget *vbox;
 	GtkWidget *hbox;
 	guint i;
@@ -283,8 +282,6 @@ static void gaminggear_macro_editor_key_sequence_frame_class_init(GaminggearMacr
 	gobject_class = G_OBJECT_CLASS(klass);
 
 	gobject_class->finalize = gaminggear_macro_editor_key_sequence_frame_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorKeySequenceFramePrivate));
 
 	signals[MODIFIED] = g_signal_new("modified",
 			G_TYPE_FROM_CLASS(klass),

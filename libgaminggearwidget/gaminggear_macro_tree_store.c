@@ -22,7 +22,6 @@
 
 #define GAMINGGEAR_MACRO_TREE_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_TREE_STORE_TYPE, GaminggearMacroTreeStoreClass))
 #define IS_GAMINGGEAR_MACRO_TREE_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_TREE_STORE_TYPE))
-#define GAMINGGEAR_MACRO_TREE_STORE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_TREE_STORE_TYPE, GaminggearMacroTreeStorePrivate))
 
 typedef struct _GaminggearMacroTreeStoreClass GaminggearMacroTreeStoreClass;
 
@@ -35,7 +34,7 @@ struct _GaminggearMacroTreeStorePrivate {
 	gboolean modified;
 };
 
-G_DEFINE_TYPE(GaminggearMacroTreeStore, gaminggear_macro_tree_store, GTK_TYPE_TREE_STORE);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroTreeStore, gaminggear_macro_tree_store, GTK_TYPE_TREE_STORE);
 
 enum {
 	MODIFIED,
@@ -69,7 +68,7 @@ GaminggearMacroTreeStore *gaminggear_macro_tree_store_new(void) {
 }
 
 static void gaminggear_macro_tree_store_init(GaminggearMacroTreeStore *macro_tree_store) {
-	GaminggearMacroTreeStorePrivate *priv = GAMINGGEAR_MACRO_TREE_STORE_GET_PRIVATE(macro_tree_store);
+	GaminggearMacroTreeStorePrivate *priv = gaminggear_macro_tree_store_get_instance_private(macro_tree_store);
 	GType types[GAMINGGEAR_MACRO_TREE_STORE_N_COLUMNS] = {
 		G_TYPE_STRING,
 		G_TYPE_POINTER
@@ -93,8 +92,6 @@ static void gaminggear_macro_tree_store_init(GaminggearMacroTreeStore *macro_tre
 }
 
 static void gaminggear_macro_tree_store_class_init(GaminggearMacroTreeStoreClass *klass) {
-	g_type_class_add_private(klass, sizeof(GaminggearMacroTreeStorePrivate));
-
 	signals[MODIFIED] = g_signal_new("modified",
 			G_TYPE_FROM_CLASS(klass),
 			G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,

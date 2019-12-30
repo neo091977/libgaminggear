@@ -19,8 +19,6 @@
 #include <glib.h>
 #include <math.h>
 
-#define GAMINGGEAR_RULER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_RULER_TYPE, GaminggearRulerPrivate))
-
 struct _GaminggearRulerPrivate {
 	gdouble min, max;
 	gdouble interval;
@@ -33,7 +31,7 @@ enum {
 	PROP_INTERVAL,
 };
 
-G_DEFINE_TYPE(GaminggearRuler, gaminggear_ruler, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearRuler, gaminggear_ruler, GTK_TYPE_WIDGET);
 
 GtkWidget *gaminggear_ruler_new(void) {
 	return GTK_WIDGET(g_object_new(GAMINGGEAR_RULER_TYPE, NULL));
@@ -236,7 +234,7 @@ static void gaminggear_ruler_size_allocate(GtkWidget *widget, GtkAllocation *all
 }
 
 static void gaminggear_ruler_init(GaminggearRuler *ruler) {
-	GaminggearRulerPrivate *priv = GAMINGGEAR_RULER_GET_PRIVATE(ruler);
+	GaminggearRulerPrivate *priv = gaminggear_ruler_get_instance_private(ruler);
 
 	ruler->priv = priv;
 
@@ -259,8 +257,6 @@ static void gaminggear_ruler_class_init(GaminggearRulerClass *klass) {
 	widget_class->expose_event = gaminggear_ruler_expose;
 	widget_class->size_request = gaminggear_ruler_size_request;
 	widget_class->size_allocate = gaminggear_ruler_size_allocate;
-
-	g_type_class_add_private(klass, sizeof(GaminggearRulerPrivate));
 
 	g_object_class_install_property(gobject_class, PROP_MIN,
 			g_param_spec_double("min",

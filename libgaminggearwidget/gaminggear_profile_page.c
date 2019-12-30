@@ -19,13 +19,12 @@
 #include "gaminggear_helper.h"
 #include "i18n-lib.h"
 
-#define GAMINGGEAR_PROFILE_PAGE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_PROFILE_PAGE_TYPE, GaminggearProfilePagePrivate))
 
 struct _GaminggearProfilePagePrivate {
 	GaminggearProfileData *profile_data;
 };
 
-G_DEFINE_TYPE(GaminggearProfilePage, gaminggear_profile_page, GTK_TYPE_VBOX);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearProfilePage, gaminggear_profile_page, GTK_TYPE_VBOX);
 
 enum {
 	IMPORT,
@@ -75,7 +74,7 @@ static GtkWidget *buttons_new(GaminggearProfilePage *profile_page) {
 }
 
 static void gaminggear_profile_page_init(GaminggearProfilePage *profile_page) {
-	GaminggearProfilePagePrivate *priv = GAMINGGEAR_PROFILE_PAGE_GET_PRIVATE(profile_page);
+	GaminggearProfilePagePrivate *priv = gaminggear_profile_page_get_instance_private(profile_page);
 
 	profile_page->priv = priv;
 
@@ -119,8 +118,6 @@ static void gaminggear_profile_page_class_init(GaminggearProfilePageClass *klass
 
 	gobject_class->constructor = constructor;
 	gobject_class->finalize = finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearProfilePagePrivate));
 
 	signals[IMPORT] = g_signal_new("import",
 			G_TYPE_FROM_CLASS(klass),

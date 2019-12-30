@@ -22,7 +22,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_TYPE, GaminggearMacroEditorRecordOptionsFrameClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_TYPE, GaminggearMacroEditorRecordOptionsFramePrivate))
 
 typedef struct _GaminggearMacroEditorRecordOptionsFrameClass GaminggearMacroEditorRecordOptionsFrameClass;
 typedef struct _AbsoluteKeystroke AbsoluteKeystroke;
@@ -39,7 +38,7 @@ struct _GaminggearMacroEditorRecordOptionsFramePrivate {
 	GtkRadioButton *delay_fixed;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditorRecordOptionsFrame, gaminggear_macro_editor_record_options_frame, GTK_TYPE_FRAME);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditorRecordOptionsFrame, gaminggear_macro_editor_record_options_frame, GTK_TYPE_FRAME);
 
 enum {
 	RECORD_EVENT,
@@ -83,7 +82,7 @@ static void delay_value_changed_cb(GtkSpinButton *spin, gpointer user_data) {
 }
 
 static void gaminggear_macro_editor_record_options_frame_init(GaminggearMacroEditorRecordOptionsFrame *record_options_frame) {
-	GaminggearMacroEditorRecordOptionsFramePrivate *priv = GAMINGGEAR_MACRO_EDITOR_RECORD_OPTIONS_FRAME_GET_PRIVATE(record_options_frame);
+	GaminggearMacroEditorRecordOptionsFramePrivate *priv = gaminggear_macro_editor_record_options_frame_get_instance_private(record_options_frame);
 	GtkWidget *vbox1;
 	GtkWidget *vbox2;
 	GtkWidget *hbox;
@@ -143,8 +142,6 @@ static void gaminggear_macro_editor_record_options_frame_class_init(GaminggearMa
 	gobject_class = G_OBJECT_CLASS(klass);
 
 	gobject_class->finalize = gaminggear_macro_editor_record_options_frame_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorRecordOptionsFramePrivate));
 
 	signals[RECORD_EVENT] = g_signal_new("record-event",
 			G_TYPE_FROM_CLASS(klass),
