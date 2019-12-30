@@ -22,7 +22,7 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_ADVANCED_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_TYPE, GaminggearMacroEditorAdvancedClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_ADVANCED_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_ADVANCED_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_ADVANCED_TYPE, GaminggearMacroEditorAdvancedPrivate))
+/*#define GAMINGGEAR_MACRO_EDITOR_ADVANCED_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_ADVANCED_TYPE, GaminggearMacroEditorAdvancedPrivate))*/
 
 typedef struct _GaminggearMacroEditorAdvancedClass GaminggearMacroEditorAdvancedClass;
 
@@ -94,6 +94,7 @@ static void gaminggear_macro_editor_advanced_interface_init(GaminggearMacroEdito
 }
 
 G_DEFINE_TYPE_WITH_CODE(GaminggearMacroEditorAdvanced, gaminggear_macro_editor_advanced, GTK_TYPE_SCROLLED_WINDOW,
+		G_ADD_PRIVATE(GaminggearMacroEditorAdvanced)
 		G_IMPLEMENT_INTERFACE(GAMINGGEAR_MACRO_EDITOR_INTERFACE_TYPE, gaminggear_macro_editor_advanced_interface_init));
 
 
@@ -121,7 +122,7 @@ static void empty_changed_cb(GaminggearMacroEditorAdvancedListStore *store, gpoi
 }
 
 static void gaminggear_macro_editor_advanced_init(GaminggearMacroEditorAdvanced *macro_editor_advanced) {
-	GaminggearMacroEditorAdvancedPrivate *priv = GAMINGGEAR_MACRO_EDITOR_ADVANCED_GET_PRIVATE(macro_editor_advanced);
+	GaminggearMacroEditorAdvancedPrivate *priv = gaminggear_macro_editor_advanced_get_instance_private(macro_editor_advanced); 
 
 	macro_editor_advanced->priv = priv;
 
@@ -148,6 +149,4 @@ static void gaminggear_macro_editor_advanced_class_init(GaminggearMacroEditorAdv
 	gobject_class = G_OBJECT_CLASS(klass);
 
 	gobject_class->finalize = gaminggear_macro_editor_advanced_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorAdvancedPrivate));
 }

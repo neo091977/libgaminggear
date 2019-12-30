@@ -23,7 +23,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_TYPE, GaminggearMacroEditorBasicListStoreClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_TYPE, GaminggearMacroEditorBasicListStorePrivate))
 
 typedef struct _GaminggearMacroEditorBasicListStoreClass GaminggearMacroEditorBasicListStoreClass;
 
@@ -37,7 +36,7 @@ struct _GaminggearMacroEditorBasicListStorePrivate {
 	gboolean modified;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditorBasicListStore, gaminggear_macro_editor_basic_list_store, GTK_TYPE_LIST_STORE);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditorBasicListStore, gaminggear_macro_editor_basic_list_store, GTK_TYPE_LIST_STORE);
 
 enum {
 	MODIFIED,
@@ -98,7 +97,7 @@ GaminggearMacroEditorBasicListStore *gaminggear_macro_editor_basic_list_store_ne
 }
 
 static void gaminggear_macro_editor_basic_list_store_init(GaminggearMacroEditorBasicListStore *macro_editor_basic_list_store) {
-	GaminggearMacroEditorBasicListStorePrivate *priv = GAMINGGEAR_MACRO_EDITOR_BASIC_LIST_STORE_GET_PRIVATE(macro_editor_basic_list_store);
+	GaminggearMacroEditorBasicListStorePrivate *priv = gaminggear_macro_editor_basic_list_store_get_instance_private(macro_editor_basic_list_store);
 
 	macro_editor_basic_list_store->priv = priv;
 
@@ -106,8 +105,7 @@ static void gaminggear_macro_editor_basic_list_store_init(GaminggearMacroEditorB
 }
 
 static void gaminggear_macro_editor_basic_list_store_class_init(GaminggearMacroEditorBasicListStoreClass *klass) {
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorBasicListStorePrivate));
-
+	
 	signals[MODIFIED] = g_signal_new("modified",
 			G_TYPE_FROM_CLASS(klass),
 			G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
