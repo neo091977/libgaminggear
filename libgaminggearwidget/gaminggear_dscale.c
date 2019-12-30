@@ -19,7 +19,6 @@
 
 #define GAMINGGEAR_DSCALE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_DSCALE_TYPE, GaminggearDscaleClass))
 #define IS_GAMINGGEAR_DSCALE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_DSCALE_TYPE))
-#define GAMINGGEAR_DSCALE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_DSCALE_TYPE, GaminggearDscalePrivate))
 
 typedef struct _GaminggearDscaleClass GaminggearDscaleClass;
 
@@ -64,7 +63,7 @@ enum {
 	PROP_SLOWDOWN,
 };
 
-G_DEFINE_TYPE(GaminggearDscale, gaminggear_dscale, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearDscale, gaminggear_dscale, GTK_TYPE_WIDGET);
 
 GtkWidget *gaminggear_dscale_new(void) {
 	return GTK_WIDGET(g_object_new(GAMINGGEAR_DSCALE_TYPE, NULL));
@@ -585,7 +584,7 @@ static gboolean motion_callback(GtkWidget *widget, GdkEventMotion *event, gpoint
 }
 
 static void gaminggear_dscale_init(GaminggearDscale *scale) {
-	GaminggearDscalePrivate *priv = GAMINGGEAR_DSCALE_GET_PRIVATE(scale);
+	GaminggearDscalePrivate *priv = gaminggear_dscale_get_instance_private(scale);
 
 	scale->priv = priv;
 
@@ -622,8 +621,6 @@ static void gaminggear_dscale_class_init(GaminggearDscaleClass *klass) {
 	widget_class->expose_event = gaminggear_dscale_expose;
 	widget_class->size_request = gaminggear_dscale_size_request;
 	widget_class->size_allocate = gaminggear_dscale_size_allocate;
-
-	g_type_class_add_private(klass, sizeof(GaminggearDscalePrivate));
 
 	g_signal_new("min-changed",
 			G_TYPE_FROM_CLASS(klass),

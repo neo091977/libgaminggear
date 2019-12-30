@@ -25,7 +25,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_ADVANCED_TABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_TABLE_TYPE, GaminggearMacroEditorAdvancedTableClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_ADVANCED_TABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_TABLE_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_ADVANCED_TABLE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_ADVANCED_TABLE_TYPE, GaminggearMacroEditorAdvancedTablePrivate))
 
 typedef struct _GaminggearMacroEditorAdvancedTableClass GaminggearMacroEditorAdvancedTableClass;
 typedef struct _AbsoluteKeystroke AbsoluteKeystroke;
@@ -47,7 +46,7 @@ struct _GaminggearMacroEditorAdvancedTablePrivate {
 	GaminggearMacroEditorAdvancedListStore *store;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditorAdvancedTable, gaminggear_macro_editor_advanced_table, GTK_TYPE_TABLE);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditorAdvancedTable, gaminggear_macro_editor_advanced_table, GTK_TYPE_TABLE);
 
 enum {
 	GAMINGGEAR_MACRO_EDITOR_ADVANCED_TABLE_LABEL_COLUMN,
@@ -179,7 +178,7 @@ GtkWidget *gaminggear_macro_editor_advanced_table_new(GaminggearMacroEditorAdvan
 }
 
 static void gaminggear_macro_editor_advanced_table_init(GaminggearMacroEditorAdvancedTable *macro_editor_advanced_table) {
-	GaminggearMacroEditorAdvancedTablePrivate *priv = GAMINGGEAR_MACRO_EDITOR_ADVANCED_TABLE_GET_PRIVATE(macro_editor_advanced_table);
+	GaminggearMacroEditorAdvancedTablePrivate *priv = gaminggear_macro_editor_advanced_table_get_instance_private(macro_editor_advanced_table);
 	macro_editor_advanced_table->priv = priv;
 }
 
@@ -195,6 +194,4 @@ static void gaminggear_macro_editor_advanced_table_class_init(GaminggearMacroEdi
 	gobject_class = G_OBJECT_CLASS(klass);
 
 	gobject_class->finalize = gaminggear_macro_editor_advanced_table_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorAdvancedTablePrivate));
 }

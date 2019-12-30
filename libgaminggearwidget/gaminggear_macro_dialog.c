@@ -21,7 +21,6 @@
 
 #define GAMINGGEAR_MACRO_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_DIALOG_TYPE, GaminggearMacroDialogClass))
 #define IS_GAMINGGEAR_MACRO_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_DIALOG_TYPE))
-#define GAMINGGEAR_MACRO_DIALOG_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_DIALOG_TYPE, GaminggearMacroDialogPrivate))
 
 typedef struct _GaminggearMacroDialogClass GaminggearMacroDialogClass;
 
@@ -34,7 +33,7 @@ struct _GaminggearMacroDialogPrivate {
 	GtkComboBox *combo_box;
 };
 
-G_DEFINE_TYPE(GaminggearMacroDialog, gaminggear_macro_dialog, GTK_TYPE_DIALOG);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroDialog, gaminggear_macro_dialog, GTK_TYPE_DIALOG);
 
 static void gaminggear_macro_dialog_set_macros(GaminggearMacroDialog *macro_dialog, GaminggearMacros *macros) {
 	gaminggear_macro_combo_box_set_macros(macro_dialog->priv->combo_box, macros);
@@ -94,7 +93,7 @@ static void changed_cb(GtkComboBox *combo_box, gpointer user_data) {
 }
 
 static void gaminggear_macro_dialog_init(GaminggearMacroDialog *macro_dialog) {
-	GaminggearMacroDialogPrivate *priv = GAMINGGEAR_MACRO_DIALOG_GET_PRIVATE(macro_dialog);
+	GaminggearMacroDialogPrivate *priv = gaminggear_macro_dialog_get_instance_private(macro_dialog);
 	GtkVBox *content_area;
 
 	macro_dialog->priv = priv;
@@ -109,5 +108,4 @@ static void gaminggear_macro_dialog_init(GaminggearMacroDialog *macro_dialog) {
 }
 
 static void gaminggear_macro_dialog_class_init(GaminggearMacroDialogClass *klass) {
-	g_type_class_add_private(klass, sizeof(GaminggearMacroDialogPrivate));
 }

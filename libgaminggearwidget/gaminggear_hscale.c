@@ -17,8 +17,6 @@
 
 #include "gaminggear/gaminggear_hscale.h"
 
-#define GAMINGGEAR_HSCALE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_HSCALE_TYPE, GaminggearHScalePrivate))
-
 struct _GaminggearHScalePrivate {
 	GtkHScale *scale;
 	GtkSpinButton *spin;
@@ -38,7 +36,7 @@ enum {
 	PROP_STEP,
 };
 
-G_DEFINE_TYPE(GaminggearHScale, gaminggear_hscale, GTK_TYPE_HBOX);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearHScale, gaminggear_hscale, GTK_TYPE_HBOX);
 
 static void show_spin(GaminggearHScale *hscale) {
 	GaminggearHScalePrivate *priv = hscale->priv;
@@ -188,7 +186,7 @@ static void gaminggear_hscale_spin_value_changed_cb(GtkSpinButton *spinbutton, g
  * only available since gobject-2.26
  */
 static void gaminggear_hscale_init(GaminggearHScale *hscale) {
-	GaminggearHScalePrivate *priv = GAMINGGEAR_HSCALE_GET_PRIVATE(hscale);
+	GaminggearHScalePrivate *priv = gaminggear_hscale_get_instance_private(hscale);
 
 	hscale->priv = priv;
 
@@ -224,8 +222,6 @@ static void gaminggear_hscale_class_init(GaminggearHScaleClass *klass) {
 	gobject_class->set_property = gaminggear_hscale_set_property;
 	gobject_class->get_property = gaminggear_hscale_get_property;
 	gobject_class->finalize = gaminggear_hscale_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearHScalePrivate));
 
 	g_signal_new("value-changed",
 			G_TYPE_FROM_CLASS(klass),

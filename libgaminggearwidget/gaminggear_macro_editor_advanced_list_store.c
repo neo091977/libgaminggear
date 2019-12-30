@@ -29,7 +29,6 @@
 
 #define GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_TYPE, GaminggearMacroEditorAdvancedListStoreClass))
 #define IS_GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_TYPE))
-#define GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_TYPE, GaminggearMacroEditorAdvancedListStorePrivate))
 
 typedef struct _GaminggearMacroEditorAdvancedListStoreClass GaminggearMacroEditorAdvancedListStoreClass;
 
@@ -46,7 +45,7 @@ struct _GaminggearMacroEditorAdvancedListStorePrivate {
 	glong abs_time;
 };
 
-G_DEFINE_TYPE(GaminggearMacroEditorAdvancedListStore, gaminggear_macro_editor_advanced_list_store, GTK_TYPE_LIST_STORE);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroEditorAdvancedListStore, gaminggear_macro_editor_advanced_list_store, GTK_TYPE_LIST_STORE);
 
 enum {
 	MAX_CHANGED,
@@ -126,7 +125,7 @@ GaminggearMacroEditorAdvancedListStore *gaminggear_macro_editor_advanced_list_st
 }
 
 static void gaminggear_macro_editor_advanced_list_store_init(GaminggearMacroEditorAdvancedListStore *macro_editor_advanced_list_store) {
-	GaminggearMacroEditorAdvancedListStorePrivate *priv = GAMINGGEAR_MACRO_EDITOR_ADVANCED_LIST_STORE_GET_PRIVATE(macro_editor_advanced_list_store);
+	GaminggearMacroEditorAdvancedListStorePrivate *priv = gaminggear_macro_editor_advanced_list_store_get_instance_private(macro_editor_advanced_list_store);
 
 	macro_editor_advanced_list_store->priv = priv;
 
@@ -144,8 +143,6 @@ static void gaminggear_macro_editor_advanced_list_store_class_init(GaminggearMac
 	gobject_class = G_OBJECT_CLASS(klass);
 
 	gobject_class->finalize = gaminggear_macro_editor_advanced_list_store_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroEditorAdvancedListStorePrivate));
 
 	signals[MAX_CHANGED] = g_signal_new("max-changed",
 			G_TYPE_FROM_CLASS(klass),
