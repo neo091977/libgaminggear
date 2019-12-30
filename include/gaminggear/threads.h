@@ -175,7 +175,7 @@ static inline gboolean gaminggear_cond_wait_for_timed(GaminggearCond *cond, Gami
 	}
 	return TRUE;
 #else
-	GTimeVal end_time;
+	GDateTime end_time;
 	g_get_current_time(&end_time);
 	g_time_val_add(&end_time, microseconds);
 	while (!handler(user_data)) {
