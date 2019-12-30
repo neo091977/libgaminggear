@@ -44,7 +44,7 @@ struct _GaminggearMacroThreadPrivate {
 	GaminggearMacro *macro;
 };
 
-G_DEFINE_TYPE(GaminggearMacroThread, gaminggear_macro_thread, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearMacroThread, gaminggear_macro_thread, G_TYPE_OBJECT);
 
 void gaminggear_macro_thread_set_paused(GaminggearMacroThread *gaminggear_macro_thread, gboolean value) {
 	GaminggearMacroThreadPrivate *priv = gaminggear_macro_thread->priv;
