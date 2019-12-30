@@ -1,6 +1,6 @@
 %define vmajor 0
 %define vminor 15
-%define vmicro 1
+%define vmicro 2
 
 Name: libgaminggear
 Version: %{vmajor}.%{vminor}.%{vmicro}
@@ -8,7 +8,7 @@ Release: 1
 License: GPL
 Source: %{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
-BuildRequires: cmake >= 2.6.4
+BuildRequires: cmake >= 3.0.0
 BuildRequires: gtk2-devel >= 2.20
 BuildRequires: sqlite >= 3.7
 BuildRequires: libcanberra-devel
@@ -17,7 +17,6 @@ BuildRequires: doxygen
 BuildRequires: gettext >= 0.15
 ExclusiveOS: linux
 URL: http://sourceforge.net/projects/libgaminggear/
-Packager: Stefan Achatz <erazor_de@users.sourceforge.net>
 
 Summary: Libraries for gaming input devices
 Group: System Environment/Libraries
