@@ -17,16 +17,14 @@
 
 #include "gaminggear/gaminggear_profile_data.h"
 
-#define GAMINGGEAR_PROFILE_DATA_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_PROFILE_DATA_TYPE, GaminggearProfileDataPrivate))
-
 struct _GaminggearProfileDataPrivate {
 	gboolean valid;
 };
 
-G_DEFINE_TYPE(GaminggearProfileData, gaminggear_profile_data, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearProfileData, gaminggear_profile_data, G_TYPE_OBJECT);
 
 static void gaminggear_profile_data_init(GaminggearProfileData *profile_data) {
-	GaminggearProfileDataPrivate *priv = GAMINGGEAR_PROFILE_DATA_GET_PRIVATE(profile_data);
+	GaminggearProfileDataPrivate *priv = gaminggear_profile_data_get_instance_private(profile_data);
 	profile_data->priv = priv;
 
 	priv->valid = TRUE;
@@ -39,8 +37,6 @@ static void copy(GaminggearProfileData *self, GaminggearProfileData *other) {
 static void discriminate(GaminggearProfileData *self) {}
 
 static void gaminggear_profile_data_class_init(GaminggearProfileDataClass *klass) {
-	g_type_class_add_private(klass, sizeof(GaminggearProfileDataPrivate));
-
 	klass->copy = copy;
 	klass->discriminate = discriminate;
 }

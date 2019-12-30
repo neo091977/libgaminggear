@@ -24,8 +24,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#define GAMINGGEAR_DEVICE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_DEVICE_TYPE, GaminggearDevicePrivate))
-
 struct _GaminggearDevicePrivate {
 	gchar *identifier; // unique per device, not interface
 	guint vendor_id;
@@ -44,7 +42,7 @@ enum {
 	PROP_NUM_INTERFACES,
 };
 
-G_DEFINE_TYPE(GaminggearDevice, gaminggear_device, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE(GaminggearDevice, gaminggear_device, G_TYPE_OBJECT);
 
 int gaminggear_device_open(GaminggearDevice *gaminggear_device, gchar const *key, gint flags, GError **error) {
 	gchar const *path;
@@ -138,7 +136,7 @@ GaminggearDevice *gaminggear_device_new(gchar const *identifier, guint vendor_id
 }
 
 static void gaminggear_device_init(GaminggearDevice *gaminggear_dev) {
-	GaminggearDevicePrivate *priv = GAMINGGEAR_DEVICE_GET_PRIVATE(gaminggear_dev);
+	GaminggearDevicePrivate *priv = gaminggear_device_get_instance_private(gaminggear_dev);
 	gaminggear_dev->priv = priv;
 
 	gaminggear_rec_mutex_init(&priv->lock);
@@ -194,8 +192,6 @@ static void gaminggear_device_class_init(GaminggearDeviceClass *klass) {
 
 	gobject_class->set_property = set_property;
 	gobject_class->finalize = gaminggear_device_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearDevicePrivate));
 
 	g_object_class_install_property(gobject_class, PROP_IDENTIFIER,
 			g_param_spec_string("identifier",

@@ -24,7 +24,6 @@
 
 #define GAMINGGEAR_MACRO_THREAD_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), GAMINGGEAR_MACRO_THREAD_TYPE, GaminggearMacroThreadClass))
 #define IS_GAMINGGEAR_MACRO_THREAD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GAMINGGEAR_MACRO_THREAD_TYPE))
-#define GAMINGGEAR_MACRO_THREAD_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GAMINGGEAR_MACRO_THREAD_TYPE, GaminggearMacroThreadPrivate))
 
 typedef struct _GaminggearMacroThreadClass GaminggearMacroThreadClass;
 
@@ -184,7 +183,7 @@ GaminggearMacroThread *gaminggear_macro_thread_new(GaminggearMacro const *macro)
 }
 
 static void gaminggear_macro_thread_init(GaminggearMacroThread *macro_thread_data) {
-	GaminggearMacroThreadPrivate *priv = GAMINGGEAR_MACRO_THREAD_GET_PRIVATE(macro_thread_data);
+	GaminggearMacroThreadPrivate *priv = gaminggear_macro_thread_get_instance_private(macro_thread_data);
 	macro_thread_data->priv = priv;
 
 	gaminggear_mutex_init(&priv->mutex);
@@ -211,6 +210,4 @@ static void gaminggear_macro_thread_class_init(GaminggearMacroThreadClass *klass
 	gobject_class = (GObjectClass*)klass;
 
 	gobject_class->finalize = gaminggear_macro_thread_finalize;
-
-	g_type_class_add_private(klass, sizeof(GaminggearMacroThreadPrivate));
 }
